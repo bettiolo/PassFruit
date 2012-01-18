@@ -11,7 +11,6 @@ namespace PassFruit {
         public Guid AccountId { get; set; }
 
         public string Password { get; set; }
-        }
+    
     }
-
 }

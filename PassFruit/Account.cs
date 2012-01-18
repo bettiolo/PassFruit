@@ -12,7 +12,7 @@ namespace PassFruit {
 
         public string UserName { get; set; }
 
-        public string GetPassword() {
+        public IAccountPassword GetPassword() {
             throw new NotImplementedException();
         }
 
