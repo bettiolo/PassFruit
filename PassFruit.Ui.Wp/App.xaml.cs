@@ -14,7 +14,9 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
 namespace PassFruit.Ui.Wp {
+
     public partial class App : Application {
+
         private static MainViewModel viewModel = null;
 
         /// <summary>
@@ -68,6 +70,8 @@ namespace PassFruit.Ui.Wp {
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+
+            var init = new Init();
 
         }
 

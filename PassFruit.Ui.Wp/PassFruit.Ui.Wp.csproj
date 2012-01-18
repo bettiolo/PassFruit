@@ -98,6 +98,20 @@
     <Resource Include="PanoramaBackground.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PassFruit.Client.FakeRepository\PassFruit.Client.FakeRepository.csproj">
+      <Project>{EF5C1406-CD43-46C7-A5C3-DBC74770585F}</Project>
+      <Name>PassFruit.Client.FakeRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Client\PassFruit.Client.csproj">
+      <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
+      <Name>PassFruit.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
+      <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
+      <Name>PassFruit.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
