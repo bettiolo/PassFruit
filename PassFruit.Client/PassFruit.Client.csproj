@@ -40,8 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
+      <Project>{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}</Project>
+      <Name>PassFruit.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit\PassFruit.csproj">
+      <Project>{A3541573-9925-41EE-A42D-58F79E88A7D5}</Project>
+      <Name>PassFruit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
