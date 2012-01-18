@@ -6,7 +6,7 @@ using PassFruit.Contracts;
 
 namespace PassFruit.Client.FakeRepository {
 
-    public class Info : IRepositoryInfo {
+    public class FakeRepository : IRepository {
         
         public string Name {
             get { return "Fake Repository"; }
@@ -16,6 +16,13 @@ namespace PassFruit.Client.FakeRepository {
             get { return "Fake Repository that returns fixed example data"; }
         }
 
+        public IAccountGroups AccountGroups {
+            get { return new AccountGroups(this); }
+        }
+
+        public IAccounts Accounts {
+            get { return new Accounts(this); }
+        }
     }
 
 }
