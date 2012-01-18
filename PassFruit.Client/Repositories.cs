@@ -8,23 +8,23 @@ namespace PassFruit.Client {
     
     public class Repositories {
 
-        private readonly IList<IRepositoryInfo> _repositories = new List<IRepositoryInfo>();
+        private readonly IList<IRepository> _repositories = new List<IRepository>();
 
-        private IRepositoryInfo _currentRepository;
+        private IRepository _currentRepository;
 
-        public void AddRepository(IRepositoryInfo repository) {
+        public void AddRepository(IRepository repository) {
             _repositories.Add(repository);
         }
 
-        public IList<IRepositoryInfo> GetAvailableRepositories() {
+        public IList<IRepository> GetAvailableRepositories() {
             return _repositories;
         }
 
-        public void SelectRepository(IRepositoryInfo repository) {
+        public void SelectRepository(IRepository repository) {
             _currentRepository = repository;
         }
 
-        public IRepositoryInfo GetSelectedRepository() {
+        public IRepository GetSelectedRepository() {
             return _currentRepository;
         }
 
