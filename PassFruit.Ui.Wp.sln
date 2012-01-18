@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Ui.Wp", "PassFruit.Ui.Wp.csproj", "{3F98C228-F367-439D-8F3F-6E679E26CE4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Ui.Wp", "PassFruit.Ui.Wp\PassFruit.Ui.Wp.csproj", "{3F98C228-F367-439D-8F3F-6E679E26CE4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client", "..\PassFruit.Client\PassFruit.Client.csproj", "{4852F469-D561-46A3-BB4F-B5A9157BC39F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client", "PassFruit.Client\PassFruit.Client.csproj", "{4852F469-D561-46A3-BB4F-B5A9157BC39F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "..\..\PassFruit\PassFruit\PassFruit.csproj", "{A3541573-9925-41EE-A42D-58F79E88A7D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "PassFruit\PassFruit.csproj", "{A3541573-9925-41EE-A42D-58F79E88A7D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Contracts", "..\..\PassFruit.Contracts\PassFruit.Contracts\PassFruit.Contracts.csproj", "{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Contracts", "PassFruit.Contracts\PassFruit.Contracts.csproj", "{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
