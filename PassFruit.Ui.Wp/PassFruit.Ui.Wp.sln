@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Ui.Wp", "PassFruit.Ui.Wp.csproj", "{3F98C228-F367-439D-8F3F-6E679E26CE4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client", "..\PassFruit.Client\PassFruit.Client.csproj", "{4852F469-D561-46A3-BB4F-B5A9157BC39F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "..\..\PassFruit\PassFruit\PassFruit.csproj", "{A3541573-9925-41EE-A42D-58F79E88A7D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Contracts", "..\..\PassFruit.Contracts\PassFruit.Contracts\PassFruit.Contracts.csproj", "{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F98C228-F367-439D-8F3F-6E679E26CE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F98C228-F367-439D-8F3F-6E679E26CE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F98C228-F367-439D-8F3F-6E679E26CE4A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3F98C228-F367-439D-8F3F-6E679E26CE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F98C228-F367-439D-8F3F-6E679E26CE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F98C228-F367-439D-8F3F-6E679E26CE4A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4852F469-D561-46A3-BB4F-B5A9157BC39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4852F469-D561-46A3-BB4F-B5A9157BC39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4852F469-D561-46A3-BB4F-B5A9157BC39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4852F469-D561-46A3-BB4F-B5A9157BC39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3541573-9925-41EE-A42D-58F79E88A7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3541573-9925-41EE-A42D-58F79E88A7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3541573-9925-41EE-A42D-58F79E88A7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3541573-9925-41EE-A42D-58F79E88A7D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{423E29B1-86AD-422D-96FD-C9E2FF6E3CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
