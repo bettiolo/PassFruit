@@ -15,7 +15,9 @@ using System.Collections.ObjectModel;
 
 
 namespace PassFruit.Ui.Wp {
+
     public class MainViewModel : INotifyPropertyChanged {
+
         public MainViewModel() {
             this.Items = new ObservableCollection<ItemViewModel>();
         }

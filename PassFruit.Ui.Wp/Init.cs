@@ -16,16 +16,16 @@ namespace PassFruit.Ui.Wp {
 
     public class Init {
 
-        private IRepository _repository;
-        
-        public Init() {
+       public Init() {
+
+        }
+
+        public Repositories GetRepositories() {
             var repositories = new Repositories();
             var fakeRepository = new FakeRepository();
             repositories.AddRepository(fakeRepository);
             repositories.SelectRepository(fakeRepository);
-            var repository = repositories.GetSelectedRepository();
-            var groups = repository.AccountGroups.GetAll();
-            var accounts = groups[0].Accounts;
+            return repositories;
         }
         
     }

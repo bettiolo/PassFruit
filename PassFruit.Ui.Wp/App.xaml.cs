@@ -12,12 +12,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using PassFruit.Client;
 
 namespace PassFruit.Ui.Wp {
 
     public partial class App : Application {
 
         private static MainViewModel viewModel = null;
+
+        public Repositories Repositories { get { return _repositories; } }
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -72,6 +75,7 @@ namespace PassFruit.Ui.Wp {
             }
 
             var init = new Init();
+            _repositories = init.GetRepositories();
 
         }
 
@@ -120,6 +124,7 @@ namespace PassFruit.Ui.Wp {
 
         // Avoid double-initialization
         private bool phoneApplicationInitialized = false;
+        private Repositories _repositories;
 
         // Do not add any additional code to this method
         private void InitializePhoneApplication() {

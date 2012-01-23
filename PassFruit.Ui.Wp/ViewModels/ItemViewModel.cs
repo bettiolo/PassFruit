@@ -12,7 +12,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 namespace PassFruit.Ui.Wp {
+
     public class ItemViewModel : INotifyPropertyChanged {
+
         private string _lineOne;
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
@@ -65,11 +67,14 @@ namespace PassFruit.Ui.Wp {
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void NotifyPropertyChanged(String propertyName) {
+
             PropertyChangedEventHandler handler = PropertyChanged;
             if (null != handler) {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+
         }
     }
 }
