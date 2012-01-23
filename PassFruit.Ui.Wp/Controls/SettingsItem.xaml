@@ -8,7 +8,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    d:DesignHeight="100" d:DesignWidth="480" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
+    d:DesignHeight="100" d:DesignWidth="480" Tap="UserControl_Tap">
     
     <Grid x:Name="LayoutRoot">
         <StackPanel Margin="0,0,0,17" Width="Auto" Height="Auto">

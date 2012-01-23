@@ -86,7 +86,7 @@ namespace PassFruit.Ui.Wp.Controls {
             }
         }
 
-        private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+        private void UserControl_Tap(object sender, System.Windows.Input.GestureEventArgs e) {
             var root = Application.Current.RootVisual as PhoneApplicationFrame;
             if (root != null) {
                 root.Navigate(new Uri(PageUrl, UriKind.RelativeOrAbsolute));
