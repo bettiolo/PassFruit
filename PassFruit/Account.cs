@@ -22,6 +22,10 @@ namespace PassFruit {
 
         public string Note { get; set; }
 
+        public override string ToString() {
+            return Name + " - " + Url;
+        }
+
     }
 
 }

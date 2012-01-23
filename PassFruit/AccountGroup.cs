@@ -27,5 +27,9 @@ namespace PassFruit {
             get { return _repository.Accounts.GetByAccountGroup(Id); }
         }
 
+        public override string ToString() {
+            return Name;
+        }
+
     }
 }
