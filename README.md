@@ -23,6 +23,7 @@ Password storage services
 -------------------------
 
 You can have your crypted password persisted using the following services:
+
 - Local XML file (Single device mode)
 - Dropbox
 - Windows SkyDrive
@@ -35,6 +36,7 @@ Client password access
 ----------------------
 
 This is the selection of available clients
+
 * Windows (WPF)
 * Web (HTML + JS + Crypted JSON)
 * Windows Phone (Silverlight)
