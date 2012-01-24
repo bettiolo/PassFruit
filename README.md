@@ -27,13 +27,13 @@ Password storage services
 
 You can have your crypted password persisted using the following services:
 
-- Local XML file (Single device mode)
-- Dropbox
-- Windows SkyDrive
-- CloudApp
-- Windows Azure (REST Service)
-- AppHarbor (REST Service)
-- Heroku (REST Service)
+- [Local crypted XML file (Single device mode)](https://trello.com/c/ZwoEyIgn)
+- [Dropbox](https://trello.com/c/RPC56yxs)
+- [Windows SkyDrive](https://trello.com/c/Rqxb2V5t)
+- [CloudApp](https://trello.com/c/QiaOKOCn)
+- [Windows Azure (REST Service)](https://trello.com/c/ImI6ZkrI)
+- [AppHarbor (REST Service)](https://trello.com/c/JwbYlKC4)
+- [Heroku (REST Service)](https://trello.com/c/d0U08lII)
 
 You need your own account to persist the data in the cloud.
 
@@ -44,12 +44,12 @@ Client password access
 
 This is the selection of available clients
 
-- Windows (WPF)
-- Web (HTML + JS + Crypted JSON)
-- Windows Phone (Silverlight)
-- Android
-- Mac OS X (Cocoa)
-- IOS (Cocoa Touch)
+- [Windows (WPF)](https://trello.com/c/1lZZ3HGM)
+- [Web (HTML + JS + Crypted JSON)](https://trello.com/c/bzMgVngO)
+- [Windows Phone (Silverlight)](https://trello.com/c/0a5Qc5Oi)
+- [Android](https://trello.com/c/M26yUbVf)
+- [Mac OS X (Cocoa)](https://trello.com/c/7chNcCXr)
+- [iOS (Cocoa Touch)](https://trello.com/c/iLvncg3Z)
 
 * * *
 
