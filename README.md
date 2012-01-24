@@ -30,8 +30,10 @@ You can have your crypted password persisted using the following services:
 - Local XML file (Single device mode)
 - Dropbox
 - Windows SkyDrive
+- CloudApp
 - Windows Azure (REST Service)
 - AppHarbor (REST Service)
+- Heroku (REST Service)
 
 You need your own account to persist the data in the cloud.
 
