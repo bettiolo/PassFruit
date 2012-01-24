@@ -51,10 +51,14 @@ This is the selection of available clients
 
 * * *
 
-Todo
+Discussion
 ----
 
-Everything :(
+[Trello PassFruit Board](https://trello.com/board/passfruit/4f1f1713ffa52a1e57084422) 
+Add ideas, or claim an idea and start working on it!
+
+[JabbR PassFruit Chatroom](http://jabbr.net/#/rooms/PassFruit)
+Discuss things in real-time.
 
 * * *
 
