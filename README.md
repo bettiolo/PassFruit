@@ -65,7 +65,7 @@ Discuss things in real-time.
 Author
 ------
 
-Marco Bettiolo - [@bettiolo](https://twitter.com/bettiolo) - http://bettiolo.it
+[Marco Bettiolo](http://bettiolo.it) - [@bettiolo](https://twitter.com/bettiolo)
 
 * * *
 
