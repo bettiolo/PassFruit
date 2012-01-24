@@ -37,10 +37,10 @@ Client password access
 
 This is the selection of available clients
 
-* Windows (WPF)
-* Web (HTML + JS + Crypted JSON)
-* Windows Phone (Silverlight)
-* Android
-* Mac OS X (Cocoa)
-* IOS (Cocoa Touch)
+- Windows (WPF)
+- Web (HTML + JS + Crypted JSON)
+- Windows Phone (Silverlight)
+- Android
+- Mac OS X (Cocoa)
+- IOS (Cocoa Touch)
 
