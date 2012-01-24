@@ -2,6 +2,7 @@
 *.cache
 *.suo
 bin/
+Bin/
 obj/
 *.suo
 _ReSharper.*
