@@ -68,7 +68,6 @@ I'd appreciate it to mention the use of this code somewhere if you use it in an 
 License
 -------
 
-PassFruit 
-Copyright (C) 2012, Marco Bettiolo
+PassFruit | Copyright (C) 2012, Marco Bettiolo
 
 * * *
