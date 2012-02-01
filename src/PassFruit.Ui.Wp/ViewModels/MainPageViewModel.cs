@@ -21,14 +21,14 @@ namespace PassFruit.Ui.Wp.ViewModels {
 
         private readonly IRepository _repository;
 
-        private ObservableCollection<AccountTagViewModel> _tags;
+        private ObservableCollection<AccountLabelViewModel> _labels;
 
-        public ObservableCollection<AccountTagViewModel> Tags { 
+        public ObservableCollection<AccountLabelViewModel> Labels { 
             get {
-                if (_tags == null) {
-                    PopulateTags();
+                if (_labels == null) {
+                    PopulateLabels();
                 }
-                return _tags;
+                return _labels;
 
             }
         }
@@ -46,35 +46,35 @@ namespace PassFruit.Ui.Wp.ViewModels {
                 _repository = init.GetRepositories().GetSelectedRepository();
             }
 
-            //_tags = _repository.AccountTags.GetAll().Select(accountTag =>
-            //    new AccountTagViewModel {
-            //        Id = accountTag.Id,
-            //        Name = accountTag.Name,
-            //        Description = accountTag.Description
+            //_labels = _repository.AccountLabels.GetAll().Select(accountLabel =>
+            //    new AccountLabelViewModel {
+            //        Id = accountLabel.Id,
+            //        Name = accountLabel.Name,
+            //        Description = accountLabel.Description
             //    }
             //).ToList();
-            //OnPropertyChanged("Tags");
+            //OnPropertyChanged("Labels");
         }
 
-        //public IList<AccountTagViewModel> Tags {
+        //public IList<AccountLabelViewModel> Labels {
         //    get {
-        //        return _tags;
+        //        return _labels;
         //    }
         //}
 
-        private void PopulateTags() {
+        private void PopulateLabels() {
 
-            _tags = new ObservableCollection<AccountTagViewModel>();
-            var tagViewModels = _repository.AccountTags.GetAll().Select(accountTag =>
-                new AccountTagViewModel {
-                    Id = accountTag.Id,
-                    Name = accountTag.Name,
-                    Description = accountTag.Description
+            _labels = new ObservableCollection<AccountLabelViewModel>();
+            var labelViewModels = _repository.AccountLabels.GetAll().Select(accountLabel =>
+                new AccountLabelViewModel {
+                    Id = accountLabel.Id,
+                    Name = accountLabel.Name,
+                    Description = accountLabel.Description
                 }
             );
 
-            foreach (var tagViewModel in tagViewModels) {
-                Tags.Add(tagViewModel);
+            foreach (var labelViewModel in labelViewModels) {
+                Labels.Add(labelViewModel);
             }
         }
 

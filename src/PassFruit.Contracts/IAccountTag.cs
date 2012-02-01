@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccountTag {
+    public interface IAccountLabel {
 
         Guid Id { get; }
 

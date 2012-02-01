@@ -6,13 +6,13 @@ using PassFruit.Contracts;
 
 namespace PassFruit {
 
-    public class AccountTag : IAccountTag {
+    public class AccountLabel : IAccountLabel {
 
         private IRepository _repository;
         
         private Guid _id;
 
-        public AccountTag( Guid id, IRepository repository) {
+        public AccountLabel( Guid id, IRepository repository) {
             _id = id;
             _repository = repository;
         }
@@ -24,7 +24,7 @@ namespace PassFruit {
         public string Description { get; set; }
 
         public IList<IAccount> Accounts {
-            get { return _repository.Accounts.GetByAccountTag(Id); }
+            get { return _repository.Accounts.GetByAccountLabel(Id); }
         }
 
         public override string ToString() {

@@ -16,8 +16,8 @@ namespace PassFruit.Client.FakeRepository {
             get { return "Fake Repository that returns fixed example data"; }
         }
 
-        public IAccountTags AccountTags {
-            get { return new AccountTags(this); }
+        public IAccountLabels AccountLabels {
+            get { return new AccountLabels(this); }
         }
 
         public IAccounts Accounts {

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace PassFruit.Contracts {
     
-    public interface IAccountTags {
+    public interface IAccountLabels {
 
-        IList<IAccountTag> GetAll();
+        IList<IAccountLabel> GetAll();
 
     }
 

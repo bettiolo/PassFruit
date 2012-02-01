@@ -13,9 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace PassFruit.Ui.Wp
 {
-    public partial class TagsPivotPage : PhoneApplicationPage
+    public partial class LabelsPivotPage : PhoneApplicationPage
     {
-        public TagsPivotPage()
+        public LabelsPivotPage()
         {
             InitializeComponent();
         }

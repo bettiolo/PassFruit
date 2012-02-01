@@ -11,7 +11,7 @@ namespace PassFruit.Contracts {
 
         IAccountPassword GetPassword(IAccount account);
 
-        IList<IAccount> GetByAccountTag(Guid accountTagId);
+        IList<IAccount> GetByAccountLabel(Guid accountLabelId);
     }
 
 }

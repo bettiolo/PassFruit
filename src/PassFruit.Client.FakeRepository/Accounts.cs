@@ -14,8 +14,8 @@ namespace PassFruit.Client.FakeRepository {
 
         private static IList<IAccount> _accounts;
         private static IList<IAccountPassword> _password;
-        private static IDictionary<Guid, IList<IAccount>> _tagsAccountsAssociation;
-        private static IList<IAccountTag> _accountTags;
+        private static IDictionary<Guid, IList<IAccount>> _labelsAccountsAssociation;
+        private static IList<IAccountLabel> _accountLabels;
 
         public Accounts(IRepository repository) {
             _repository = repository;
@@ -67,10 +67,10 @@ namespace PassFruit.Client.FakeRepository {
                         Password = @"Password3"
                     }
                 };
-                _accountTags = new AccountTags(_repository).GetAll();
-                _tagsAccountsAssociation = new Dictionary<Guid, IList<IAccount>> {
-                    { _accountTags[0].Id, new List<IAccount> { _accounts[0], _accounts[1] }}, 
-                    { _accountTags[1].Id, new List<IAccount> { _accounts[0], _accounts[2] }}, 
+                _accountLabels = new AccountLabels(_repository).GetAll();
+                _labelsAccountsAssociation = new Dictionary<Guid, IList<IAccount>> {
+                    { _accountLabels[0].Id, new List<IAccount> { _accounts[0], _accounts[1] }}, 
+                    { _accountLabels[1].Id, new List<IAccount> { _accounts[0], _accounts[2] }}, 
                 };
             }
         }
@@ -82,11 +82,11 @@ namespace PassFruit.Client.FakeRepository {
             return _password.First(password => password.AccountId == account.Id);
         }
 
-        public IList<IAccount> GetByAccountTag(Guid accountTagId) {
-            if (_tagsAccountsAssociation == null) {
+        public IList<IAccount> GetByAccountLabel(Guid accountLabelId) {
+            if (_labelsAccountsAssociation == null) {
                 GenerateFakeData();
             }
-            return _tagsAccountsAssociation[accountTagId];
+            return _labelsAccountsAssociation[accountLabelId];
         }
     }
 

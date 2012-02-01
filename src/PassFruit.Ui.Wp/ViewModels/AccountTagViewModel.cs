@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace PassFruit.Ui.Wp.ViewModels {
 
-    public class AccountTagViewModel {
+    public class AccountLabelViewModel {
 
         public Guid Id { get; set; }
 
