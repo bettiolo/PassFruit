@@ -58,8 +58,8 @@
                 </ScrollViewer>
             </controls:PanoramaItem>
  
-            <controls:PanoramaItem Header="Groups">
-                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Groups}">
+            <controls:PanoramaItem Header="Tags">
+                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Tags}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,17">

@@ -11,7 +11,7 @@ namespace PassFruit.Contracts {
 
         string Description { get; }
 
-        IAccountGroups AccountGroups { get; }
+        IAccountTags AccountTags { get; }
 
         IAccounts Accounts { get; }
 

@@ -68,9 +68,6 @@
     <Compile Include="Controls\SettingsItem.xaml.cs">
       <DependentUpon>SettingsItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GroupsPage.xaml.cs">
-      <DependentUpon>GroupsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Init.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -79,7 +76,10 @@
       <DependentUpon>PasswordStorageSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AccountGroupViewModel.cs" />
+    <Compile Include="TagsPivotPage.xaml.cs">
+      <DependentUpon>TagsPivotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AccountTagViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -93,15 +93,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GroupsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PasswordStorageSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TagsPivotPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,13 +6,13 @@ using PassFruit.Contracts;
 
 namespace PassFruit {
 
-    public class AccountGroup : IAccountGroup {
+    public class AccountTag : IAccountTag {
 
         private IRepository _repository;
         
         private Guid _id;
 
-        public AccountGroup( Guid id, IRepository repository) {
+        public AccountTag( Guid id, IRepository repository) {
             _id = id;
             _repository = repository;
         }
@@ -24,7 +24,7 @@ namespace PassFruit {
         public string Description { get; set; }
 
         public IList<IAccount> Accounts {
-            get { return _repository.Accounts.GetByAccountGroup(Id); }
+            get { return _repository.Accounts.GetByAccountTag(Id); }
         }
 
         public override string ToString() {

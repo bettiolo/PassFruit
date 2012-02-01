@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 
 namespace PassFruit.Contracts {
-    public interface IAccountGroup {
+
+    public interface IAccountTag {
 
         Guid Id { get; }
 
@@ -15,4 +16,5 @@ namespace PassFruit.Contracts {
         IList<IAccount> Accounts { get; }
 
     }
+
 }

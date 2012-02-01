@@ -11,9 +11,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 
-namespace PassFruit.Ui.Wp {
-    public partial class GroupsPage : PhoneApplicationPage {
-        public GroupsPage() {
+namespace PassFruit.Ui.Wp
+{
+    public partial class TagsPivotPage : PhoneApplicationPage
+    {
+        public TagsPivotPage()
+        {
             InitializeComponent();
         }
     }

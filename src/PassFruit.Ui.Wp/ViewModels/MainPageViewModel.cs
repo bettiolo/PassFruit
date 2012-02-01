@@ -19,16 +19,16 @@ namespace PassFruit.Ui.Wp.ViewModels {
 
     public class MainPageViewModel : INotifyPropertyChanged {
 
-        private IRepository _repository;
+        private readonly IRepository _repository;
 
-        private ObservableCollection<AccountGroupViewModel> _groups;
+        private ObservableCollection<AccountTagViewModel> _tags;
 
-        public ObservableCollection<AccountGroupViewModel> Groups { 
+        public ObservableCollection<AccountTagViewModel> Tags { 
             get {
-                if (_groups == null) {
-                    PopulateGroups();
+                if (_tags == null) {
+                    PopulateTags();
                 }
-                return _groups;
+                return _tags;
 
             }
         }
@@ -46,35 +46,35 @@ namespace PassFruit.Ui.Wp.ViewModels {
                 _repository = init.GetRepositories().GetSelectedRepository();
             }
 
-            //_groups = _repository.AccountGroups.GetAll().Select(accountGroup =>
-            //    new AccountGroupViewModel {
-            //        Id = accountGroup.Id,
-            //        Name = accountGroup.Name,
-            //        Description = accountGroup.Description
+            //_tags = _repository.AccountTags.GetAll().Select(accountTag =>
+            //    new AccountTagViewModel {
+            //        Id = accountTag.Id,
+            //        Name = accountTag.Name,
+            //        Description = accountTag.Description
             //    }
             //).ToList();
-            //OnPropertyChanged("Groups");
+            //OnPropertyChanged("Tags");
         }
 
-        //public IList<AccountGroupViewModel> Groups {
+        //public IList<AccountTagViewModel> Tags {
         //    get {
-        //        return _groups;
+        //        return _tags;
         //    }
         //}
 
-        private void PopulateGroups() {
+        private void PopulateTags() {
 
-            _groups = new ObservableCollection<AccountGroupViewModel>();
-            var groupViewModels = _repository.AccountGroups.GetAll().Select(accountGroup =>
-                new AccountGroupViewModel {
-                    Id = accountGroup.Id,
-                    Name = accountGroup.Name,
-                    Description = accountGroup.Description
+            _tags = new ObservableCollection<AccountTagViewModel>();
+            var tagViewModels = _repository.AccountTags.GetAll().Select(accountTag =>
+                new AccountTagViewModel {
+                    Id = accountTag.Id,
+                    Name = accountTag.Name,
+                    Description = accountTag.Description
                 }
             );
 
-            foreach (var groupViewModel in groupViewModels) {
-                Groups.Add(groupViewModel);
+            foreach (var tagViewModel in tagViewModels) {
+                Tags.Add(tagViewModel);
             }
         }
 
