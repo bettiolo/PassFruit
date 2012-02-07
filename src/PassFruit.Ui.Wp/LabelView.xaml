@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="PassFruit.Ui.Wp.LabelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="480"
+             d:DesignWidth="480"
+             FontFamily="{StaticResource PhoneFontFamilyNormal}"
+             FontSize="{StaticResource PhoneFontSizeNormal}"
+             Foreground="{StaticResource PhoneForegroundBrush}"
+             mc:Ignorable="d">
+
+    <StackPanel Margin="0,0,0,17" Orientation="Horizontal">
+
+        <Rectangle Width="100"
+                   Height="100"
+                   Margin="12,0,9,0"
+                   Fill="#FFE5001b" />
+
+        <StackPanel Width="311">
+            <TextBlock x:Name="LabelName"
+                       Style="{StaticResource PhoneTextExtraLargeStyle}"
+                       TextWrapping="Wrap" />
+            <TextBlock x:Name="Description"
+                       Margin="12,-6,12,0"
+                       Style="{StaticResource PhoneTextSubtleStyle}"
+                       TextWrapping="Wrap" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

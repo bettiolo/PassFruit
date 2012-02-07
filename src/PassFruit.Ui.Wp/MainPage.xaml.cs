@@ -13,6 +13,7 @@ using Microsoft.Phone.Controls;
 using PassFruit.Ui.Wp.Controls;
 
 namespace PassFruit.Ui.Wp {
+
     public partial class MainPage : PhoneApplicationPage {
 
         public MainPage() {
