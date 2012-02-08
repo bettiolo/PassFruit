@@ -1,4 +1,7 @@
-﻿namespace PassFruit.Ui.Wp {
+﻿using PassFruit.Ui.Wp.Views;
+using PassFruit.Ui.Wp.Views.Controls;
+
+namespace PassFruit.Ui.Wp {
     using System;
     using System.Collections.Generic;
     using System.Windows.Controls;
@@ -16,6 +19,7 @@
 			_container.RegisterPhoneServices();
             _container.PerRequest<MainPageViewModel>();
             _container.PerRequest<LabelViewModel>();
+            _container.PerRequest<LabelsPivotPageViewModel>();
 
             AddCustomConventions();
         }

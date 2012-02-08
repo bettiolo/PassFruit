@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PassFruit.Accounts;
 using PassFruit.Contracts;
 
 namespace PassFruit.Client.FakeRepository {
@@ -31,26 +32,26 @@ namespace PassFruit.Client.FakeRepository {
         private void GenerateFakeData() {
             lock (Locker) {
                 _accounts = new List<IAccount> {
-                    new Account {
+                    new FacebookAccount() {
                         Id = Guid.NewGuid(),
-                        Name = @"Test 1",
                         Note = @"Example test note 1",
-                        Url = @"http://www.example.com",
-                        UserName = @"testuser"
+                        Email = @"test@example.com"
                     },
-                    new Account {
+                    new TwitterAccount() {
                         Id = Guid.NewGuid(),
-                        Name = @"Test 2",
                         Note = @"Example test note 2 blah blah blah\nBlah blah blah\nLorem ipsun dolor sit amet",
-                        Url = @"http://www.example.it",
-                        UserName = @"testuser"
+                        Email = @"test2@example.com",
+                        User = @"TwitterUser"
                     },
-                    new Account {
+                    new GoogleAccount() {
                         Id = Guid.NewGuid(),
-                        Name = @"Test website 3",
-                        Note = @"",
-                        Url = @"http://www.testsite.net",
-                        UserName = @"testuser12313"
+                        Email = "example@gmail.com",
+                        Note = ""
+                    },
+                    new GoogleAccount() {
+                        Id = Guid.NewGuid(),
+                        Email = "example2@gmail.com",
+                        Note = ""
                     }
                 };
                 _password = new List<IAccountPassword> {
@@ -65,6 +66,11 @@ namespace PassFruit.Client.FakeRepository {
                     new AccountPassword {
                         AccountId = _accounts[2].Id,
                         Password = @"Password3"
+                    }
+                    ,
+                    new AccountPassword {
+                        AccountId = _accounts[3].Id,
+                        Password = @"Password4"
                     }
                 };
                 _accountLabels = new AccountLabels(_repository).GetAll();

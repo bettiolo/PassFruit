@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAccount.cs" />
+    <Compile Include="IAccountProvider.cs" />
     <Compile Include="IAccountTag.cs" />
     <Compile Include="IAccountTags.cs" />
     <Compile Include="IAccountPassword.cs" />

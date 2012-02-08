@@ -1,13 +1,9 @@
 ﻿using System;
 using Caliburn.Micro;
 
-namespace PassFruit.Ui.Wp {
+namespace PassFruit.Ui.Wp.Views.Controls {
 
     public class LabelViewModel : PropertyChangedBase {
-
-        public LabelViewModel() {
-
-        }
 
         private Guid _id;
         public Guid Id {
@@ -19,7 +15,7 @@ namespace PassFruit.Ui.Wp {
         }
 
         private string _labelName;
-        public string LabelName {
+        public virtual string LabelName {
             get { return _labelName; }
             set {
                 _labelName = value;
@@ -28,12 +24,29 @@ namespace PassFruit.Ui.Wp {
         }
 
         private string _description;
-        public string Description {
+        public virtual string Description {
             get { return _description; }
             set {
                 _description = value;
                 NotifyOfPropertyChange(() => Description);
             }
         }
+    }
+
+    public class SampleLabelViewModel : LabelViewModel {
+        
+        public override string LabelName {
+            get { return "Label name"; }
+        }
+
+        public override string Description {
+            get {
+                return "Label description bla bla bla bla bla bla bla bla";
+            }
+            set {
+                base.Description = value;
+            }
+        }
+
     }
 }

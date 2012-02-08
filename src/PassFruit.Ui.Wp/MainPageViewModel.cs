@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
 using PassFruit.Contracts;
+using PassFruit.Ui.Wp.Views;
+using PassFruit.Ui.Wp.Views.Controls;
 
 namespace PassFruit.Ui.Wp {
 
@@ -21,6 +23,14 @@ namespace PassFruit.Ui.Wp {
             }
         }
 
+        private ObservableCollection<AccountViewModel> _accounts;
+
+        public ObservableCollection<AccountViewModel> Accounts {
+            get {
+                return _accounts;
+            }
+        }
+
         public MainPageViewModel(INavigationService navigationService) {
             _navigationService = navigationService;
             var app = Application.Current as App;
@@ -31,6 +41,7 @@ namespace PassFruit.Ui.Wp {
                 _repository = init.GetRepositories().GetSelectedRepository();
             }
             PopulateLabels();
+            PopulateAccounts();
         }
 
         private void PopulateLabels() {
@@ -47,14 +58,32 @@ namespace PassFruit.Ui.Wp {
             foreach (var labelViewModel in labelViewModels) {
                 Labels.Add(labelViewModel);
             }
+        }
 
+        private void PopulateAccounts() {
+            _accounts = new ObservableCollection<AccountViewModel>();
+            var accountViewModels = _repository.Accounts.GetAll().Select(account => {
+                return new AccountViewModel(account);;
+            });
+
+            foreach (var accountViewModel in accountViewModels) {
+                Accounts.Add(accountViewModel);
+            }
         }
 
         public void Test(LabelViewModel label) {
             _navigationService.UriFor<LabelsPivotPageViewModel>()
+                .WithParam(x => x.ActiveId, label.Id)
                 .Navigate();
         }
 
+        public void AddNewLabel() {
+            var newlabel = "ciccio";
+        }
+
+        public void AddNewAccount() {
+            var newaccount = "pluto";
+        }
     }
 
 }

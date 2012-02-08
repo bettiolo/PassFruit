@@ -6,13 +6,11 @@ namespace PassFruit.Contracts {
 
         Guid Id { get; set; }
 
-        string UserName { get; set; }
-
-        string Name { get; set; }
-
-        string Url { get; set; }
+        string Account { get; }
 
         string Note { get; set; }
+
+        IAccountProvider Provider { get; }
 
         IAccountPassword GetPassword();
 

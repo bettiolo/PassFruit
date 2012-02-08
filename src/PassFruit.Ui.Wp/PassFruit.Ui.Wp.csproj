@@ -75,30 +75,34 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Controls\SettingsItem.xaml.cs">
+    <Compile Include="Views\Controls\AccountProviderIconViewModel.cs" />
+    <Compile Include="Views\Controls\AccountViewModel.cs" />
+    <Compile Include="Views\Controls\SettingsItem.xaml.cs">
       <DependentUpon>SettingsItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Init.cs" />
-    <Compile Include="LabelsPivotPageViewModel.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\LabelsPivotPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LabelsPivotPageView.xaml.cs">
+    <Compile Include="Views\LabelsPivotPageView.xaml.cs">
       <DependentUpon>LabelsPivotPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LabelViewModel.cs" />
+    <Compile Include="Views\Controls\LabelViewModel.cs" />
     <Compile Include="MainPageViewModel.cs" />
-    <Compile Include="LabelView.xaml.cs">
-      <DependentUpon>LabelView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Controls\SettingsItem.xaml">
+    <Page Include="Views\Controls\AccountProviderIconView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\AccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\SettingsItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,11 +110,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LabelsPivotPageView.xaml">
+    <Page Include="Views\LabelsPivotPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LabelView.xaml">
+    <Page Include="Views\Controls\LabelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,7 +131,6 @@
     <None Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Resource Include="Resources\PanoramaBackground.png" />
     <None Include="SplashScreenImage.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -146,7 +149,30 @@
       <Name>PassFruit.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Dark\appbar.add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Dark\appbar.user.add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dark\appbar.user.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dark\appbar.tag.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Providers\Google.png" />
+    <Content Include="Resources\Providers\Twitter.png" />
+    <Content Include="Resources\Providers\Facebook.png" />
+    <Content Include="Resources\Providers\Unknown.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

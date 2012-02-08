@@ -40,9 +40,19 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
+    <Compile Include="AccountProviders\GoogleAccountProvider.cs" />
+    <Compile Include="AccountProviders\TwitterAccountProvider.cs" />
+    <Compile Include="Accounts\AccountBase.cs" />
+    <Compile Include="Accounts\GoogleAccount.cs" />
+    <Compile Include="Accounts\TwitterAccount.cs" />
+    <Compile Include="Accounts\UserOnlyAccountBase.cs" />
+    <Compile Include="Accounts\UserAndEmailAccountBase.cs.cs" />
+    <Compile Include="Accounts\EmailOnlyAccountBase.cs" />
+    <Compile Include="AccountProviders\FacebookAccountProvider.cs" />
     <Compile Include="AccountTag.cs" />
     <Compile Include="AccountPassword.cs" />
+    <Compile Include="AccountProviders\AccountProviderBase.cs" />
+    <Compile Include="Accounts\FacebookAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +61,7 @@
       <Name>PassFruit.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

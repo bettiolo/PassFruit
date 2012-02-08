@@ -3,6 +3,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:cal="http://www.caliburnproject.org"
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:Controls="clr-namespace:PassFruit.Ui.Wp.Views.Controls"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:my="clr-namespace:PassFruit.Ui.Wp.Controls"
@@ -10,7 +11,8 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            d:DesignHeight="800"
+                            xmlns:Views="clr-namespace:PassFruit.Ui.Wp.Views"
+                            d:DesignHeight="728"
                             d:DesignWidth="480"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -26,15 +28,21 @@
         <!--  Panorama control  -->
         <controls:Panorama x:Name="MainPanorama" Title="PassFruit - Secure Cloud Password Manager">
 
-            <controls:Panorama.Background>
-                <ImageBrush ImageSource="Resources\PanoramaBackground.png" />
-            </controls:Panorama.Background>
-
             <controls:PanoramaItem Header="Labels">
                 <ListBox x:Name="Labels" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <pf:LabelView cal:Message.Attach="[Event Tap] = [Action Test($dataContext)]" cal:View.Model="{Binding}" />
+                            <Controls:LabelView cal:Message.Attach="[Event Tap] = [Action Test($dataContext)]" cal:View.Model="{Binding}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="Accounts">
+                <ListBox x:Name="Accounts" Margin="0,0,-12,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Controls:AccountView cal:Message.Attach="[Event Tap] = [Action DisplayAccount($dataContext)]" cal:View.Model="{Binding}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -70,4 +78,22 @@
 
         </controls:Panorama>
     </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBar.Buttons>
+                <cal:AppBarButton IconUri="Resources\Dark\appbar.user.add.png"
+                                  Message="AddNewAccount"
+                                  Text="Add Account" />
+                <cal:AppBarButton IconUri="Resources\Dark\appbar.tag.png"
+                                  Message="AddNewLabel"
+                                  Text="Add Label" />
+            </shell:ApplicationBar.Buttons>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="Add Account 2" />
+                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="Add Labek 2" />
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
 </phone:PhoneApplicationPage>

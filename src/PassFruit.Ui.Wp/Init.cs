@@ -8,16 +8,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Phone.Controls;
 using PassFruit.Client;
 using PassFruit.Client.FakeRepository;
 using PassFruit.Contracts;
+using PassFruit.Ui.Wp.Controls;
 
 namespace PassFruit.Ui.Wp {
 
     public class Init {
 
        public Init() {
-
+           TiltEffect.TiltableItems.Add(typeof(SettingsItem)); 
         }
 
         public Repositories GetRepositories() {

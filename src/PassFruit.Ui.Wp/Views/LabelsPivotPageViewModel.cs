@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Caliburn.Micro;
 using PassFruit.Contracts;
+using PassFruit.Ui.Wp.Views.Controls;
 
-namespace PassFruit.Ui.Wp {
+namespace PassFruit.Ui.Wp.Views {
 
     public class LabelsPivotPageViewModel : Conductor<LabelViewModel>.Collection.OneActive {
 
@@ -36,12 +29,21 @@ namespace PassFruit.Ui.Wp {
 
         public Guid ActiveId {
             get { return ActiveItem.Id; }
-            set {  }
+            set { var ciccio = value; }
         }
 
-        LabelsPivotPageViewModel(Func<LabelsPivotPageViewModel> createCiccio ) {
-            var uaz = createCiccio;
+        //LabelsPivotPageViewModel(Func<LabelsPivotPageViewModel> createCiccio ) {
+        //    var uaz = createCiccio;
+        //}
+
+        public LabelsPivotPageViewModel() {
+            var test = "ciao";
         }
+
+
+        //LabelsPivotPageViewModel(Guid ActiveId) {
+        //    var actie = ActiveId;
+        //}
 
         private void PopulateLabels() {
             IRepository repository;
@@ -71,8 +73,12 @@ namespace PassFruit.Ui.Wp {
 
         }
 
-        public void Test() {
-            var ciccio = DateTime.Now;
+        public string Test {
+            get { return DateTime.Now.ToShortDateString(); }
+        }
+
+        public void Test2() {
+            var uaz = "asda";
         }
 
     }
