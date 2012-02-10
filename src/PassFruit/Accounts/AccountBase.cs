@@ -10,7 +10,7 @@ namespace PassFruit.Accounts {
 
         public abstract string Account { get; }
 
-        public string Note { get; set; }
+        public string Notes { get; set; }
 
         public override string ToString() {
             return Account + " | " + Provider.Name;

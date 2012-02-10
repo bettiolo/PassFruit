@@ -21,14 +21,15 @@
                             shell:SystemTray.IsVisible="False"
                             SupportedOrientations="Portrait"
                             toolkit:TiltEffect.IsTiltEnabled="True"
-                            mc:Ignorable="d">
+                            mc:Ignorable="d"
+                            Style="{StaticResource TransitionPageStyle}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
         <!--  Panorama control  -->
         <controls:Panorama x:Name="MainPanorama" Title="PassFruit - Secure Cloud Password Manager">
 
-            <controls:PanoramaItem Header="Labels">
+            <controls:PanoramaItem Header="labels">
                 <ListBox x:Name="Labels" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -38,22 +39,27 @@
                 </ListBox>
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem Header="Accounts">
+            <controls:PanoramaItem Header="accounts">
                 <ListBox x:Name="Accounts" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Controls:AccountView cal:Message.Attach="[Event Tap] = [Action DisplayAccount($dataContext)]" cal:View.Model="{Binding}" />
+                            <Controls:AccountView cal:Message.Attach="[Event Tap] = [Action ShowAccountDetails($dataContext)]" cal:View.Model="{Binding}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem Header="Settings">
+            <controls:PanoramaItem Header="settings">
                 <ScrollViewer>
                     <StackPanel>
+                        <HyperlinkButton NavigateUri="/Views/LabelsPivotPageView.xaml" Style="{StaticResource HyperlinkEmptyStyle}">
+                            <Controls:HeaderedContentControl Content="change password storage settings"
+                                                             Header="password storage"
+                                                             Style="{StaticResource MultilineHyperlinkStyle}" />
+                        </HyperlinkButton>
                         <my:SettingsItem Title="password storage"
                                          Description="change password storage settings"
-                                         PageUrl="/PasswordStorageSettingsPage.xaml" />
+                                         PageUrl="/Views/LabelsPivotPageView.xaml" />
                         <my:SettingsItem Title="second setting"
                                          Description="Second setting long long  long description"
                                          PageUrl="file.xaml" />

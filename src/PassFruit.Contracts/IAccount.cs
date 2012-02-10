@@ -8,7 +8,7 @@ namespace PassFruit.Contracts {
 
         string Account { get; }
 
-        string Note { get; set; }
+        string Notes { get; set; }
 
         IAccountProvider Provider { get; }
 

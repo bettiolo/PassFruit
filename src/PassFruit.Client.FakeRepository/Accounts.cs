@@ -20,38 +20,39 @@ namespace PassFruit.Client.FakeRepository {
 
         public Accounts(IRepository repository) {
             _repository = repository;
+            GenerateFakeData();
         }
 
         public IList<IAccount> GetAll() {
-            if (_accounts == null) {
-                GenerateFakeData();
-            }
             return _accounts;
         }
 
         private void GenerateFakeData() {
+            if (_accounts != null) {
+                return;
+            }
             lock (Locker) {
                 _accounts = new List<IAccount> {
                     new FacebookAccount() {
                         Id = Guid.NewGuid(),
-                        Note = @"Example test note 1",
+                        Notes = @"Example test note 1",
                         Email = @"test@example.com"
                     },
                     new TwitterAccount() {
                         Id = Guid.NewGuid(),
-                        Note = @"Example test note 2 blah blah blah\nBlah blah blah\nLorem ipsun dolor sit amet",
+                        Notes = @"Example test note 2 blah blah blah\nBlah blah blah\nLorem ipsun dolor sit amet",
                         Email = @"test2@example.com",
                         User = @"TwitterUser"
                     },
                     new GoogleAccount() {
                         Id = Guid.NewGuid(),
                         Email = "example@gmail.com",
-                        Note = ""
+                        Notes = ""
                     },
                     new GoogleAccount() {
                         Id = Guid.NewGuid(),
                         Email = "example2@gmail.com",
-                        Note = ""
+                        Notes = ""
                     }
                 };
                 _password = new List<IAccountPassword> {
@@ -82,17 +83,15 @@ namespace PassFruit.Client.FakeRepository {
         }
 
         public IAccountPassword GetPassword(IAccount account) {
-            if (_password == null) {
-                GenerateFakeData();
-            }
             return _password.First(password => password.AccountId == account.Id);
         }
 
         public IList<IAccount> GetByAccountLabel(Guid accountLabelId) {
-            if (_labelsAccountsAssociation == null) {
-                GenerateFakeData();
-            }
             return _labelsAccountsAssociation[accountLabelId];
+        }
+
+        public IAccount GetById(Guid accountId) {
+            return GetAll().Single(account => account.Id == accountId);
         }
     }
 

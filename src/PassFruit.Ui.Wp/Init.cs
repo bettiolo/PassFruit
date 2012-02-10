@@ -29,6 +29,18 @@ namespace PassFruit.Ui.Wp {
             repositories.SelectRepository(fakeRepository);
             return repositories;
         }
+
+        public static IRepository GetRepository() {
+            IRepository repository;
+            var app = Application.Current as App;
+            if (app != null) {
+                repository = app.Repositories.GetSelectedRepository();
+            } else {
+                var init = new Init();
+                repository = init.GetRepositories().GetSelectedRepository();
+            }
+            return repository;
+        }
         
     }
 

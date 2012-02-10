@@ -17,9 +17,14 @@ namespace PassFruit.Ui.Wp {
             _container = new PhoneContainer(RootFrame);
 
 			_container.RegisterPhoneServices();
+
             _container.PerRequest<MainPageViewModel>();
-            _container.PerRequest<LabelViewModel>();
             _container.PerRequest<LabelsPivotPageViewModel>();
+            _container.PerRequest<AccountDetailsPageViewModel>();
+
+            _container.PerRequest<AccountProviderIconViewModel>();
+            _container.PerRequest<AccountViewModel>();
+            _container.PerRequest<LabelViewModel>();
 
             AddCustomConventions();
         }
@@ -72,6 +77,10 @@ namespace PassFruit.Ui.Wp {
 
                     return false;
                 };
+        }
+
+        protected override PhoneApplicationFrame CreatePhoneApplicationFrame() {
+            return new TransitionFrame();
         }
 
     }

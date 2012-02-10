@@ -77,6 +77,12 @@ namespace PassFruit.Ui.Wp {
                 .Navigate();
         }
 
+        public void ShowAccountDetails(AccountViewModel accountViewModel) {
+            _navigationService.UriFor<AccountDetailsPageViewModel>()
+                .WithParam(x => x.AccountId, accountViewModel.Id)
+                .Navigate();
+        }
+
         public void AddNewLabel() {
             var newlabel = "ciccio";
         }

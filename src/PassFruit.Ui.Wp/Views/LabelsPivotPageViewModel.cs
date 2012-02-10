@@ -46,16 +46,7 @@ namespace PassFruit.Ui.Wp.Views {
         //}
 
         private void PopulateLabels() {
-            IRepository repository;
-            var app = Application.Current as App;
-            if (app != null) {
-                repository = app.Repositories.GetSelectedRepository();
-            } else {
-                var init = new Init();
-                repository = init.GetRepositories().GetSelectedRepository();
-            }
-
-
+            var repository = Init.GetRepository();
             _labels = new ObservableCollection<LabelViewModel>();
             var labelViewModels = repository.AccountLabels.GetAll().Select(accountLabel => {
                 var label = new LabelViewModel();

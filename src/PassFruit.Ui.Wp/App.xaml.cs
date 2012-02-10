@@ -18,12 +18,9 @@ namespace PassFruit.Ui.Wp {
 
     public partial class App : Application {
 
-        public Repositories Repositories { get { return _repositories; } }
-        private readonly Repositories _repositories;
+        public Repositories Repositories { get; private set; }
 
         public App() {
-
-            InitializeComponent();
 
             //// Show graphics profiling information while debugging.
             //if (System.Diagnostics.Debugger.IsAttached) {
@@ -44,8 +41,10 @@ namespace PassFruit.Ui.Wp {
             //    PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             //}
 
+            InitializeComponent();
+
             var init = new Init();
-            _repositories = init.GetRepositories();
+            Repositories = init.GetRepositories();
 
         }
 

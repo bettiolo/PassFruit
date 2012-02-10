@@ -4,10 +4,20 @@
              xmlns:local="clr-namespace:PassFruit.Ui.Wp"
              xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
              xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:controlsToolkit="clr-namespace:PassFruit.Ui.Wp.Views.Controls">
 
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
         <local:AppBootstrapper x:Key="bootstrapper" />
+
+        <sys:String x:Key="ApplicationTitle">PASSFRUIT</sys:String>
+
     </Application.Resources>
 
 </Application>
