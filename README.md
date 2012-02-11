@@ -1,7 +1,7 @@
 PassFruit
 =========
 
-*Secure opensource cloud password manager.*
+*Open source secure cloud password manager.*
 
 * * *
 
