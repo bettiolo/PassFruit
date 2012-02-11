@@ -62,6 +62,9 @@ Add ideas, or claim an idea and start working on it!
 [JabbR PassFruit Chatroom](http://jabbr.net/#/rooms/PassFruit)
 Discuss things in real-time.
 
+[Ohloh Project Statistics](https://www.ohloh.net/p/passfruit)
+View statistics about the project
+
 * * *
 
 Author
