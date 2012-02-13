@@ -19,21 +19,20 @@
                             Foreground="{StaticResource PhoneForegroundBrush}"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="False"
+                            Style="{StaticResource TransitionPageStyle}"
                             SupportedOrientations="Portrait"
                             toolkit:TiltEffect.IsTiltEnabled="True"
-                            mc:Ignorable="d"
-                            Style="{StaticResource TransitionPageStyle}">
+                            mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
         <!--  Panorama control  -->
         <controls:Panorama x:Name="MainPanorama" Title="PassFruit - Secure Cloud Password Manager">
-
-            <controls:PanoramaItem Header="labels">
-                <ListBox x:Name="Labels" Margin="0,0,-12,0">
+            <controls:PanoramaItem Header="tags">
+                <ListBox x:Name="Tags" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Controls:LabelView cal:Message.Attach="[Event Tap] = [Action Test($dataContext)]" cal:View.Model="{Binding}" />
+                            <Controls:TagView cal:Message.Attach="[Event Tap] = [Action Test($dataContext)]" cal:View.Model="{Binding}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -52,14 +51,14 @@
             <controls:PanoramaItem Header="settings">
                 <ScrollViewer>
                     <StackPanel>
-                        <HyperlinkButton NavigateUri="/Views/LabelsPivotPageView.xaml" Style="{StaticResource HyperlinkEmptyStyle}">
+                        <HyperlinkButton NavigateUri="/Views/TagsPivotPageView.xaml" Style="{StaticResource HyperlinkEmptyStyle}">
                             <Controls:HeaderedContentControl Content="change password storage settings"
                                                              Header="password storage"
                                                              Style="{StaticResource MultilineHyperlinkStyle}" />
                         </HyperlinkButton>
                         <my:SettingsItem Title="password storage"
                                          Description="change password storage settings"
-                                         PageUrl="/Views/LabelsPivotPageView.xaml" />
+                                         PageUrl="/Views/TagsPivotPageView.xaml" />
                         <my:SettingsItem Title="second setting"
                                          Description="Second setting long long  long description"
                                          PageUrl="file.xaml" />
@@ -92,8 +91,8 @@
                                   Message="AddNewAccount"
                                   Text="Add Account" />
                 <cal:AppBarButton IconUri="Resources\Dark\appbar.tag.png"
-                                  Message="AddNewLabel"
-                                  Text="Add Label" />
+                                  Message="AddNewTag"
+                                  Text="Add Tag" />
             </shell:ApplicationBar.Buttons>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="Add Account 2" />

@@ -15,11 +15,11 @@ namespace PassFruit.Ui.Wp {
 
         INavigationService _navigationService;
 
-        private ObservableCollection<LabelViewModel> _labels;
+        private ObservableCollection<TagViewModel> _tags;
 
-        public ObservableCollection<LabelViewModel> Labels {
+        public ObservableCollection<TagViewModel> Tags {
             get {
-                return _labels;
+                return _tags;
             }
         }
 
@@ -40,29 +40,25 @@ namespace PassFruit.Ui.Wp {
                 var init = new Init();
                 _repository = init.GetRepositories().GetSelectedRepository();
             }
-            PopulateLabels();
+
+            var fakeData = new FakeDataGenerator();
+            fakeData.GenerateFakeData(_repository);
+
+            PopulateTags();
             PopulateAccounts();
         }
 
-        private void PopulateLabels() {
-            _labels = new ObservableCollection<LabelViewModel>();
-            var labelViewModels = _repository.AccountLabels.GetAll().Select(accountLabel => {
-                var label = new LabelViewModel();
-                label.Id = accountLabel.Id;
-                label.LabelName = accountLabel.Name;
-                label.Description =
-                    accountLabel.Description;
-                return label;
-            });
-
-            foreach (var labelViewModel in labelViewModels) {
-                Labels.Add(labelViewModel);
+        private void PopulateTags() {
+            _tags = new ObservableCollection<TagViewModel>();
+            var tagViewModels = _repository.AccountTags.Select(accountTag => new TagViewModel(accountTag));
+            foreach (var tagViewModel in tagViewModels) {
+                Tags.Add(tagViewModel);
             }
         }
 
         private void PopulateAccounts() {
             _accounts = new ObservableCollection<AccountViewModel>();
-            var accountViewModels = _repository.Accounts.GetAll().Select(account => {
+            var accountViewModels = _repository.Accounts.Select(account => {
                 return new AccountViewModel(account);;
             });
 
@@ -71,9 +67,9 @@ namespace PassFruit.Ui.Wp {
             }
         }
 
-        public void Test(LabelViewModel label) {
-            _navigationService.UriFor<LabelsPivotPageViewModel>()
-                .WithParam(x => x.ActiveId, label.Id)
+        public void Test(TagViewModel tag) {
+            _navigationService.UriFor<TagsPivotPageViewModel>()
+                .WithParam(x => x.ActiveId, tag.Id)
                 .Navigate();
         }
 
@@ -83,8 +79,8 @@ namespace PassFruit.Ui.Wp {
                 .Navigate();
         }
 
-        public void AddNewLabel() {
-            var newlabel = "ciccio";
+        public void AddNewTag() {
+            var newtag = "ciccio";
         }
 
         public void AddNewAccount() {

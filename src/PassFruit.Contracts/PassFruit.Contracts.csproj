@@ -40,11 +40,12 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAccountHasUserName.cs" />
     <Compile Include="IAccount.cs" />
+    <Compile Include="IAccountHasEMail.cs" />
     <Compile Include="IAccountProvider.cs" />
     <Compile Include="IAccountTag.cs" />
     <Compile Include="IAccountTags.cs" />
-    <Compile Include="IAccountPassword.cs" />
     <Compile Include="IAccounts.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

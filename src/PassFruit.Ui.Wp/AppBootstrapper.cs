@@ -19,12 +19,12 @@ namespace PassFruit.Ui.Wp {
 			_container.RegisterPhoneServices();
 
             _container.PerRequest<MainPageViewModel>();
-            _container.PerRequest<LabelsPivotPageViewModel>();
+            _container.PerRequest<TagsPivotPageViewModel>();
             _container.PerRequest<AccountDetailsPageViewModel>();
 
             _container.PerRequest<AccountProviderIconViewModel>();
             _container.PerRequest<AccountViewModel>();
-            _container.PerRequest<LabelViewModel>();
+            _container.PerRequest<TagViewModel>();
 
             AddCustomConventions();
         }

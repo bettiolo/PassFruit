@@ -15,12 +15,13 @@ using PassFruit.Contracts;
 namespace PassFruit.Ui.Wp.Views.Controls {
 
     public class AccountProviderIconViewModel : PropertyChangedBase {
-       
-        public AccountProviderIconViewModel(IAccount account) {
+        
+        public AccountProviderIconViewModel(IAccount account, int size) {
+            var basePath = ImageSource = @"/Resources/Providers/" + size + "/";
             if (account == null) {
-                ImageSource = @"/Resources/Providers/Unknown.png";
+                 ImageSource = basePath + "Unknown.png";
             } else {
-                ImageSource = @"/Resources/Providers/" + account.Provider.Name + ".png";
+                ImageSource = basePath + account.Provider.Name + ".png";
             }
         }
 

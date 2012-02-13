@@ -86,6 +86,30 @@
         </Setter>
     </Style>
 
+    <Style x:Key="HeaderedDetailStyle" TargetType="controlsToolkit:HeaderedContentControl">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" 
+                                Text="{Binding}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Opacity=".5"
+                               Foreground="{StaticResource PhoneForegroundBrush}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   Text="{Binding}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="PhoneButtonBase" TargetType="ButtonBase">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}" />

@@ -11,10 +11,10 @@ namespace PassFruit.Ui.Wp.Views.Controls {
             if (account == null) {
                 return;
             }
-            AccountIcon = new AccountProviderIconViewModel(account);
+            AccountIcon = new AccountProviderIconViewModel(account, 64);
             Id = account.Id;
             ProviderName = account.Provider.Name;
-            Account = account.Account;
+            Account = account.AccountName;
         }
 
         private Guid _id;
@@ -58,7 +58,7 @@ namespace PassFruit.Ui.Wp.Views.Controls {
     public class AccountViewModelSample : AccountViewModel {
 
         public AccountViewModelSample() : base(null) {
-            AccountIcon = new AccountProviderIconViewModel(null);
+            AccountIcon = new AccountProviderIconViewModel(null, 64);
             Id = Guid.NewGuid();
             ProviderName = "Provider";
             Account = "account - info@example.com";

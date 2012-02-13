@@ -11,9 +11,13 @@ namespace PassFruit.Contracts {
 
         string Description { get; }
 
-        IAccountLabels AccountLabels { get; }
-
         IAccounts Accounts { get; }
+
+        IAccountTags AccountTags { get; }
+
+        string GetPassword(Guid accountId);
+
+        void SetPassword(Guid accountId, string password);
 
     }
 

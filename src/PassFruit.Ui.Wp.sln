@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Contracts", "Pass
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client", "PassFruit.Client\PassFruit.Client.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client.FakeRepository", "PassFruit.Client.FakeRepository\PassFruit.Client.FakeRepository.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client.InMemoryRepository", "PassFruit.Client.InMemoryRepository\PassFruit.Client.InMemoryRepository.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "PassFruit\PassFruit.csproj", "{02D15B96-AD18-466A-88D7-454652E8347A}"
 EndProject

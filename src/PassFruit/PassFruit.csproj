@@ -42,18 +42,20 @@
   <ItemGroup>
     <Compile Include="AccountProviders\GoogleAccountProvider.cs" />
     <Compile Include="AccountProviders\TwitterAccountProvider.cs" />
-    <Compile Include="Accounts\AccountBase.cs" />
-    <Compile Include="Accounts\GoogleAccount.cs" />
-    <Compile Include="Accounts\TwitterAccount.cs" />
-    <Compile Include="Accounts\UserOnlyAccountBase.cs" />
-    <Compile Include="Accounts\UserAndEmailAccountBase.cs.cs" />
-    <Compile Include="Accounts\EmailOnlyAccountBase.cs" />
+    <Compile Include="Accounts.cs" />
+    <Compile Include="AccountImplementations\AccountBase.cs" />
+    <Compile Include="AccountImplementations\GoogleAccount.cs" />
+    <Compile Include="AccountImplementations\TwitterAccount.cs" />
+    <Compile Include="AccountImplementations\UserNameOnlyAccountBase.cs" />
+    <Compile Include="AccountImplementations\UserNameAndEmailAccountBase.cs" />
+    <Compile Include="AccountImplementations\EmailOnlyAccountBase.cs" />
     <Compile Include="AccountProviders\FacebookAccountProvider.cs" />
     <Compile Include="AccountTag.cs" />
-    <Compile Include="AccountPassword.cs" />
     <Compile Include="AccountProviders\AccountProviderBase.cs" />
-    <Compile Include="Accounts\FacebookAccount.cs" />
+    <Compile Include="AccountImplementations\FacebookAccount.cs" />
+    <Compile Include="AccountTags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">

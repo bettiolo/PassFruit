@@ -1,9 +1,13 @@
 ﻿using PassFruit.AccountProviders;
 using PassFruit.Contracts;
 
-namespace PassFruit.Accounts {
+namespace PassFruit.AccountImplementations {
 
-    public class TwitterAccount : UserAndEmailAccountBase {
+    public class TwitterAccount : UserNameAndEmailAccountBase {
+
+        public TwitterAccount(IRepository repository) : base(repository) {
+
+        }
 
         public override IAccountProvider Provider {
 

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccounts : IList<IAccount> {
+    public interface IAccountHasEmail {
 
-        IAccount this[Guid accountId] { get; }
+        string Email { get; set; }
 
     }
 

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 
 namespace PassFruit.Contracts {
-    
-    public interface IAccountPassword {
 
-        Guid AccountId { get; set; }
+    public interface IAccountHasUserName {
 
-        string Password { get; set; }
+        string UserName { get; set; }
 
     }
+
 }

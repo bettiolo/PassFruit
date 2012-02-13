@@ -1,9 +1,13 @@
 ﻿using PassFruit.AccountProviders;
 using PassFruit.Contracts;
 
-namespace PassFruit.Accounts {
+namespace PassFruit.AccountImplementations {
 
     public class GoogleAccount : EmailOnlyAccountBase {
+
+        public GoogleAccount(IRepository repository) : base(repository) {
+
+        }
 
         public override IAccountProvider Provider {
 

@@ -40,9 +40,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountTags.cs" />
-    <Compile Include="Accounts.cs" />
-    <Compile Include="FakeRepository.cs" />
+    <Compile Include="InMemoryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

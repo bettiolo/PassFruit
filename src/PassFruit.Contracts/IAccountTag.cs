@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccountLabel {
+    public interface IAccountTag {
 
         Guid Id { get; }
 
@@ -13,7 +13,7 @@ namespace PassFruit.Contracts {
 
         string Description { get; set; }
 
-        IList<IAccount> Accounts { get; }
+        IEnumerable<IAccount> Accounts { get; }
 
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace PassFruit.Contracts {
 
@@ -6,13 +7,21 @@ namespace PassFruit.Contracts {
 
         Guid Id { get; set; }
 
-        string Account { get; }
+        string AccountName { get; }
 
         string Notes { get; set; }
 
         IAccountProvider Provider { get; }
 
-        IAccountPassword GetPassword();
+        string GetPassword();
 
+        void SetPassword(string password);
+
+        IList<IAccountTag> AccountTags { get; }
+
+        void AddTag(string tagName);
+
+        void Save();
     }
+
 }
