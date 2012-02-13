@@ -19,6 +19,12 @@ namespace PassFruit.Contracts {
 
         void SetPassword(Guid accountId, string password);
 
+        void Save(IAccount account);
+
+        event EventHandler OnSaved;
+
+        event EventHandler OnSaving;
+
     }
 
 }

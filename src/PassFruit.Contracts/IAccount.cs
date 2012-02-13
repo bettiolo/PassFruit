@@ -22,6 +22,8 @@ namespace PassFruit.Contracts {
         void AddTag(string tagName);
 
         void Save();
+
+        void SetSynched();
     }
 
 }

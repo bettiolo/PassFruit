@@ -11,7 +11,7 @@ namespace PassFruit {
         private IAccounts _accounts;
 
         private IAccountTags _accountTags;
-        
+
         protected RepositoryBase() {
             
         }
@@ -41,6 +41,20 @@ namespace PassFruit {
         public abstract string GetPassword(Guid accountId);
 
         public abstract void SetPassword(Guid accountId, string password);
+
+        public void Save(IAccount account) {
+            if (OnSaving != null) {
+                OnSaving(this, EventArgs.Empty);
+            }
+            account.SetSynched();
+            if (OnSaved != null) {
+                OnSaved(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler OnSaved;
+
+        public event EventHandler OnSaving;
 
         protected abstract IAccounts GetAllAccounts();
 

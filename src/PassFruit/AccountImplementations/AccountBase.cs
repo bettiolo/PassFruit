@@ -8,6 +8,8 @@ namespace PassFruit.AccountImplementations {
         
         private readonly IRepository _repository;
 
+        private int _orignalHash;
+
         public AccountBase(IRepository repository) {
             _repository = repository;
             AccountTags = new List<IAccountTag>();
@@ -40,8 +42,41 @@ namespace PassFruit.AccountImplementations {
         }
 
         public virtual void Save() {
-            // Save data
+            if (IsEdited) {
+                _repository.Save(this);
+            }
         }
+
+        private bool IsEdited {
+            get { return (_orignalHash != GetHashCode()); }
+        }
+
+        public override int GetHashCode() {
+            unchecked {
+                int result = Id.GetHashCode();
+                result = (result*397) ^ (Notes != null ? Notes.GetHashCode() : 0);
+                result = (result*397) ^ (AccountTags != null ? AccountTags.GetHashCode() : 0);
+                return result;
+            }
+        }
+
+        public bool Equals(AccountBase other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other.Id.Equals(Id) && Equals(other.Notes, Notes) && Equals(other.AccountTags, AccountTags);
+        }
+
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (AccountBase)) return false;
+            return Equals((AccountBase) obj);
+        }
+
+        public void SetSynched() {
+            _orignalHash = GetHashCode();
+        }
+
     }
 
 }

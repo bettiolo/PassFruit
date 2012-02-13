@@ -66,6 +66,11 @@ namespace PassFruit.Ui.Wp {
             repository.Accounts[1].AddTag("Tag 1");
             repository.Accounts[0].AddTag("Tag 2");
             repository.Accounts[2].AddTag("Tag 2");
+
+            foreach (var account in repository.Accounts) {
+                account.SetSynched();
+            }
+
         }
 
     }

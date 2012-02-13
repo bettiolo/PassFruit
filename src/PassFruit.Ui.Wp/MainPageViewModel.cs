@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
+using IsolatedStorageExtensions;
 using PassFruit.Contracts;
 using PassFruit.Ui.Wp.Views;
 using PassFruit.Ui.Wp.Views.Controls;
@@ -15,41 +18,48 @@ namespace PassFruit.Ui.Wp {
 
         INavigationService _navigationService;
 
-        private ObservableCollection<TagViewModel> _tags;
+        public ObservableCollection<TagViewModel> Tags { get; private set; }
 
-        public ObservableCollection<TagViewModel> Tags {
-            get {
-                return _tags;
-            }
-        }
-
-        private ObservableCollection<AccountViewModel> _accounts;
-
-        public ObservableCollection<AccountViewModel> Accounts {
-            get {
-                return _accounts;
-            }
-        }
+        public ObservableCollection<AccountViewModel> Accounts { get; private set; }
 
         public MainPageViewModel(INavigationService navigationService) {
+            Tags = new ObservableCollection<TagViewModel>();
+            Accounts = new ObservableCollection<AccountViewModel>();
             _navigationService = navigationService;
-            var app = Application.Current as App;
-            if (app != null) {
-                _repository = app.Repositories.GetSelectedRepository();
+
+            var storedRepository = IsolatedStorageHelper.GetApplicationSetting("repository") as IRepository;
+            if (storedRepository == null) {
+                var app = Application.Current as App;
+                if (app != null) {
+                    _repository = app.Repositories.GetSelectedRepository();
+                } else {
+                    var init = new Init();
+                    _repository = init.GetRepositories().GetSelectedRepository();
+                }
+                var fakeData = new FakeDataGenerator();
+                fakeData.GenerateFakeData(_repository);
             } else {
-                var init = new Init();
-                _repository = init.GetRepositories().GetSelectedRepository();
+                _repository = storedRepository;
             }
 
-            var fakeData = new FakeDataGenerator();
-            fakeData.GenerateFakeData(_repository);
+            UpdateUi();
 
+            _repository.OnSaved += RepositoryChanged;
+
+        }
+
+        private void RepositoryChanged(object sender, EventArgs eventArgs) {
+            IsolatedStorageHelper.SaveApplicationSetting("repository", _repository);
+            UpdateUi();
+        }
+
+        private void UpdateUi() {
             PopulateTags();
             PopulateAccounts();
         }
 
         private void PopulateTags() {
-            _tags = new ObservableCollection<TagViewModel>();
+            Tags.Clear();
             var tagViewModels = _repository.AccountTags.Select(accountTag => new TagViewModel(accountTag));
             foreach (var tagViewModel in tagViewModels) {
                 Tags.Add(tagViewModel);
@@ -57,11 +67,8 @@ namespace PassFruit.Ui.Wp {
         }
 
         private void PopulateAccounts() {
-            _accounts = new ObservableCollection<AccountViewModel>();
-            var accountViewModels = _repository.Accounts.Select(account => {
-                return new AccountViewModel(account);;
-            });
-
+            Accounts.Clear();
+            var accountViewModels = _repository.Accounts.Select(account => new AccountViewModel(account));
             foreach (var accountViewModel in accountViewModels) {
                 Accounts.Add(accountViewModel);
             }

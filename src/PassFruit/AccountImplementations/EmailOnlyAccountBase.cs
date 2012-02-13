@@ -15,6 +15,24 @@ namespace PassFruit.AccountImplementations {
 
         public string Email { get; set; }
 
+        public bool Equals(EmailOnlyAccountBase other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return base.Equals(other) && Equals(other.Email, Email);
+        }
+
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals(obj as EmailOnlyAccountBase);
+        }
+
+        public override int GetHashCode() {
+            unchecked {
+                return (base.GetHashCode()*397) ^ (Email != null ? Email.GetHashCode() : 0);
+            }
+        }
+
     }
 
 }

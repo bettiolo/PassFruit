@@ -103,6 +103,7 @@ namespace PassFruit.Ui.Wp.Views {
 
                 accountWithEmail.Email = value;
                 NotifyOfPropertyChange(() => Email);
+                NotifyOfPropertyChange(() => Title);
             }
         }
 
@@ -119,6 +120,7 @@ namespace PassFruit.Ui.Wp.Views {
 
                 accountWithUserName.UserName = value;
                 NotifyOfPropertyChange(() => UserName);
+                NotifyOfPropertyChange(() => Title);
             }
         }
 
