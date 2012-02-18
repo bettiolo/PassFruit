@@ -9,6 +9,10 @@ namespace PassFruit.Contracts {
 
         IAccount this[Guid accountId] { get; }
 
+        IEnumerable<IAccountWithEmail> GetByEmail(string email);
+
+        IEnumerable<IAccountWithUserName> GetByUserName(string userName);
+
     }
 
 }

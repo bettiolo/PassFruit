@@ -11,7 +11,7 @@ namespace PassFruit.Ui.Wp.Views.Controls {
             if (account == null) {
                 return;
             }
-            AccountIcon = new AccountProviderIconViewModel(account, 64);
+            AccountIcon = new AccountProviderIconViewModel(account.Provider, 64);
             Id = account.Id;
             ProviderName = account.Provider.Name;
             Account = account.AccountName;

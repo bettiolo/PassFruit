@@ -3,9 +3,10 @@ using PassFruit.Contracts;
 
 namespace PassFruit.AccountImplementations {
 
-    public abstract class EmailOnlyAccountBase : AccountBase, IAccountHasEmail {
+    public abstract class EmailOnlyAccountBase : AccountBase, IAccountWithEmail {
 
-        protected EmailOnlyAccountBase(IRepository repository) : base(repository) {
+        protected EmailOnlyAccountBase(IRepository repository, Guid? id = null)
+            : base(repository, id) {
 
         }
 

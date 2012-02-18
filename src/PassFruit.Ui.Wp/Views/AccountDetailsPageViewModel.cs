@@ -45,7 +45,7 @@ namespace PassFruit.Ui.Wp.Views {
             NotifyOfPropertyChange(() => Notes);
             NotifyOfPropertyChange(() => Tags);
             Password = "*****";
-            AccountIcon = new AccountProviderIconViewModel(_account, 32);
+            AccountIcon = new AccountProviderIconViewModel(_account.Provider, 32);
         }
 
         public void PopulatePassword() {
@@ -153,7 +153,6 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         private AccountProviderIconViewModel _accountIcon;
-
         public AccountProviderIconViewModel AccountIcon {
             get { return _accountIcon; }
             set {
@@ -163,7 +162,6 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         private string _password;
-
         public string Password {
             get { return _password; }
             set { _password = value; NotifyOfPropertyChange(() => Password);} }

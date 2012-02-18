@@ -5,7 +5,7 @@ namespace PassFruit.Contracts {
 
     public interface IAccount {
 
-        Guid Id { get; set; }
+        Guid Id { get; }
 
         string AccountName { get; }
 
@@ -19,11 +19,14 @@ namespace PassFruit.Contracts {
 
         IList<IAccountTag> AccountTags { get; }
 
+        bool IsDirty { get; }
+
         void AddTag(string tagName);
 
         void Save();
 
-        void SetSynched();
+        void SetClean();
+
     }
 
 }

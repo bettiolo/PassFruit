@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccountHasUserName {
+    public interface IAccountWithUserName : IAccount {
 
         string UserName { get; set; }
 

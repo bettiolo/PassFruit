@@ -21,6 +21,7 @@ namespace PassFruit.Ui.Wp {
             _container.PerRequest<MainPageViewModel>();
             _container.PerRequest<TagsPivotPageViewModel>();
             _container.PerRequest<AccountDetailsPageViewModel>();
+            _container.PerRequest<AccountProviderSelectPageViewModel>();
 
             _container.PerRequest<AccountProviderIconViewModel>();
             _container.PerRequest<AccountViewModel>();

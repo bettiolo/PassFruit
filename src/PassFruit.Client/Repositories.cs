@@ -28,7 +28,5 @@ namespace PassFruit.Client {
             return _currentRepository;
         }
 
-
-
     }
 }

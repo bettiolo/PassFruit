@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PassFruit.AccountImplementations;
 using PassFruit.Contracts;
 
 namespace PassFruit {
@@ -21,21 +22,11 @@ namespace PassFruit {
         public abstract string Description { get; }
         
         public IAccounts Accounts {
-            get {
-                if (_accounts == null) {
-                    _accounts = GetAllAccounts();
-                }
-                return _accounts;
-            }
+            get { return _accounts ?? (_accounts = GetAllAccountsExceptDeleted()); }
         }
 
         public IAccountTags AccountTags {
-            get {
-                if (_accountTags == null) {
-                    _accountTags = GetAllAccountTags();
-                }
-                return _accountTags;
-            }
+            get { return _accountTags ?? (_accountTags = GetAllAccountTags()); }
         }
 
         public abstract string GetPassword(Guid accountId);
@@ -46,7 +37,7 @@ namespace PassFruit {
             if (OnSaving != null) {
                 OnSaving(this, EventArgs.Empty);
             }
-            account.SetSynched();
+            account.SetClean();
             if (OnSaved != null) {
                 OnSaved(this, EventArgs.Empty);
             }
@@ -56,9 +47,24 @@ namespace PassFruit {
 
         public event EventHandler OnSaving;
 
+        public void SaveAll() {
+            if (OnSaving != null) {
+                OnSaving(this, EventArgs.Empty);
+            }
+            foreach (var account in Accounts.Where(a => a.IsDirty)) {
+                account.SetClean();   
+            }
+            if (OnSaved != null) {
+                OnSaved(this, EventArgs.Empty);
+            }
+        }
+
         protected abstract IAccounts GetAllAccounts();
 
         protected abstract IAccountTags GetAllAccountTags();
+
+        protected abstract IAccounts GetAllAccountsExceptDeleted();
+
     }
 
 }

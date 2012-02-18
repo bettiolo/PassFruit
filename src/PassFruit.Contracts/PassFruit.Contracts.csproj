@@ -40,9 +40,9 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAccountHasUserName.cs" />
+    <Compile Include="IAccountWithUserName.cs" />
     <Compile Include="IAccount.cs" />
-    <Compile Include="IAccountHasEMail.cs" />
+    <Compile Include="IAccountWithEmail.cs" />
     <Compile Include="IAccountProvider.cs" />
     <Compile Include="IAccountTag.cs" />
     <Compile Include="IAccountTags.cs" />

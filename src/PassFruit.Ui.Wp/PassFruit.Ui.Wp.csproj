@@ -87,13 +87,20 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="FakeDataGenerator.cs" />
     <Compile Include="MetroGridHelper.cs" />
     <Compile Include="Views\AccountDetailsPageView.xaml.cs">
       <DependentUpon>AccountDetailsPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AccountDetailsPageViewModel.cs" />
+    <Compile Include="Views\AccountProviderSelectPageView.xaml.cs">
+      <DependentUpon>AccountProviderSelectPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AccountProviderSelectPageViewModel.cs" />
     <Compile Include="Views\Controls\AccountProviderIconViewModel.cs" />
+    <Compile Include="Views\Controls\AccountProviderView.xaml.cs">
+      <DependentUpon>AccountProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\AccountProviderViewModel.cs" />
     <Compile Include="Views\Controls\AccountViewModel.cs" />
     <Compile Include="Views\Controls\HeaderedContentControl.cs" />
     <Compile Include="Views\Controls\SettingsItem.xaml.cs">
@@ -118,7 +125,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AccountProviderSelectPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\AccountProviderIconView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\AccountProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

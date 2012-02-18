@@ -27,7 +27,23 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
         <!--  Panorama control  -->
-        <controls:Panorama x:Name="MainPanorama" Title="PassFruit - Secure Cloud Password Manager">
+        <controls:Panorama Title="PassFruit" DefaultItem="{Binding RelativeSource={RelativeSource Self}, Path=Items[1]}">
+            <controls:Panorama.TitleTemplate>
+                <DataTemplate>
+                    <StackPanel Height="Auto"
+                                MinWidth="770"
+                                MaxWidth="1200"
+                                Margin="0,96,0,0">
+                        <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                   Text="passfruit"
+                                   TextWrapping="Wrap" />
+                        <TextBlock Style="{StaticResource PhoneTextLargeStyle}"
+                                   Text="secure password manager"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:Panorama.TitleTemplate>
             <controls:PanoramaItem Header="tags">
                 <ListBox x:Name="Tags" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>

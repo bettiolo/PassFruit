@@ -34,6 +34,10 @@ namespace PassFruit.Client.InMemoryRepository {
             return new AccountTags(this);
         }
 
+        protected override IAccounts GetAllAccountsExceptDeleted() {
+            return new Accounts(this);
+        }
+
     }
 
 }

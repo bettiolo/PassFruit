@@ -10,12 +10,13 @@ namespace PassFruit.AccountImplementations {
 
         private int _orignalHash;
 
-        public AccountBase(IRepository repository) {
+        public AccountBase(IRepository repository, Guid? id = null) {
             _repository = repository;
             AccountTags = new List<IAccountTag>();
+            Id = id.HasValue ? id.Value : Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; protected set; }
 
         public abstract string AccountName { get; }
 
@@ -42,12 +43,12 @@ namespace PassFruit.AccountImplementations {
         }
 
         public virtual void Save() {
-            if (IsEdited) {
+            if (IsDirty) {
                 _repository.Save(this);
             }
         }
 
-        private bool IsEdited {
+        public bool IsDirty {
             get { return (_orignalHash != GetHashCode()); }
         }
 
@@ -73,7 +74,7 @@ namespace PassFruit.AccountImplementations {
             return Equals((AccountBase) obj);
         }
 
-        public void SetSynched() {
+        public void SetClean() {
             _orignalHash = GetHashCode();
         }
 

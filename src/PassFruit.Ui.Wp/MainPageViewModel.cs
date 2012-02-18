@@ -91,7 +91,9 @@ namespace PassFruit.Ui.Wp {
         }
 
         public void AddNewAccount() {
-            var newaccount = "pluto";
+            _navigationService.UriFor<AccountProviderSelectPageViewModel>()
+                .Navigate();
+            ;
         }
     }
 
