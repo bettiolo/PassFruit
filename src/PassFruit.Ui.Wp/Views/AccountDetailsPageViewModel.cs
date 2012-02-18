@@ -68,7 +68,7 @@ namespace PassFruit.Ui.Wp.Views {
 
         public Visibility IsUserNameEnabled {
             get {
-                return _account is IAccountHasUserName
+                return _account is IAccountWithUserName
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             }
@@ -76,7 +76,7 @@ namespace PassFruit.Ui.Wp.Views {
 
         public Visibility IsEmailEnabled {
             get {
-                return _account is IAccountHasEmail
+                return _account is IAccountWithEmail
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             }
@@ -92,13 +92,13 @@ namespace PassFruit.Ui.Wp.Views {
 
         public string Email {
             get {
-                var accountWithEmail = _account as IAccountHasEmail;
+                var accountWithEmail = _account as IAccountWithEmail;
                 return accountWithEmail != null 
                     ? accountWithEmail.Email 
                     : "";
             }
             set {
-                var accountWithEmail = _account as IAccountHasEmail;
+                var accountWithEmail = _account as IAccountWithEmail;
                 if (accountWithEmail == null) return;
 
                 accountWithEmail.Email = value;
@@ -109,13 +109,13 @@ namespace PassFruit.Ui.Wp.Views {
 
         public string UserName {
             get {
-                var accountWithUserName = _account as IAccountHasUserName;
+                var accountWithUserName = _account as IAccountWithUserName;
                 return accountWithUserName != null
                     ? accountWithUserName.UserName
                     : "";
             }
             set {
-                var accountWithUserName = _account as IAccountHasUserName;
+                var accountWithUserName = _account as IAccountWithUserName;
                 if (accountWithUserName == null) return;
 
                 accountWithUserName.UserName = value;

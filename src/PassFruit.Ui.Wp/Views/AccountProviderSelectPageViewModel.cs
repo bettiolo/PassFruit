@@ -34,11 +34,11 @@ namespace PassFruit.Ui.Wp.Views {
         public void AccountSelected(AccountProviderViewModel accountProvider) {
 
             var repository = Init.GetRepository();
-            repository.Accounts.Add(accountProvider.AccountProvider.);
+            //repository.Accounts.Add(accountProvider.AccountProvider);
 
-            _navigationService.UriFor<AccountDetailsPageViewModel>()
-                .WithParam(x => x.AccountId, )
-                .Navigate();
+            //_navigationService.UriFor<AccountDetailsPageViewModel>()
+            //    .WithParam(x => x.AccountId, )
+            //    .Navigate();
         }
 
     }

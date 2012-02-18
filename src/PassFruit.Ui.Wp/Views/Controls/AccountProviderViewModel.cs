@@ -16,7 +16,7 @@ namespace PassFruit.Ui.Wp.Views.Controls {
 
     public class AccountProviderViewModel : PropertyChangedBase {
 
-        public IAccountProvider AccountProvider { get; private set; };
+        public IAccountProvider AccountProvider { get; private set; }
 
         public AccountProviderViewModel(IAccountProvider accountProvider) {
             AccountProvider = accountProvider;

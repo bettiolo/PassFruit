@@ -7,6 +7,7 @@ using System.Windows;
 using Caliburn.Micro;
 using IsolatedStorageExtensions;
 using PassFruit.Contracts;
+using PassFruit.Tests.FakeData;
 using PassFruit.Ui.Wp.Views;
 using PassFruit.Ui.Wp.Views.Controls;
 
