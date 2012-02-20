@@ -19,9 +19,9 @@ namespace PassFruit.Contracts {
 
         void SetPassword(Guid accountId, string password);
 
-        event EventHandler OnSaved;
+        event EventHandler<RepositorySaveEventArgs> OnSaved;
 
-        event EventHandler OnSaving;
+        event EventHandler<RepositorySaveEventArgs> OnSaving;
 
         void SaveAll();
 
@@ -29,4 +29,16 @@ namespace PassFruit.Contracts {
 
     }
 
+    public class RepositorySaveEventArgs : EventArgs {
+        
+        public IRepository Repository { get; private set; }
+
+        public IAccount Account { get; private set; }
+
+        public RepositorySaveEventArgs(IRepository repository, IAccount account) {
+            Repository = repository;
+            Account = account;
+        }
+
+    }
 }

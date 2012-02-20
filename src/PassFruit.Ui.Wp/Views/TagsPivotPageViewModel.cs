@@ -27,8 +27,8 @@ namespace PassFruit.Ui.Wp.Views {
             NotifyOfPropertyChange(() => ActiveTag);}
         }
 
-        public Guid ActiveId {
-            get { return ActiveItem.Id; }
+        public string ActiveTagName {
+            get { return ActiveItem.TagName; }
             set { var ciccio = value; }
         }
 

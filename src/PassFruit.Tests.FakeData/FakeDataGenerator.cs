@@ -8,15 +8,6 @@ namespace PassFruit.Tests.FakeData {
 
         public void GenerateFakeData(IRepository repository) {
 
-            repository.AccountTags.Add(new AccountTag(Guid.NewGuid(), repository) {
-                Name = @"Tag 1",
-                Description = @"Description informations for Tag 1"
-            });
-            repository.AccountTags.Add(new AccountTag(Guid.NewGuid(), repository) {
-                Name = @"Tag 2",
-                Description = @"Description informations for Tag 2"
-            });
-
             repository.Accounts.Add(
                 new FacebookAccount(repository) {
                     Notes = @"Example test note 1",
@@ -51,10 +42,9 @@ namespace PassFruit.Tests.FakeData {
             repository.Accounts[1].AddTag("Tag 1");
             repository.Accounts[0].AddTag("Tag 2");
             repository.Accounts[2].AddTag("Tag 2");
+            repository.Accounts[3].AddTag("Tag 3");
 
-            foreach (var account in repository.Accounts) {
-                account.SetClean();
-            }
+            repository.SaveAll();
 
         }
 

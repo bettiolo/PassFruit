@@ -49,7 +49,7 @@ namespace PassFruit.Ui.Wp {
 
         }
 
-        private void RepositoryChanged(object sender, EventArgs eventArgs) {
+        private void RepositoryChanged(object sender, RepositorySaveEventArgs eventArgs) {
             IsolatedStorageHelper.SaveApplicationSetting("repository", _repository);
             UpdateUi();
         }
@@ -77,7 +77,7 @@ namespace PassFruit.Ui.Wp {
 
         public void Test(TagViewModel tag) {
             _navigationService.UriFor<TagsPivotPageViewModel>()
-                .WithParam(x => x.ActiveId, tag.Id)
+                .WithParam(x => x.ActiveTagName, tag.TagName)
                 .Navigate();
         }
 
@@ -85,10 +85,6 @@ namespace PassFruit.Ui.Wp {
             _navigationService.UriFor<AccountDetailsPageViewModel>()
                 .WithParam(x => x.AccountId, accountViewModel.Id)
                 .Navigate();
-        }
-
-        public void AddNewTag() {
-            var newtag = "ciccio";
         }
 
         public void AddNewAccount() {

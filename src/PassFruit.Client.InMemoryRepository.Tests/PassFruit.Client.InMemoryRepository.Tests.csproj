@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryTests.cs" />
+    <Compile Include="InMemoryRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PassFruit.Client.InMemoryRepository\PassFruit.Client.InMemoryRepository.csproj">

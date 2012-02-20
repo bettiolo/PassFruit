@@ -11,7 +11,7 @@ using PassFruit.Tests.FakeData;
 namespace PassFruit.Client.InMemoryRepository.Tests {
 
     [TestFixture]
-    public class RepositoryTests {
+    public class InMemoryRepositoryTests {
 
         private InMemoryRepository GetRepositoryWithFakeData() {
             var repository = new InMemoryRepository();
@@ -116,6 +116,32 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
             retrievedAccount.UserName.Should().Be(editedUser);
             retrievedAccount.Email.Should().Be(editedEmail);
 
+        }
+
+        [Test]
+        public void When_A_Tag_Is_Added_Then_The_Number_Of_Tags_Should_Increase() {
+
+            // Given
+            var repository = GetRepositoryWithFakeData();
+            var account = repository.Accounts.GetByUserName("tWiTTeRUsEr").First();
+            var originalTotalTagCount = repository.AccountTags.Count();
+            var originalAccountTagCount = account.AccountTags.Count;
+
+            // When
+            var actAddTag = new Action(() => account.AddTag("test tag A"));
+            var actSave = new Action(account.Save);
+
+            // Then
+            account.IsDirty.Should().BeFalse();
+            actAddTag();
+            account.IsDirty.Should().BeTrue();
+            repository.AccountTags.Count().Should().Be(originalTotalTagCount);
+            actSave();
+            account.IsDirty.Should().BeFalse();
+            account.AccountTags.Count.Should().Be(originalAccountTagCount + 1);
+            repository.AccountTags.Count().Should().Be(originalTotalTagCount + 1);
+            repository.AccountTags.Contains("test tag b").Should().BeFalse();
+            repository.AccountTags.Contains("test tag a").Should().BeTrue();
 
         }
 

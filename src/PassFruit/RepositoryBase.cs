@@ -34,28 +34,23 @@ namespace PassFruit {
         public abstract void SetPassword(Guid accountId, string password);
 
         public void Save(IAccount account) {
+            _accountTags = null;
             if (OnSaving != null) {
-                OnSaving(this, EventArgs.Empty);
+                OnSaving(this, new RepositorySaveEventArgs(this, account));
             }
             account.SetClean();
             if (OnSaved != null) {
-                OnSaved(this, EventArgs.Empty);
+                OnSaved(this, new RepositorySaveEventArgs(this, account));
             }
         }
 
-        public event EventHandler OnSaved;
+        public event EventHandler<RepositorySaveEventArgs> OnSaved;
 
-        public event EventHandler OnSaving;
+        public event EventHandler<RepositorySaveEventArgs> OnSaving;
 
         public void SaveAll() {
-            if (OnSaving != null) {
-                OnSaving(this, EventArgs.Empty);
-            }
             foreach (var account in Accounts.Where(a => a.IsDirty)) {
-                account.SetClean();   
-            }
-            if (OnSaved != null) {
-                OnSaved(this, EventArgs.Empty);
+                account.Save();
             }
         }
 

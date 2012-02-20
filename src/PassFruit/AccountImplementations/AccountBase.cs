@@ -39,7 +39,7 @@ namespace PassFruit.AccountImplementations {
         public IList<IAccountTag> AccountTags { get; private set; }
 
         public void AddTag(string tagName) {
-            AccountTags.Add(_repository.AccountTags[tagName]);
+            AccountTags.Add(new AccountTag(_repository) { Name = tagName });
         }
 
         public virtual void Save() {
@@ -56,7 +56,9 @@ namespace PassFruit.AccountImplementations {
             unchecked {
                 int result = Id.GetHashCode();
                 result = (result*397) ^ (Notes != null ? Notes.GetHashCode() : 0);
-                result = (result*397) ^ (AccountTags != null ? AccountTags.GetHashCode() : 0);
+                foreach (var accountTag in AccountTags) {
+                    result = (result * 397) ^ (accountTag != null ? accountTag.GetHashCode() : 0);                    
+                }
                 return result;
             }
         }

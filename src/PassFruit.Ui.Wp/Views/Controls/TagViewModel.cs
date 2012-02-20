@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Caliburn.Micro;
 using PassFruit.Contracts;
 
@@ -7,18 +8,8 @@ namespace PassFruit.Ui.Wp.Views.Controls {
     public class TagViewModel : PropertyChangedBase {
 
         public TagViewModel(IAccountTag accountTag) {
-            Id = accountTag.Id;
             TagName = accountTag.Name;
-            Description = accountTag.Description;
-        }
-
-        private Guid _id;
-        public Guid Id {
-            get { return _id; }
-            set {
-                _id = value;
-                NotifyOfPropertyChange(() => Id);
-            }
+            Description = accountTag.Accounts.Count() + " account(s)";
         }
 
         private string _tagName;
