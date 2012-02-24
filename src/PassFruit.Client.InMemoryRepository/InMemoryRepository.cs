@@ -26,18 +26,21 @@ namespace PassFruit.Client.InMemoryRepository {
             _passwords[accountId] = password;
         }
 
-        protected override IAccounts GetAllAccounts() {
-            return new Accounts(this);
+        protected override void LoadAllAccounts() {
+            // Accounts.Add(Accounts.Create());
         }
 
-        protected override IAccountTags GetAllAccountTags() {
-            return new AccountTags(this);
+        protected override void LoadAllAccountsExceptDeleted() {
+            // Accounts.Add(Accounts.Create());
         }
 
-        protected override IAccounts GetAllAccountsExceptDeleted() {
-            return new Accounts(this);
+        protected override void LoadAllAccountProviders() {
+            // Providers.Add(Providers.Create());
         }
 
+        protected override void LoadAllFieldTypes() {
+            // FieldTypes.Add(FieldTypes.Create());
+        }
     }
 
 }

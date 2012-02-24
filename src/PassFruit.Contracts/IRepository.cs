@@ -13,7 +13,9 @@ namespace PassFruit.Contracts {
 
         IAccounts Accounts { get; }
 
-        IAccountTags AccountTags { get; }
+        ITags Tags { get; }
+
+        IProviders Providers { get; }
 
         string GetPassword(Guid accountId);
 
@@ -26,19 +28,6 @@ namespace PassFruit.Contracts {
         void SaveAll();
 
         void Save(IAccount account);
-
-    }
-
-    public class RepositorySaveEventArgs : EventArgs {
-        
-        public IRepository Repository { get; private set; }
-
-        public IAccount Account { get; private set; }
-
-        public RepositorySaveEventArgs(IRepository repository, IAccount account) {
-            Repository = repository;
-            Account = account;
-        }
 
     }
 }

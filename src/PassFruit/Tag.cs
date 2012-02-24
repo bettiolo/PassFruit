@@ -6,25 +6,25 @@ using PassFruit.Contracts;
 
 namespace PassFruit {
 
-    public class AccountTag : IAccountTag {
+    public class Tag : ITag {
 
         private readonly IRepository _repository;
 
-        public AccountTag(IRepository repository) {
+        internal Tag(IRepository repository) {
             _repository = repository;
         }
 
         public string Name { get; set; }
 
         public IEnumerable<IAccount> Accounts {
-            get { return _repository.Accounts.Where(account => account.AccountTags.Contains(this)); }
+            get { return _repository.Accounts.Where(account => account.Tags.Contains(this)); }
         }
 
         public override string ToString() {
             return Name;
         }
 
-        public bool Equals(AccountTag other) {
+        public bool Equals(Tag other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Equals(other.Name, Name);
@@ -33,8 +33,8 @@ namespace PassFruit {
         public override bool Equals(object obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (AccountTag)) return false;
-            return Equals((AccountTag) obj);
+            if (obj.GetType() != typeof (Tag)) return false;
+            return Equals((Tag) obj);
         }
 
         public override int GetHashCode() {
@@ -42,4 +42,5 @@ namespace PassFruit {
         }
 
     }
+
 }

@@ -7,26 +7,29 @@ namespace PassFruit.Contracts {
 
         Guid Id { get; }
 
-        string AccountName { get; }
+        string GetAccountName();
 
         string Notes { get; set; }
 
-        IAccountProvider Provider { get; }
+        IProvider Provider { get; }
 
         string GetPassword();
 
         void SetPassword(string password);
 
-        IList<IAccountTag> AccountTags { get; }
+        IList<ITag> Tags { get; }
+
+        IList<IField> Fields { get; }
 
         bool IsDirty { get; }
-
-        void AddTag(string tagName);
 
         void Save();
 
         void SetClean();
 
+        IEnumerable<IField<string>> GetFieldsByType(FieldTypeName fieldTypeName);
+
+        IField<string> GetDefaultField(FieldTypeName fieldTypeName);
     }
 
 }

@@ -40,15 +40,19 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAccountWithUserName.cs" />
+    <Compile Include="FieldTypeName.cs" />
+    <Compile Include="IField.cs" />
     <Compile Include="IAccount.cs" />
-    <Compile Include="IAccountWithEmail.cs" />
-    <Compile Include="IAccountProvider.cs" />
-    <Compile Include="IAccountTag.cs" />
-    <Compile Include="IAccountTags.cs" />
+    <Compile Include="IFieldType.cs" />
+    <Compile Include="IProvider.cs" />
+    <Compile Include="IProviders.cs" />
+    <Compile Include="ITag.cs" />
+    <Compile Include="ITags.cs" />
     <Compile Include="IAccounts.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IFieldTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositorySaveEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

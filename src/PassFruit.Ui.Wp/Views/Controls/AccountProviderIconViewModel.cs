@@ -16,12 +16,12 @@ namespace PassFruit.Ui.Wp.Views.Controls {
 
     public class AccountProviderIconViewModel : PropertyChangedBase {
 
-        public AccountProviderIconViewModel(IAccountProvider accountProvider, int size) {
+        public AccountProviderIconViewModel(IProvider provider, int size) {
             var basePath = ImageSource = @"/Resources/Providers/" + size + "/";
-            if (accountProvider == null) {
+            if (provider == null) {
                  ImageSource = basePath + "Unknown.png";
             } else {
-                ImageSource = basePath + accountProvider.Name + ".png";
+                ImageSource = basePath + provider.Name + ".png";
             }
         }
 

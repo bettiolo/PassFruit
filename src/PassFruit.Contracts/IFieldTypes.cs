@@ -5,9 +5,7 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccountWithEmail : IAccount {
-
-        string Email { get; set; }
+    public interface IFieldTypes : IEnumerable<FieldTypeName> {
 
     }
 

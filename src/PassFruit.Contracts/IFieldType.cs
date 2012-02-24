@@ -5,11 +5,13 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccountTag {
+    public interface IFieldType {
 
-        string Name { get; set; }
+        string Type { get; }
 
-        IEnumerable<IAccount> Accounts { get; }
+        bool IsDefault { get; }
+
+        bool IsPassword { get; }
 
     }
 

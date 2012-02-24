@@ -9,33 +9,32 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
-using PassFruit.AccountProviders;
 using PassFruit.Contracts;
 
 namespace PassFruit.Ui.Wp.Views.Controls {
 
     public class AccountProviderViewModel : PropertyChangedBase {
 
-        public IAccountProvider AccountProvider { get; private set; }
+        public IProvider Provider { get; private set; }
 
-        public AccountProviderViewModel(IAccountProvider accountProvider) {
-            AccountProvider = accountProvider;
+        public AccountProviderViewModel(IProvider provider) {
+            Provider = provider;
             LoadAccountProvider();
         }
 
         private void LoadAccountProvider() {
             NotifyOfPropertyChange(() => ProviderName);
-            ProviderIcon = new AccountProviderIconViewModel(AccountProvider, 64);
+            ProviderIcon = new AccountProviderIconViewModel(Provider, 64);
             NotifyOfPropertyChange(() => ProviderIcon);
             NotifyOfPropertyChange(() => ProviderUrl);
         }
 
         public string ProviderName {
-            get { return AccountProvider.Name; }
+            get { return Provider.Name; }
         }        
         
         public string ProviderUrl {
-            get { return AccountProvider.Url; }
+            get { return Provider.Url; }
         }
 
         private AccountProviderIconViewModel _providerIcon;

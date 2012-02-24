@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
-using PassFruit.AccountProviders;
 using PassFruit.Contracts;
 using PassFruit.Ui.Wp.Views.Controls;
 
@@ -20,12 +19,15 @@ namespace PassFruit.Ui.Wp.Views {
 
         private readonly INavigationService _navigationService;
 
+        private IRepository _repository;
+
         public AccountProviderSelectPageViewModel(INavigationService navigationService) {
             _navigationService = navigationService;
+            _repository = Init.GetRepository();
             AccountProviders = new ObservableCollection<AccountProviderViewModel>();
-            AccountProviders.Add(new AccountProviderViewModel(new FacebookAccountProvider()));
-            AccountProviders.Add(new AccountProviderViewModel(new GoogleAccountProvider()));
-            AccountProviders.Add(new AccountProviderViewModel(new TwitterAccountProvider()));
+            foreach (var provider in _repository.Providers) {
+                AccountProviders.Add(new AccountProviderViewModel(provider));
+            }
         }
 
         public ObservableCollection<AccountProviderViewModel> AccountProviders { get; private set; }
@@ -33,8 +35,8 @@ namespace PassFruit.Ui.Wp.Views {
 
         public void AccountSelected(AccountProviderViewModel accountProvider) {
 
-            var repository = Init.GetRepository();
-            //repository.Accounts.Add(accountProvider.AccountProvider);
+            
+            //repository.Accounts.Add(provider.provider);
 
             //_navigationService.UriFor<AccountDetailsPageViewModel>()
             //    .WithParam(x => x.AccountId, )

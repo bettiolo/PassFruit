@@ -1,32 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PassFruit.AccountImplementations;
 using PassFruit.Contracts;
 
 namespace PassFruit {
     
     public abstract class RepositoryBase : IRepository {
-        
+
         private IAccounts _accounts;
 
-        private IAccountTags _accountTags;
+        private ITags _tags;
 
-        protected RepositoryBase() {
-            
-        }
-        
+        private IProviders _providers;
+
+        private IFieldTypes _fieldTypes;
+
         public abstract string Name { get; }
 
         public abstract string Description { get; }
         
         public IAccounts Accounts {
-            get { return _accounts ?? (_accounts = GetAllAccountsExceptDeleted()); }
+            get {
+                if (_accounts == null) {
+                    _accounts = new Accounts(this);
+                    LoadAllAccountsExceptDeleted();
+                }
+                return _accounts;
+            }
         }
 
-        public IAccountTags AccountTags {
-            get { return _accountTags ?? (_accountTags = GetAllAccountTags()); }
+        public ITags Tags {
+            get { return _tags ?? (_tags = new Tags(this)); }
+        }
+
+        public IProviders Providers {
+            get {
+                if (_providers == null) {
+                    _providers = new Providers(this);
+                    LoadAllAccountProviders();
+                }
+                return _providers;
+            }
+        }
+
+        public IFieldTypes FieldTypes {
+            get {
+                if (_fieldTypes == null) {
+                    _fieldTypes = new FieldTypes(this);
+                    LoadAllFieldTypes();
+                }
+                return _fieldTypes;
+            }
         }
 
         public abstract string GetPassword(Guid accountId);
@@ -34,7 +58,7 @@ namespace PassFruit {
         public abstract void SetPassword(Guid accountId, string password);
 
         public void Save(IAccount account) {
-            _accountTags = null;
+            _tags = null;
             if (OnSaving != null) {
                 OnSaving(this, new RepositorySaveEventArgs(this, account));
             }
@@ -54,12 +78,13 @@ namespace PassFruit {
             }
         }
 
-        protected abstract IAccounts GetAllAccounts();
+        protected abstract void LoadAllAccounts();
 
-        protected abstract IAccountTags GetAllAccountTags();
+        protected abstract void LoadAllAccountsExceptDeleted();
 
-        protected abstract IAccounts GetAllAccountsExceptDeleted();
+        protected abstract void LoadAllAccountProviders();
+
+        protected abstract void LoadAllFieldTypes();
 
     }
-
 }

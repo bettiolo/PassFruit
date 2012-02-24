@@ -40,21 +40,16 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountImplementations\DeletedAccount.cs" />
-    <Compile Include="AccountProviders\GoogleAccountProvider.cs" />
-    <Compile Include="AccountProviders\TwitterAccountProvider.cs" />
+    <Compile Include="AccountImpl\DeletedAccount.cs" />
+    <Compile Include="FieldImpl\StringField.cs" />
+    <Compile Include="FieldType.cs" />
+    <Compile Include="FieldTypes.cs" />
+    <Compile Include="Providers.cs" />
     <Compile Include="Accounts.cs" />
-    <Compile Include="AccountImplementations\AccountBase.cs" />
-    <Compile Include="AccountImplementations\GoogleAccount.cs" />
-    <Compile Include="AccountImplementations\TwitterAccount.cs" />
-    <Compile Include="AccountImplementations\UserNameOnlyAccountBase.cs" />
-    <Compile Include="AccountImplementations\UserNameAndEmailAccountBase.cs" />
-    <Compile Include="AccountImplementations\EmailOnlyAccountBase.cs" />
-    <Compile Include="AccountProviders\FacebookAccountProvider.cs" />
-    <Compile Include="AccountTag.cs" />
-    <Compile Include="AccountProviders\AccountProviderBase.cs" />
-    <Compile Include="AccountImplementations\FacebookAccount.cs" />
-    <Compile Include="AccountTags.cs" />
+    <Compile Include="Account.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="Provider.cs" />
+    <Compile Include="Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase.cs" />
   </ItemGroup>
@@ -67,6 +62,10 @@
   <ItemGroup>
     <None Include="PassFruit.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates.xml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

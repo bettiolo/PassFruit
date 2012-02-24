@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using PassFruit.AccountImplementations;
+using PassFruit.AccountImpl;
 using PassFruit.Contracts;
 
 namespace PassFruit {
@@ -11,7 +11,7 @@ namespace PassFruit {
 
         private readonly IRepository _repository;
 
-        public Accounts(IRepository repository) : base() {
+        internal Accounts(IRepository repository) {
             _repository = repository;
         }
 
@@ -19,15 +19,21 @@ namespace PassFruit {
             get { return this.Single(account => account.Id == accountId); }
         }
 
-        public IEnumerable<IAccountWithEmail> GetByEmail(string email) {
-            return this.OfType<IAccountWithEmail>().Where(
-                account => account.Email.Equals(email, StringComparison.OrdinalIgnoreCase)
-            );
+        public IEnumerable<IAccount> GetByEmail(string email) {
+            return this.Where(account => FindField(account, Contracts.FieldTypeName.Email, email));
         }
 
-        public IEnumerable<IAccountWithUserName> GetByUserName(string userName) {
-            return this.OfType<IAccountWithUserName>().Where(
-                account => account.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+        public IEnumerable<IAccount> GetByUserName(string userName) {
+            return this.Where(account => FindField(account, Contracts.FieldTypeName.UserName, userName));
+        }
+
+        public IAccount Create() {
+            return new Account(_repository);
+        }
+
+        private static bool FindField(IAccount account, Contracts.FieldTypeName fieldTypeName, string fieldValue) {
+            return account.GetFieldsByType(fieldTypeName).Any(
+                field => field.Value.Equals(fieldValue, StringComparison.OrdinalIgnoreCase)
             );
         }
 

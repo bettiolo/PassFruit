@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<templates>
+  
+  <providers>
+  
+    <facebook>
+      <name>Facebook</name>
+      <homepage>facebook.com</homepage>
+      <fields>
+        <email />
+        <password />
+      </fields>
+      <tags>
+        <web-sites />
+      </tags>
+    </facebook>
+  
+    <google>
+      <name>Google</name>
+      <homepage>google.com</homepage>
+      <fields>
+        <email />
+        <password />
+      </fields>
+      <tags>
+        <web-sites />
+      </tags>
+    </google>
+  
+    <twitter>
+      <name>Twitter</name>
+      <homepage>twitter.com</homepage>
+      <fields>
+        <username />
+        <email />
+        <password />
+      </fields>
+      <tags>
+        <web-sites />
+      </tags>
+    </twitter>
+    
+  </providers>
+
+  <fields>
+    
+    <email isDefault="true" />
+    <password isDefault="true" isPassword="true" />
+    <username isDefault="true" />
+    
+  </fields>
+  
+</templates>

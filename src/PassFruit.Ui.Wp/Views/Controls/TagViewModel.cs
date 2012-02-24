@@ -7,9 +7,9 @@ namespace PassFruit.Ui.Wp.Views.Controls {
 
     public class TagViewModel : PropertyChangedBase {
 
-        public TagViewModel(IAccountTag accountTag) {
-            TagName = accountTag.Name;
-            Description = accountTag.Accounts.Count() + " account(s)";
+        public TagViewModel(ITag tag) {
+            TagName = tag.Name;
+            Description = tag.Accounts.Count() + " account(s)";
         }
 
         private string _tagName;

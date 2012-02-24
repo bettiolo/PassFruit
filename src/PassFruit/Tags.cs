@@ -6,23 +6,23 @@ using PassFruit.Contracts;
 
 namespace PassFruit {
 
-    public class AccountTags : IAccountTags {
+    public class Tags : ITags {
 
         private readonly IRepository _repository;
 
-        private readonly List<IAccountTag> _accountTags = new List<IAccountTag>();
+        private readonly List<ITag> _tags = new List<ITag>();
 
-        public AccountTags(IRepository repository) {
+        internal Tags(IRepository repository) {
             _repository = repository;
             ReloadTags();
         }
 
         private void ReloadTags() {
-            _accountTags.Clear();
-            _accountTags.AddRange(_repository.Accounts.SelectMany(account => account.AccountTags).Distinct());
+            _tags.Clear();
+            _tags.AddRange(_repository.Accounts.SelectMany(account => account.Tags).Distinct());
         }
 
-        public IAccountTag this[string name] {
+        public ITag this[string name] {
             get {
                 return this.FirstOrDefault(accountTag => 
                     accountTag.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -30,20 +30,25 @@ namespace PassFruit {
         }
 
         public bool Contains(string name) {
-            return _accountTags.Any(accountTag => accountTag.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return _tags.Any(accountTag => accountTag.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
-        public IEnumerable<IAccountTag> GetByAccountId(Guid accountId) {
+        public IEnumerable<ITag> GetByAccountId(Guid accountId) {
             return this.Where(accountTag => accountTag.Accounts.Any(account => account.Id == accountId));
         }
 
-        public IEnumerator<IAccountTag> GetEnumerator() {
-            return _accountTags.GetEnumerator();
+        public IEnumerator<ITag> GetEnumerator() {
+            return _tags.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
+
+        public ITag Create(string tagName) {
+            return new Tag(_repository) { Name = tagName };
+        }
+
     }
 
 }

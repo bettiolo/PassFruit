@@ -20,7 +20,7 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         public IEnumerable<TagViewModel> Tags {
-            get { return _account.AccountTags.Select(accountTag => new TagViewModel(accountTag)); }
+            get { return _account.Tags.Select(accountTag => new TagViewModel(accountTag)); }
         }
 
         private Guid _accountId;
@@ -68,7 +68,7 @@ namespace PassFruit.Ui.Wp.Views {
 
         public Visibility IsUserNameEnabled {
             get {
-                return _account is IAccountWithUserName
+                return _account.Provider.HasUserName
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             }
@@ -76,7 +76,7 @@ namespace PassFruit.Ui.Wp.Views {
 
         public Visibility IsEmailEnabled {
             get {
-                return _account is IAccountWithEmail
+                return _account.Provider.HasEmail
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             }
@@ -87,21 +87,20 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         public string AccountName {
-            get { return _account.AccountName; }
+            get { return _account.GetAccountName(); }
         }
 
         public string Email {
             get {
-                var accountWithEmail = _account as IAccountWithEmail;
-                return accountWithEmail != null 
-                    ? accountWithEmail.Email 
+                return _account.Provider.HasEmail
+                    ? _account.GetDefaultField(FieldTypeName.Email).Value
                     : "";
             }
             set {
-                var accountWithEmail = _account as IAccountWithEmail;
-                if (accountWithEmail == null) return;
+                if (!_account.Provider.HasEmail) return;
 
-                accountWithEmail.Email = value;
+                _account.GetDefaultField(FieldTypeName.Email).Value = value;
+
                 NotifyOfPropertyChange(() => Email);
                 NotifyOfPropertyChange(() => Title);
             }
@@ -109,16 +108,15 @@ namespace PassFruit.Ui.Wp.Views {
 
         public string UserName {
             get {
-                var accountWithUserName = _account as IAccountWithUserName;
-                return accountWithUserName != null
-                    ? accountWithUserName.UserName
+                return _account.Provider.HasUserName
+                    ? _account.GetDefaultField(FieldTypeName.UserName).Value
                     : "";
             }
             set {
-                var accountWithUserName = _account as IAccountWithUserName;
-                if (accountWithUserName == null) return;
+                if (!_account.Provider.HasUserName) return;
 
-                accountWithUserName.UserName = value;
+                _account.GetDefaultField(FieldTypeName.UserName).Value = value;
+
                 NotifyOfPropertyChange(() => UserName);
                 NotifyOfPropertyChange(() => Title);
             }

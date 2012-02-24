@@ -14,7 +14,7 @@ namespace PassFruit.Ui.Wp.Views.Controls {
             AccountIcon = new AccountProviderIconViewModel(account.Provider, 64);
             Id = account.Id;
             ProviderName = account.Provider.Name;
-            Account = account.AccountName;
+            Account = account.GetAccountName();
         }
 
         private Guid _id;
