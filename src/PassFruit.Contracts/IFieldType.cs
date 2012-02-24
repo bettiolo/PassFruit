@@ -7,7 +7,7 @@ namespace PassFruit.Contracts {
 
     public interface IFieldType {
 
-        string Type { get; }
+        FieldTypeKey Key { get; }
 
         bool IsDefault { get; }
 

@@ -5,7 +5,9 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IFieldTypes : IEnumerable<FieldTypeName> {
+    public interface IFieldTypes : IEnumerable<IFieldType> {
+
+        IField<TValue> CreateField<TValue>(FieldTypeKey key, TValue value);
 
     }
 

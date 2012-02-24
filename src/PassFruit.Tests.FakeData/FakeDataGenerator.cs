@@ -9,7 +9,7 @@ namespace PassFruit.Tests.FakeData {
 
             var facebookAccount = repository.Accounts.Create();
             facebookAccount.Notes = @"Example test note 1";
-            facebookAccount.SetField(FieldTypeName.Email, @"testFacebook@example.com");
+            facebookAccount.SetField(FieldTypeKey.Email, @"testFacebook@example.com");
             facebookAccount.AddTag("Tag 1");
             facebookAccount.AddTag("Tag 2");
             facebookAccount.SetPassword("Password1");
@@ -17,8 +17,8 @@ namespace PassFruit.Tests.FakeData {
 
             var twitterAccount = repository.Accounts.Create();
             twitterAccount.Notes = @"Example test note 2 blah blah blah\nBlah blah blah\nLorem ipsun dolor sit amet";
-            twitterAccount.SetField(FieldTypeName.Email, @"testTwitter@example.com");
-            twitterAccount.SetField(FieldTypeName.UserName, @"TwitterUser");
+            twitterAccount.SetField(FieldTypeKey.Email, @"testTwitter@example.com");
+            twitterAccount.SetField(FieldTypeKey.UserName, @"TwitterUser");
             twitterAccount.AddTag("Tag 1");
             twitterAccount.SetPassword("Password2!£!$!$%!$&!£&!");
             repository.Accounts.Add(twitterAccount);

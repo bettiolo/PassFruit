@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountImpl\DeletedAccount.cs" />
-    <Compile Include="FieldImpl\StringField.cs" />
+    <Compile Include="Field.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="FieldTypes.cs" />
     <Compile Include="Providers.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PassFruit.Contracts;
+using PassFruit.FieldImpl;
 
 namespace PassFruit {
 
@@ -11,25 +12,29 @@ namespace PassFruit {
 
         private int _orignalHash;
 
+        private readonly List<ITag> _tags;
+
+        private readonly List<IField> _fields;
+
         internal Account(IRepository repository, Guid? id = null) {
             _repository = repository;
-            Tags = new List<ITag>();
-            Fields = new List<IField>();
+            _tags = new List<ITag>();
+            _fields = new List<IField>();
             Id = id.HasValue ? id.Value : Guid.NewGuid();
         }
 
         public Guid Id { get; private set; }
 
-        public string GetAccountName() {
+        public virtual string GetAccountName() {
             var accountName = "";
             if (Provider.HasUserName) {
-                var userNameField = GetDefaultField(FieldTypeName.UserName);
+                var userNameField = GetDefaultField(FieldTypeKey.UserName);
                 if (userNameField != null) {
                     accountName = userNameField.Value;
                 }
             }
             if (Provider.HasEmail) {
-                var emailField = GetDefaultField(FieldTypeName.Email);
+                var emailField = GetDefaultField(FieldTypeKey.Email);
                 if (emailField != null) {
                     if (!string.IsNullOrEmpty(accountName)) {
                         accountName += " - ";
@@ -59,18 +64,32 @@ namespace PassFruit {
             _repository.SetPassword(Id, password);
         }
 
-        public IList<ITag> Tags { get; private set; }
+        public IEnumerable<ITag> Tags { get { return _tags.ToArray(); } }
 
-        public IList<IField> Fields { get; private set; }
+        public IEnumerable<IField> Fields { get { return _fields.ToArray(); } }
 
-        public IEnumerable<IField<string>> GetFieldsByType(Contracts.FieldTypeName fieldTypeName) {
-            return Fields.Select(field => field as IField<string>)
-                         .Where(field => field != null)
-                         .Where(field => field.FieldTypeName == fieldTypeName);
+        public IEnumerable<IField<string>> GetFieldsByKey(FieldTypeKey fieldTypeKey) {
+            return _fields.Select(field => field as IField<string>)
+                          .Where(field => field != null)
+                          .Where(field => field.FieldType.Key == fieldTypeKey);
         }
 
-        public IField<string> GetDefaultField(Contracts.FieldTypeName fieldTypeName) {
-            return GetFieldsByType(fieldTypeName).FirstOrDefault(field => field.Template.IsDefault);
+        public IField<string> GetDefaultField(FieldTypeKey fieldTypeKey) {
+            return GetFieldsByKey(fieldTypeKey).FirstOrDefault(field => field.FieldType.IsDefault);
+        }
+
+        public void SetField<TValue>(FieldTypeKey fieldTypeKey, TValue value) {
+            var field = (IField<TValue>)_fields.SingleOrDefault(f => f.FieldType.Key == fieldTypeKey);
+            if (field == null) {
+                var newField = _repository.FieldTypes.CreateField(fieldTypeKey, value);
+                _fields.Add(newField);
+            } else {
+                field.Value = value;
+            }
+        }
+
+        public void AddTag(string tagName) {
+            _tags.Add(_repository.Tags.Create(tagName));
         }
 
         public virtual void Save() {
@@ -91,11 +110,11 @@ namespace PassFruit {
             unchecked {
                 var result = Id.GetHashCode();
                 result = (result * 397) ^ (Notes != null ? Notes.GetHashCode() : 0);
-                foreach (var accountField in Fields) {
-                    result = (result * 397) ^ (accountField != null ? accountField.GetHashCode() : 0);
+                foreach (var field in Fields) {
+                    result = (result * 397) ^ (field != null ? field.GetHashCode() : 0);
                 }
-                foreach (var accountTag in Tags) {
-                    result = (result * 397) ^ (accountTag != null ? accountTag.GetHashCode() : 0);
+                foreach (var tag in Tags) {
+                    result = (result * 397) ^ (tag != null ? tag.GetHashCode() : 0);
                 }
                 return result;
             }

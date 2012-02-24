@@ -6,9 +6,13 @@ using PassFruit.Contracts;
 
 namespace PassFruit {
 
-    internal class FieldType : IFieldType {
+    public class FieldType : IFieldType {
 
-        public string Type { get; set; }
+        internal FieldType(FieldTypeKey key) {
+            Key = key;
+        }
+
+        public FieldTypeKey Key { get; private set; }
 
         public bool IsDefault { get; set; }
 

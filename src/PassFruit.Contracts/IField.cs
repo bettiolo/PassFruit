@@ -9,9 +9,7 @@ namespace PassFruit.Contracts {
 
         string Name { get; set; }
 
-        IFieldType Template { get; set; }
-
-        FieldTypeName FieldTypeName { get; set; }
+        IFieldType FieldType { get; }
 
     }
     

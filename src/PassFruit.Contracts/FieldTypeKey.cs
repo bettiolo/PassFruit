@@ -1,6 +1,6 @@
 ﻿namespace PassFruit.Contracts {
 
-    public enum FieldTypeName {
+    public enum FieldTypeKey {
         Generic,
         Email,
         UserName,

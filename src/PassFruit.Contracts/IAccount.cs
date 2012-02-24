@@ -17,9 +17,9 @@ namespace PassFruit.Contracts {
 
         void SetPassword(string password);
 
-        IList<ITag> Tags { get; }
+        IEnumerable<ITag> Tags { get; }
 
-        IList<IField> Fields { get; }
+        IEnumerable<IField> Fields { get; }
 
         bool IsDirty { get; }
 
@@ -27,9 +27,14 @@ namespace PassFruit.Contracts {
 
         void SetClean();
 
-        IEnumerable<IField<string>> GetFieldsByType(FieldTypeName fieldTypeName);
+        IEnumerable<IField<string>> GetFieldsByKey(FieldTypeKey fieldTypeKey);
 
-        IField<string> GetDefaultField(FieldTypeName fieldTypeName);
+        IField<string> GetDefaultField(FieldTypeKey fieldTypeKey);
+
+        void SetField<TValue>(FieldTypeKey fieldTypeKey, TValue value);
+
+        void AddTag(string tagName);
+
     }
 
 }

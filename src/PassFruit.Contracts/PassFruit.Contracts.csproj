@@ -40,7 +40,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FieldTypeName.cs" />
+    <Compile Include="FieldTypeKey.cs" />
     <Compile Include="IField.cs" />
     <Compile Include="IAccount.cs" />
     <Compile Include="IFieldType.cs" />

@@ -17,6 +17,8 @@ namespace PassFruit.Contracts {
 
         IProviders Providers { get; }
 
+        IFieldTypes FieldTypes { get; }
+
         string GetPassword(Guid accountId);
 
         void SetPassword(Guid accountId, string password);
@@ -28,6 +30,6 @@ namespace PassFruit.Contracts {
         void SaveAll();
 
         void Save(IAccount account);
-
+        
     }
 }

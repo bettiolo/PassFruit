@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
-using PassFruit.AccountImplementations;
+using PassFruit.AccountImpl;
 using PassFruit.Contracts;
 using PassFruit.Tests.FakeData;
 
@@ -109,7 +109,7 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
             accountWithUserName.UserName = "edItedUsEr";
             accountWithEmail.Email = editedEmail;
             accountWithUserName.Save();
-            var retrievedAccount = (UserNameAndEmailAccountBase)repository.Accounts.GetByUserName(editedUser).First();
+            var retrievedAccount = repository.Accounts.GetByUserName(editedUser).First();
 
             // Then
             retrievedAccount.Id.Should().Be(originalId);
