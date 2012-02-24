@@ -30,7 +30,7 @@ namespace PassFruit.Contracts {
         IEnumerable<IField<string>> GetFieldsByKey(FieldTypeKey fieldTypeKey);
 
         IField<string> GetDefaultField(FieldTypeKey fieldTypeKey);
-
+        
         void SetField<TValue>(FieldTypeKey fieldTypeKey, TValue value);
 
         void AddTag(string tagName);
