@@ -27,9 +27,9 @@ namespace PassFruit.Contracts {
 
         void SetClean();
 
-        IEnumerable<IField<string>> GetFieldsByKey(FieldTypeKey fieldTypeKey);
+        IEnumerable<IField<TValue>> GetFieldsByKey<TValue>(FieldTypeKey fieldTypeKey);
 
-        IField<string> GetDefaultField(FieldTypeKey fieldTypeKey);
+        IField<TValue> GetDefaultField<TValue>(FieldTypeKey fieldTypeKey);
         
         void SetField<TValue>(FieldTypeKey fieldTypeKey, TValue value);
 

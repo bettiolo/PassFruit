@@ -1,5 +1,6 @@
 ﻿using PassFruit.Ui.Wp.Views;
 using PassFruit.Ui.Wp.Views.Controls;
+using PassFruit.Ui.Wp.Views.Controls.Fields;
 
 namespace PassFruit.Ui.Wp {
     using System;
@@ -26,6 +27,8 @@ namespace PassFruit.Ui.Wp {
             _container.PerRequest<AccountProviderIconViewModel>();
             _container.PerRequest<AccountViewModel>();
             _container.PerRequest<TagViewModel>();
+
+            _container.PerRequest<AccountFieldBase>();
 
             AddCustomConventions();
         }

@@ -15,7 +15,7 @@
              Foreground="{StaticResource PhoneForegroundBrush}"
              mc:Ignorable="d">
 
-    <Grid Margin="0,0,0,17">
+    <Grid Margin="0,0,0,2">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -24,9 +24,9 @@
 
         <my:AccountProviderIconView x:Name="AccountIcon"
                                     Grid.Column="0"
-                                    Width="84"
-                                    Height="84"
-                                    Margin="12,0,9,0"
+                                    Width="64"
+                                    Height="64"
+                                    Margin="12,0,12,0"
                                     cal:View.Model="{Binding AccountIcon}" />
 
         <StackPanel Grid.Column="1">

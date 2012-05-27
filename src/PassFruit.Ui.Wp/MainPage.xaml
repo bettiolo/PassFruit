@@ -31,7 +31,6 @@
             <controls:Panorama.TitleTemplate>
                 <DataTemplate>
                     <StackPanel Height="Auto"
-                                MinWidth="770"
                                 MaxWidth="1200"
                                 Margin="0,96,0,0">
                         <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}"
@@ -44,6 +43,7 @@
                     </StackPanel>
                 </DataTemplate>
             </controls:Panorama.TitleTemplate>
+            
             <controls:PanoramaItem Header="tags">
                 <ListBox x:Name="Tags" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>

@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="YourLastAboutDialog">
       <HintPath>..\packages\YLAD.1.4\lib\sl40-wp71\YourLastAboutDialog.dll</HintPath>
     </Reference>
@@ -102,6 +103,11 @@
     </Compile>
     <Compile Include="Views\Controls\AccountProviderViewModel.cs" />
     <Compile Include="Views\Controls\AccountViewModel.cs" />
+    <Compile Include="Views\Controls\Fields\AccountFieldBase.cs" />
+    <Compile Include="Views\Controls\Fields\AccountTypeFieldViewModel.cs" />
+    <Compile Include="Views\Controls\Fields\PasswordFieldViewModel.cs" />
+    <Compile Include="Views\Controls\Fields\GenericAccountFieldViewModel.cs" />
+    <Compile Include="Views\Controls\Fields\NotesFieldViewModel.cs" />
     <Compile Include="Views\Controls\HeaderedContentControl.cs" />
     <Compile Include="Views\Controls\SettingsItem.xaml.cs">
       <DependentUpon>SettingsItem.xaml</DependentUpon>
@@ -138,6 +144,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\AccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\Fields\AccountTypeFieldView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Fields\PasswordFieldView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\Fields\NotesFieldView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\Fields\GenericAccountFieldView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -216,6 +238,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\About\Data.xml" />
+    <Content Include="Resources\Providers\24\Generic.png" />
+    <Content Include="Resources\Providers\32\Generic.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
@@ -228,7 +252,7 @@
     <Content Include="Resources\Providers\64\Google.png" />
     <Content Include="Resources\Providers\64\Twitter.png" />
     <Content Include="Resources\Providers\64\Facebook.png" />
-    <Content Include="Resources\Providers\64\Unknown.png" />
+    <Content Include="Resources\Providers\64\Generic.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

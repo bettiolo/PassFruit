@@ -6,7 +6,7 @@ namespace PassFruit.AccountImpl {
     public class DeletedAccount : Account {
 
         public DeletedAccount(IRepository repository, Guid? id = null) 
-            : base(repository, id) {
+            : base(repository, null, id) {
 
         }
 

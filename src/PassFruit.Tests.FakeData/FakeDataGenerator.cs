@@ -7,7 +7,7 @@ namespace PassFruit.Tests.FakeData {
 
         public void GenerateFakeData(IRepository repository) {
 
-            var facebookAccount = repository.Accounts.Create();
+            var facebookAccount = repository.Accounts.Create("facebook");
             facebookAccount.Notes = @"Example test note 1";
             facebookAccount.SetField(FieldTypeKey.Email, @"testFacebook@example.com");
             facebookAccount.AddTag("Tag 1");
@@ -15,7 +15,7 @@ namespace PassFruit.Tests.FakeData {
             facebookAccount.SetPassword("Password1");
             repository.Accounts.Add(facebookAccount);
 
-            var twitterAccount = repository.Accounts.Create();
+            var twitterAccount = repository.Accounts.Create("twitter");
             twitterAccount.Notes = @"Example test note 2 blah blah blah\nBlah blah blah\nLorem ipsun dolor sit amet";
             twitterAccount.SetField(FieldTypeKey.Email, @"testTwitter@example.com");
             twitterAccount.SetField(FieldTypeKey.UserName, @"TwitterUser");
@@ -23,28 +23,22 @@ namespace PassFruit.Tests.FakeData {
             twitterAccount.SetPassword("Password2!£!$!$%!$&!£&!");
             repository.Accounts.Add(twitterAccount);
 
-            repository.Accounts.Add(
-                new GoogleAccount(repository) {
-                    Email = "user.name.example@gmail.com",
-                    Notes = ""
-                });
-            
-            repository.Accounts.Add(
-                new GoogleAccount(repository) {
-                    Email = "example2@gmail.com",
-                    Notes = ""
-                });
+            var googleAccount = repository.Accounts.Create("google");
+            googleAccount.SetField(FieldTypeKey.Email, "user.name.example@gmail.com");
+            googleAccount.AddTag("Tag 1");
+            googleAccount.AddTag("Tag 2");
+            googleAccount.AddTag("Tag 3");
+            googleAccount.SetPassword("Password3");
+            repository.Accounts.Add(googleAccount);
 
+            var googleAccount2 = repository.Accounts.Create("google");
+            googleAccount2.SetField(FieldTypeKey.Email, "example2@gmail.com");
+            googleAccount2.AddTag("Tag 2");
+            googleAccount2.AddTag("Tag 3");
+            googleAccount2.SetPassword("Password4");
+            repository.Accounts.Add(googleAccount2);
             
-            
-            repository.Accounts[2].SetPassword("Password3");
-            repository.Accounts[3].SetPassword("Password4");
-
-            repository.Accounts[2].AddTag("Tag 2");
-            repository.Accounts[3].AddTag("Tag 3");
-
             repository.SaveAll();
-
         }
 
     }

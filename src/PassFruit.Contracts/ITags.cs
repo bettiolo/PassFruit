@@ -14,6 +14,7 @@ namespace PassFruit.Contracts {
         bool Contains(string name);
 
         ITag Create(string tagName);
+
     }
 
 }

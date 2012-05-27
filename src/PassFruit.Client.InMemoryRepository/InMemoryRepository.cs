@@ -35,7 +35,10 @@ namespace PassFruit.Client.InMemoryRepository {
         }
 
         protected override void LoadAllAccountProviders() {
-            // Providers.Add(Providers.Create());
+            Providers.Add("generic", "Generic", true, true, false, "");
+            Providers.Add("facebook", "Facebook", true, false, false, "");
+            Providers.Add("twitter", "Twitter", true, true, false, "");
+            Providers.Add("google", "Google", true, false, false, "");
         }
 
         protected override void LoadAllFieldTypes() {

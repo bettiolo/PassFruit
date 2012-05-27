@@ -20,7 +20,7 @@
                             Foreground="{StaticResource PhoneForegroundBrush}"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="True"
-                            SupportedOrientations="Portrait"
+                            SupportedOrientations="PortraitOrLandscape"
                             mc:Ignorable="d">
 
     <!--  LayoutRoot is the root grid where all page content is placed  -->
@@ -28,77 +28,26 @@
 
         <controls:Pivot Title="{Binding Title}">
             <controls:PivotItem Header="details">
-                <ScrollViewer Margin="0, 0, -12, 0">
-                    <StackPanel>
+                <ListBox ItemsSource="{Binding DisplayFields}" Margin="0, 0, -12, 0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl cal:View.Model="{Binding}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
-                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}">account type</TextBlock>
-                        <StackPanel Orientation="Horizontal">
-                            <Controls:AccountProviderIconView Width="32"
-                                                              Height="32"
-                                                              Margin="12,0,0,0"
-                                                              cal:View.Model="{Binding AccountIcon}" />
-
-                            <TextBlock MinHeight="30"
-                                       Style="{StaticResource PhoneTextLargeStyle}"
-                                       Text="{Binding AccountType}"
-                                       TextWrapping="Wrap" />
-
-                        </StackPanel>
-
-                        <!--<TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="account name" />
-                        <TextBlock MinHeight="30"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding Account}"
-                                   TextWrapping="Wrap" />-->
-
-                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}"
-                                   Text="user name"
-                                   Visibility="{Binding IsUserNameEnabled}" />
-                        <TextBlock MinHeight="30"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding UserName}"
-                                   TextWrapping="Wrap"
-                                   Visibility="{Binding IsUserNameEnabled}" />
-                        <Button cal:Message.Attach="CopyUserName"
-                                Content="copy user name"
-                                Visibility="{Binding IsUserNameEnabled}" />
-
-                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}"
-                                   Text="email"
-                                   Visibility="{Binding IsEmailEnabled}" />
-                        <TextBlock MinHeight="30"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding Email}"
-                                   TextWrapping="Wrap"
-                                   Visibility="{Binding IsEmailEnabled}" />
-                        <Button cal:Message.Attach="CopyEmail"
-                                Content="copy email"
-                                Visibility="{Binding IsEmailEnabled}" />
-
-                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="password" />
-                        <StackPanel Orientation="Horizontal">
-                            <Button cal:Message.Attach="ShowPassword" Content="show password" />
-                            <Button cal:Message.Attach="CopyPassword" Content="copy password" />
-                        </StackPanel>
-
-                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="notes" />
-                        <TextBlock MinHeight="30"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding Notes}"
-                                   TextWrapping="Wrap" />
-
-                    </StackPanel>
-                </ScrollViewer>
             </controls:PivotItem>
 
             <controls:PivotItem Header="edit">
                 <ScrollViewer Margin="0, 0, -12, 0">
                     <StackPanel>
-                        <!--<TextBlock Style="{StaticResource PhoneTextSubtleStyle}">account name</TextBlock>
-                        <TextBlock MinHeight="30"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding Account}"
-                                   TextWrapping="Wrap" />-->
+                        <!--
+                            <TextBlock Style="{StaticResource PhoneTextSubtleStyle}">account name</TextBlock>
+                            <TextBlock MinHeight="30"
+                            Style="{StaticResource PhoneTextLargeStyle}"
+                            Text="{Binding Account}"
+                            TextWrapping="Wrap" />
+                        -->
 
                         <TextBlock Style="{StaticResource PhoneTextSubtleStyle}"
                                    Text="user name"
@@ -109,14 +58,13 @@
                         <TextBox Text="{Binding Email, Mode=TwoWay}" Visibility="{Binding IsEmailEnabled}" />
 
                         <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="password" />
-                        <PasswordBox Password="{Binding Password, Mode=TwoWay}"
-                                     cal:Message.Attach="[Event GotFocus] = [Action PopulatePassword]"
-                                     />
+                        <PasswordBox cal:Message.Attach="[Event GotFocus] = [Action PopulatePassword]" Password="{Binding Password, Mode=TwoWay}" />
 
                         <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="notes" />
                         <TextBox MinHeight="200"
                                  AcceptsReturn="True"
-                                 Text="{Binding Notes, Mode=TwoWay}"
+                                 Text="{Binding Notes,
+                                                Mode=TwoWay}"
                                  TextWrapping="Wrap" />
 
                     </StackPanel>

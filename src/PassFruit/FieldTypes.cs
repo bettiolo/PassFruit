@@ -23,7 +23,10 @@ namespace PassFruit {
 
         public IField<TValue> CreateField<TValue>(FieldTypeKey key, TValue value) {
             var fieldType = _repository.FieldTypes.SingleOrDefault(ft => ft.Key == key);
-            var field = new Field<TValue>(fieldType);
+            if (fieldType == null) {
+                fieldType = new FieldType(key);
+            }
+            var field = new Field<TValue>(fieldType, typeof(TValue));
             field.Value = value;
             return field;
         }

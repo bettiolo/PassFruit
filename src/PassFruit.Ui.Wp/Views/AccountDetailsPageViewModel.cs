@@ -7,13 +7,13 @@ using System.Windows;
 using Caliburn.Micro;
 using PassFruit.Contracts;
 using PassFruit.Ui.Wp.Views.Controls;
+using PassFruit.Ui.Wp.Views.Controls.Fields;
 
 namespace PassFruit.Ui.Wp.Views {
 
     public class AccountDetailsPageViewModel : Screen {
 
         private IAccount _account;
-        private bool _passwordLoaded;
 
         public AccountDetailsPageViewModel() {
 
@@ -33,26 +33,32 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         public void LoadAccount() {
-            _passwordLoaded = false;
+            //_passwordLoaded = false;
             var repository = Init.GetRepository();
             _account = repository.Accounts[_accountId];
             NotifyOfPropertyChange(() => AccountName);
             NotifyOfPropertyChange(() => Title);
-            NotifyOfPropertyChange(() => Email);
-            NotifyOfPropertyChange(() => IsEmailEnabled);
-            NotifyOfPropertyChange(() => UserName);
-            NotifyOfPropertyChange(() => IsUserNameEnabled);
-            NotifyOfPropertyChange(() => Notes);
+            //NotifyOfPropertyChange(() => Email);
+            //NotifyOfPropertyChange(() => IsEmailEnabled);
+            //NotifyOfPropertyChange(() => UserName);
+            //NotifyOfPropertyChange(() => IsUserNameEnabled);
+            //NotifyOfPropertyChange(() => Notes);
             NotifyOfPropertyChange(() => Tags);
-            Password = "*****";
-            AccountIcon = new AccountProviderIconViewModel(_account.Provider, 32);
+            //Password = "*****";
+            DisplayFields = new ObservableCollection<AccountFieldBase>();
+            DisplayFields.Add(new AccountTypeFieldViewModel(_account));
+            DisplayFields.Add(new PasswordFieldViewModel(_account));
+            foreach(var field in _account.Fields.Select(f => f as IField<string>).Where(f => f != null)) {
+                DisplayFields.Add(new GenericAccountFieldViewModel(field));
+            }
+            DisplayFields.Add(new NotesFieldViewModel(_account));
         }
 
-        public void PopulatePassword() {
-            if (!_passwordLoaded) {
-                Password = _account.GetPassword();
-            }
-        }
+        //public void PopulatePassword() {
+        //    if (!_passwordLoaded) {
+        //        Password = _account.GetPassword();
+        //    }
+        //}
 
         protected override void OnDeactivate(bool close) {
             SaveAccount();
@@ -60,27 +66,24 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         private void SaveAccount() {
-            if (_passwordLoaded) {
-                _account.SetPassword(Password);
-            }
             _account.Save();
         }
 
-        public Visibility IsUserNameEnabled {
-            get {
-                return _account.Provider.HasUserName
-                    ? Visibility.Visible
-                    : Visibility.Collapsed;
-            }
-        }
+        //public Visibility IsUserNameEnabled {
+        //    get {
+        //        return _account.Provider.HasUserName
+        //            ? Visibility.Visible
+        //            : Visibility.Collapsed;
+        //    }
+        //}
 
-        public Visibility IsEmailEnabled {
-            get {
-                return _account.Provider.HasEmail
-                    ? Visibility.Visible
-                    : Visibility.Collapsed;
-            }
-        }
+        //public Visibility IsEmailEnabled {
+        //    get {
+        //        return _account.Provider.HasEmail
+        //            ? Visibility.Visible
+        //            : Visibility.Collapsed;
+        //    }
+        //}
 
         public string Title {
             get { return "PASSFRUIT | " + AccountName; }
@@ -90,79 +93,61 @@ namespace PassFruit.Ui.Wp.Views {
             get { return _account.GetAccountName(); }
         }
 
-        public string Email {
-            get {
-                return _account.Provider.HasEmail
-                    ? _account.GetDefaultField(FieldTypeName.Email).Value
-                    : "";
-            }
-            set {
-                if (!_account.Provider.HasEmail) return;
+        //public string Email {
+        //    get {
+        //        var email = _account.GetDefaultField<string>(FieldTypeKey.Email);
+        //        return (email != null)
+        //            ? email.Value
+        //            : "";
+        //    }
+        //    set {
+        //        _account.SetField(FieldTypeKey.Email, value);
 
-                _account.GetDefaultField(FieldTypeName.Email).Value = value;
+        //        NotifyOfPropertyChange(() => Email);
+        //        NotifyOfPropertyChange(() => Title);
+        //    }
+        //}
 
-                NotifyOfPropertyChange(() => Email);
-                NotifyOfPropertyChange(() => Title);
-            }
-        }
+        //public string UserName {
+        //    get {
+        //        var userName = _account.GetDefaultField<string>(FieldTypeKey.UserName);
+        //        return (userName != null)
+        //            ? userName.Value
+        //            : "";
+        //    }
+        //    set {
+        //        _account.SetField(FieldTypeKey.UserName, value);
 
-        public string UserName {
-            get {
-                return _account.Provider.HasUserName
-                    ? _account.GetDefaultField(FieldTypeName.UserName).Value
-                    : "";
-            }
-            set {
-                if (!_account.Provider.HasUserName) return;
-
-                _account.GetDefaultField(FieldTypeName.UserName).Value = value;
-
-                NotifyOfPropertyChange(() => UserName);
-                NotifyOfPropertyChange(() => Title);
-            }
-        }
+        //        NotifyOfPropertyChange(() => UserName);
+        //        NotifyOfPropertyChange(() => Title);
+        //    }
+        //}
 
         public string Notes {
             get { return _account.Notes; }
             set { _account.Notes = value; NotifyOfPropertyChange(() => Notes); }
         }
 
-        public void CopyPassword() {
-            Clipboard.SetText(_account.GetPassword());
-            MessageBox.Show("Password copied");
-        }
 
-        public void ShowPassword() {
-            MessageBox.Show("Password is '" + _account.GetPassword() + "'");
-        }
 
-        public void CopyUserName() {
-            Clipboard.SetText(UserName);
-            MessageBox.Show("Username copied: '" + UserName + "'");
-        }
+        //public void CopyUserName() {
+        //    Clipboard.SetText(UserName);
+        //    MessageBox.Show("Username copied: '" + UserName + "'");
+        //}
 
-        public void CopyEmail() {
-            Clipboard.SetText(Email);
-            MessageBox.Show("Email copied: '" + Email + "'");
-        }
-
-        public string AccountType {
-            get { return _account.Provider.Name; }
-        }
-
-        private AccountProviderIconViewModel _accountIcon;
-        public AccountProviderIconViewModel AccountIcon {
-            get { return _accountIcon; }
-            set {
-                _accountIcon = value;
-                NotifyOfPropertyChange(() => AccountIcon);
-            }
-        }
+        //public void CopyEmail() {
+        //    Clipboard.SetText(Email);
+        //    MessageBox.Show("Email copied: '" + Email + "'");
+        //}
 
         private string _password;
         public string Password {
             get { return _password; }
-            set { _password = value; NotifyOfPropertyChange(() => Password);} }
+            set { _password = value; NotifyOfPropertyChange(() => Password); }
         }
+
+        public ObservableCollection<AccountFieldBase> DisplayFields { get; private set; } 
+
+    }
 
 }

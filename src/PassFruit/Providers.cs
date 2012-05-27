@@ -21,6 +21,21 @@ namespace PassFruit {
             return _providers.GetEnumerator();
         }
 
+        public IProvider GetByKey(string providerKey) {
+            var provider = _providers.SingleOrDefault(p => p.Key.Equals(providerKey, StringComparison.OrdinalIgnoreCase));
+            return provider;
+        }
+
+        public void Add(string key, string name, bool hasEmail, bool hasUserName, bool hasPassword, string url) {
+            var provider = new Provider(key);
+            provider.Name = name;
+            provider.HasEmail = hasEmail;
+            provider.HasPassword = hasPassword;
+            provider.HasUserName = hasUserName;
+            provider.Url = url;
+            _providers.Add(provider);
+        }
+
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }

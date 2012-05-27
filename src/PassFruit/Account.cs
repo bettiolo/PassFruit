@@ -16,8 +16,9 @@ namespace PassFruit {
 
         private readonly List<IField> _fields;
 
-        internal Account(IRepository repository, Guid? id = null) {
+        internal Account(IRepository repository, IProvider provider, Guid? id = null) {
             _repository = repository;
+            _provider = provider;
             _tags = new List<ITag>();
             _fields = new List<IField>();
             Id = id.HasValue ? id.Value : Guid.NewGuid();
@@ -28,13 +29,13 @@ namespace PassFruit {
         public virtual string GetAccountName() {
             var accountName = "";
             if (Provider.HasUserName) {
-                var userNameField = GetDefaultField(FieldTypeKey.UserName);
+                var userNameField = GetDefaultField<string>(FieldTypeKey.UserName);
                 if (userNameField != null) {
                     accountName = userNameField.Value;
                 }
             }
             if (Provider.HasEmail) {
-                var emailField = GetDefaultField(FieldTypeKey.Email);
+                var emailField = GetDefaultField<string>(FieldTypeKey.Email);
                 if (emailField != null) {
                     if (!string.IsNullOrEmpty(accountName)) {
                         accountName += " - ";
@@ -54,7 +55,10 @@ namespace PassFruit {
             return GetAccountName() + " | " + Provider.Name;
         }
 
-        public IProvider Provider { get; set; }
+        private IProvider _provider;
+        public IProvider Provider {
+            get { return _provider; }
+        }
 
         public string GetPassword() {
             return _repository.GetPassword(Id);
@@ -68,14 +72,19 @@ namespace PassFruit {
 
         public IEnumerable<IField> Fields { get { return _fields.ToArray(); } }
 
-        public IEnumerable<IField<string>> GetFieldsByKey(FieldTypeKey fieldTypeKey) {
-            return _fields.Select(field => field as IField<string>)
-                          .Where(field => field != null)
+        public IEnumerable<IField<TValue>> GetFieldsByKey<TValue>(FieldTypeKey fieldTypeKey) {
+            return _fields.Where(field => field.ValueType == typeof(TValue)).Select(field => (IField<TValue>)field)
                           .Where(field => field.FieldType.Key == fieldTypeKey);
         }
 
-        public IField<string> GetDefaultField(FieldTypeKey fieldTypeKey) {
-            return GetFieldsByKey(fieldTypeKey).FirstOrDefault(field => field.FieldType.IsDefault);
+        public IField<TValue> GetDefaultField<TValue>(FieldTypeKey fieldTypeKey) {
+            var fields = GetFieldsByKey<TValue>(fieldTypeKey);
+            var fieldsCount = fields.Count();
+            if (fieldsCount > 0 
+                && (fieldsCount == 1 || !fields.Any((field => field.FieldType.IsDefault)))) {
+                return fields.First();
+            } 
+            return fields.FirstOrDefault(field => field.FieldType.IsDefault);
         }
 
         public void SetField<TValue>(FieldTypeKey fieldTypeKey, TValue value) {

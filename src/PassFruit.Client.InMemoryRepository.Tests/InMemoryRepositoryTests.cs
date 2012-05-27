@@ -38,20 +38,20 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
 
             // Then
             facebookAccount.Should().NotBeNull();
-            facebookAccount.Email.Should().Be(testFacebookEmail);
-            facebookAccount.Should().BeOfType<FacebookAccount>();
+            facebookAccount.GetDefaultField(FieldTypeKey.Email).Should().Be(testFacebookEmail);
+            facebookAccount.Provider.Key.Should().Be("generic");
 
             twitterAccountByUserName.Should().NotBeNull();
-            twitterAccountByUserName.UserName.Should().Be(testTwitterAccount);
-            twitterAccountByUserName.Should().BeOfType<TwitterAccount>();
+            twitterAccountByUserName.GetDefaultField(FieldTypeKey.UserName).Should().Be(testTwitterAccount);
+            twitterAccountByUserName.Provider.Key.Should().Be("generic");
 
             twitterAccountByEmail.Should().NotBeNull();
-            twitterAccountByEmail.Email.Should().Be(testTwitterEmail);
-            twitterAccountByEmail.Should().BeOfType<TwitterAccount>();
+            twitterAccountByEmail.GetDefaultField(FieldTypeKey.Email).Should().Be(testTwitterEmail);
+            twitterAccountByEmail.Provider.Key.Should().Be("generic");
 
             gmailAccount.Should().NotBeNull();
-            gmailAccount.Email.Should().Be(testGoogleEmail);
-            gmailAccount.Should().BeOfType<GoogleAccount>();
+            gmailAccount.GetDefaultField(FieldTypeKey.Email).Should().Be(testGoogleEmail);
+            gmailAccount.Provider.Key.Should().Be("generic");
 
         }
 
@@ -61,8 +61,8 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
             // Given
             var repository = GetRepositoryWithFakeData();
             var originalAccountCount = repository.Accounts.Count();
-            var facebookAccount = new FacebookAccount(repository);
-            facebookAccount.Email = "testFacebookTemp@tin.it";
+            var facebookAccount = repository.Accounts.Create("generic");
+            facebookAccount.SetField(FieldTypeKey.Email, "testFacebookTemp@tin.it");
 
             // When
             repository.Accounts.Add(facebookAccount);
@@ -106,15 +106,15 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
             var originalId = accountWithUserName.Id;
 
             // When
-            accountWithUserName.UserName = "edItedUsEr";
-            accountWithEmail.Email = editedEmail;
+            accountWithUserName.SetField(FieldTypeKey.UserName, editedUser);
+            accountWithUserName.SetField(FieldTypeKey.Email, editedEmail);
             accountWithUserName.Save();
             var retrievedAccount = repository.Accounts.GetByUserName(editedUser).First();
 
             // Then
             retrievedAccount.Id.Should().Be(originalId);
-            retrievedAccount.UserName.Should().Be(editedUser);
-            retrievedAccount.Email.Should().Be(editedEmail);
+            retrievedAccount.GetDefaultField(FieldTypeKey.UserName).Should().Be(editedUser);
+            retrievedAccount.GetDefaultField(FieldTypeKey.Email).Should().Be(editedEmail);
 
         }
 
@@ -124,8 +124,8 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
             // Given
             var repository = GetRepositoryWithFakeData();
             var account = repository.Accounts.GetByUserName("tWiTTeRUsEr").First();
-            var originalTotalTagCount = repository.AccountTags.Count();
-            var originalAccountTagCount = account.AccountTags.Count;
+            var originalTotalTagCount = repository.Tags.Count();
+            var originalAccountTagCount = account.Tags.Count();
 
             // When
             var actAddTag = new Action(() => account.AddTag("test tag A"));
@@ -135,13 +135,13 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
             account.IsDirty.Should().BeFalse();
             actAddTag();
             account.IsDirty.Should().BeTrue();
-            repository.AccountTags.Count().Should().Be(originalTotalTagCount);
+            repository.Tags.Count().Should().Be(originalTotalTagCount);
             actSave();
             account.IsDirty.Should().BeFalse();
-            account.AccountTags.Count.Should().Be(originalAccountTagCount + 1);
-            repository.AccountTags.Count().Should().Be(originalTotalTagCount + 1);
-            repository.AccountTags.Contains("test tag b").Should().BeFalse();
-            repository.AccountTags.Contains("test tag a").Should().BeTrue();
+            account.Tags.Count().Should().Be(originalAccountTagCount + 1);
+            repository.Tags.Count().Should().Be(originalTotalTagCount + 1);
+            repository.Tags.Contains("test tag b").Should().BeFalse();
+            repository.Tags.Contains("test tag a").Should().BeTrue();
 
         }
 

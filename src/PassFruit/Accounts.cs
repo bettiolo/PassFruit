@@ -27,12 +27,13 @@ namespace PassFruit {
             return this.Where(account => FindField(account, Contracts.FieldTypeKey.UserName, userName));
         }
 
-        public IAccount Create() {
-            return new Account(_repository);
+        public IAccount Create(string providerKey) {
+            var provider = _repository.Providers.GetByKey(providerKey);
+            return new Account(_repository, provider);
         }
 
         private static bool FindField(IAccount account, Contracts.FieldTypeKey fieldTypeKey, string fieldValue) {
-            return account.GetFieldsByKey(fieldTypeKey).Any(
+            return account.GetFieldsByKey<string>(fieldTypeKey).Any(
                 field => field.Value.Equals(fieldValue, StringComparison.OrdinalIgnoreCase)
             );
         }

@@ -4,19 +4,25 @@ namespace PassFruit {
 
     public class Provider : IProvider {
 
-        internal Provider() {
-            
+        internal Provider(string key) {
+            Key = key;
         }
 
-        public string Name { get; private set; }
+        public string Key { get; private set; }
 
-        public bool HasEmail { get; private set; }
+        public string Name { get; internal set; }
 
-        public bool HasUserName { get; private set; }
+        public bool HasEmail { get; internal set; }
 
-        public bool HasPassword { get; private set; }
+        public bool HasUserName { get; internal set; }
 
-        public string Url { get; private set; }
+        public bool HasPassword { get; internal set; }
+
+        public string Url { get; internal set; }
+
+        public override string ToString() {
+            return Name;
+        }
 
     }
 
