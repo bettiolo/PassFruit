@@ -53,10 +53,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XmlRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PassFruit.Client.XmlRepository\PassFruit.Client.XmlRepository.csproj">
+      <Project>{5DACB670-3923-49D9-815F-ECEE33835DC8}</Project>
+      <Name>PassFruit.Client.XmlRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
+      <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
+      <Name>PassFruit.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Tests.FakeData\PassFruit.Tests.FakeData.csproj">
+      <Project>{6140384A-8A30-4916-BAC5-6AD1E0FC5049}</Project>
+      <Name>PassFruit.Tests.FakeData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Tests\PassFruit.Tests.csproj">
+      <Project>{CBC6B226-8231-4F44-946A-9A4BA83BFD29}</Project>
+      <Name>PassFruit.Tests %28PassFruit.Tests\PassFruit.Tests%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit\PassFruit.csproj">
+      <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>
+      <Name>PassFruit %28PassFruit\PassFruit%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

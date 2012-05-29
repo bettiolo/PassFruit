@@ -203,7 +203,7 @@
     </ProjectReference>
     <ProjectReference Include="..\PassFruit.Client\PassFruit.Client.csproj">
       <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
-      <Name>PassFruit.Client</Name>
+      <Name>PassFruit.Client %28PassFruit.Client\PassFruit.Client%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
       <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
@@ -215,7 +215,7 @@
     </ProjectReference>
     <ProjectReference Include="..\PassFruit\PassFruit.csproj">
       <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>
-      <Name>PassFruit</Name>
+      <Name>PassFruit %28PassFruit\PassFruit%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

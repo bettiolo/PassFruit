@@ -90,6 +90,10 @@
       <Project>{67DFF456-D3B0-4F62-BDC7-D0154C46C662}</Project>
       <Name>PassFruit.Tests.FakeData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Tests\PassFruit.Tests.csproj">
+      <Project>{CBC6B226-8231-4F44-946A-9A4BA83BFD29}</Project>
+      <Name>PassFruit.Tests %28PassFruit.Tests\PassFruit.Tests%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PassFruit\PassFruit.csproj">
       <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>
       <Name>PassFruit %28PassFruit\PassFruit%29</Name>

@@ -15,7 +15,7 @@ namespace PassFruit.Contracts {
 
     }
 
-public interface IField<TValue> : IField{
+    public interface IField<TValue> : IField{
 
         TValue Value { get; set; }
 
