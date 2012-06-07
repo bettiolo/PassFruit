@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
-using PassFruit.AccountImpl;
 using PassFruit.Contracts;
 using PassFruit.Tests;
 using PassFruit.Tests.FakeData;

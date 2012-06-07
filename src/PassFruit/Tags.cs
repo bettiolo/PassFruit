@@ -22,15 +22,15 @@ namespace PassFruit {
             _tags.AddRange(_repository.Accounts.SelectMany(account => account.Tags).Distinct());
         }
 
-        public ITag this[string name] {
+        public ITag this[string key] {
             get {
                 return this.FirstOrDefault(accountTag => 
-                    accountTag.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                    accountTag.Key.Equals(key, StringComparison.OrdinalIgnoreCase));
             }
         }
 
-        public bool Contains(string name) {
-            return _tags.Any(accountTag => accountTag.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        public bool Contains(string key) {
+            return _tags.Any(accountTag => accountTag.Key.Equals(key, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<ITag> GetByAccountId(Guid accountId) {
@@ -45,8 +45,8 @@ namespace PassFruit {
             return GetEnumerator();
         }
 
-        public ITag Create(string tagName) {
-            return new Tag(_repository) { Name = tagName };
+        public ITag Create(string key) {
+            return new Tag(_repository) { Key = key };
         }
 
     }

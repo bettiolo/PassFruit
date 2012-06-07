@@ -7,13 +7,13 @@ namespace PassFruit.Contracts {
 
     public interface ITags : IEnumerable<ITag> {
 
-        ITag this[string name] { get; }
+        ITag this[string key] { get; }
 
         IEnumerable<ITag> GetByAccountId(Guid accountId);
 
-        bool Contains(string name);
+        bool Contains(string key);
 
-        ITag Create(string tagName);
+        ITag Create(string key);
 
     }
 

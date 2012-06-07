@@ -8,13 +8,16 @@ namespace PassFruit {
 
     public class FieldType : IFieldType {
 
-        internal FieldType(FieldTypeKey key) {
+        internal FieldType(FieldTypeKey key, string description = "") {
             Key = key;
+            Description = description;
         }
 
         public FieldTypeKey Key { get; private set; }
 
         public bool IsDefault { get; set; }
+
+        public string Description { get; private set; }
 
         public bool IsPassword { get; set; }
 

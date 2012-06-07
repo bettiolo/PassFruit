@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NUnit.Framework;
 using PassFruit.Contracts;
 using PassFruit.Tests;
@@ -10,10 +11,7 @@ namespace PassFruit.Client.XmlRepository.Tests {
     public class XmlRepositoryTests : RepositoryTests {
 
         protected override IRepository GetRepositoryWithFakeData() {
-
-            throw new NotImplementedException();
-
-            var repository = new XmlRepository("");
+            var repository = new XmlRepository(Path.GetTempFileName());
             var fakeDataGenerator = new FakeDataGenerator();
             fakeDataGenerator.GenerateFakeData(repository);
             return repository;

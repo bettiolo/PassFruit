@@ -1,7 +1,7 @@
 ﻿using System;
 using PassFruit.Contracts;
 
-namespace PassFruit.AccountImpl {
+namespace PassFruit {
     
     public class DeletedAccount : Account {
 

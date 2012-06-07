@@ -7,6 +7,8 @@ namespace PassFruit {
     
     public abstract class RepositoryBase : IRepository {
 
+        public const string DefaultPasswordKey = "default";
+
         private IAccounts _accounts;
 
         private ITags _tags;
@@ -53,9 +55,9 @@ namespace PassFruit {
             }
         }
 
-        public abstract string GetPassword(Guid accountId);
+        public abstract string GetPassword(Guid accountId, string passwordKey = DefaultPasswordKey);
 
-        public abstract void SetPassword(Guid accountId, string password);
+        public abstract void SetPassword(Guid accountId, string password, string passwordKey = DefaultPasswordKey);
 
         public void Save(IAccount account) {
             _tags = null;
@@ -82,7 +84,12 @@ namespace PassFruit {
 
         protected abstract void LoadAllAccountsExceptDeleted();
 
-        protected abstract void LoadAllAccountProviders();
+        protected void LoadAllAccountProviders() {
+            Providers.Add("generic", "Generic", true, true, false, "");
+            Providers.Add("facebook", "Facebook", true, false, false, "");
+            Providers.Add("twitter", "Twitter", true, true, false, "");
+            Providers.Add("google", "Google", true, false, false, "");
+        }
 
         protected abstract void LoadAllFieldTypes();
 

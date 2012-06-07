@@ -8,7 +8,7 @@ namespace PassFruit.Client.InMemoryRepository {
 
     public class InMemoryRepository : RepositoryBase {
 
-        private Dictionary<Guid, string> _passwords = new Dictionary<Guid, string>(); 
+        private readonly Dictionary<Guid, Dictionary<string, string>> _passwords = new Dictionary<Guid, Dictionary<string, string>>();
 
         public override string Name {
             get { return "In Memory Repository"; }
@@ -18,12 +18,30 @@ namespace PassFruit.Client.InMemoryRepository {
             get { return "In Memory repository, the data is not persisted anywhere"; }
         }
 
-        public override string GetPassword(Guid accountId) {
-            return _passwords[accountId];
+        public override string GetPassword(Guid accountId, string passwordKey = DefaultPasswordKey) {
+            if (String.IsNullOrEmpty(passwordKey)) {
+                passwordKey = DefaultPasswordKey;
+            }
+            passwordKey = passwordKey.ToLowerInvariant();
+            var accountPasswords = _passwords[accountId];
+            if (accountPasswords == null || !accountPasswords.ContainsKey(passwordKey)) {
+                return "";
+            }
+            return accountPasswords[passwordKey];
         }
 
-        public override void SetPassword(Guid accountId, string password) {
-            _passwords[accountId] = password;
+        public override void SetPassword(Guid accountId, string password, string passwordKey = DefaultPasswordKey) {
+            if (String.IsNullOrEmpty(passwordKey)) {
+                passwordKey = DefaultPasswordKey;
+            }
+            passwordKey = passwordKey.ToLowerInvariant();
+            if (!_passwords.ContainsKey(accountId)) {
+                _passwords.Add(accountId, new Dictionary<string, string>());
+            }
+            if (!_passwords[accountId].ContainsKey(passwordKey)) {
+                _passwords[accountId].Add(passwordKey, "");
+            }
+            _passwords[accountId][passwordKey] = password;
         }
 
         protected override void LoadAllAccounts() {
@@ -32,13 +50,6 @@ namespace PassFruit.Client.InMemoryRepository {
 
         protected override void LoadAllAccountsExceptDeleted() {
             // Accounts.Add(Accounts.Create());
-        }
-
-        protected override void LoadAllAccountProviders() {
-            Providers.Add("generic", "Generic", true, true, false, "");
-            Providers.Add("facebook", "Facebook", true, false, false, "");
-            Providers.Add("twitter", "Twitter", true, true, false, "");
-            Providers.Add("google", "Google", true, false, false, "");
         }
 
         protected override void LoadAllFieldTypes() {

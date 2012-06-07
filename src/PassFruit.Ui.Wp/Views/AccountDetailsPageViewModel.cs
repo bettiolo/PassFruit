@@ -48,7 +48,7 @@ namespace PassFruit.Ui.Wp.Views {
             DisplayFields = new ObservableCollection<AccountFieldBase>();
             DisplayFields.Add(new AccountTypeFieldViewModel(_account));
             DisplayFields.Add(new PasswordFieldViewModel(_account));
-            foreach(var field in _account.Fields.Select(f => f as IField<string>).Where(f => f != null)) {
+            foreach(var field in _account.Fields.Where(f => f != null)) {
                 DisplayFields.Add(new GenericAccountFieldViewModel(field));
             }
             DisplayFields.Add(new NotesFieldViewModel(_account));

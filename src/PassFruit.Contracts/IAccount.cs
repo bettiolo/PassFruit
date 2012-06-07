@@ -7,15 +7,17 @@ namespace PassFruit.Contracts {
 
         Guid Id { get; }
 
+        string EncryptionSalt { get; set; }
+
         string GetAccountName();
 
         string Notes { get; set; }
 
         IProvider Provider { get; }
 
-        string GetPassword();
+        string GetPassword(string passwordKey = "");
 
-        void SetPassword(string password);
+        void SetPassword(string password, string passwordKey = "");
 
         IEnumerable<ITag> Tags { get; }
 
@@ -27,11 +29,11 @@ namespace PassFruit.Contracts {
 
         void SetClean();
 
-        IEnumerable<IField<TValue>> GetFieldsByKey<TValue>(FieldTypeKey fieldTypeKey);
+        IEnumerable<IField> GetFieldsByKey(FieldTypeKey fieldTypeKey);
 
-        IField<TValue> GetDefaultField<TValue>(FieldTypeKey fieldTypeKey);
+        IField GetDefaultField(FieldTypeKey fieldTypeKey);
         
-        void SetField<TValue>(FieldTypeKey fieldTypeKey, TValue value);
+        void SetField(FieldTypeKey fieldTypeKey, object value);
 
         void AddTag(string tagName);
 

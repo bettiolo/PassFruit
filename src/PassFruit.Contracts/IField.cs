@@ -9,15 +9,9 @@ namespace PassFruit.Contracts {
 
         string Name { get; set; }
 
-        Type ValueType { get; }
-
         IFieldType FieldType { get; }
 
-    }
-
-    public interface IField<TValue> : IField{
-
-        TValue Value { get; set; }
+        object Value { get; set; }
 
     }
 

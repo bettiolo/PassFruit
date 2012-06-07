@@ -11,7 +11,7 @@ namespace PassFruit.Contracts {
 
         bool IsDefault { get; }
 
-        bool IsPassword { get; }
+        string Description { get; }
 
     }
 

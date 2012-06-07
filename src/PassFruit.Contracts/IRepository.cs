@@ -19,9 +19,9 @@ namespace PassFruit.Contracts {
 
         IFieldTypes FieldTypes { get; }
 
-        string GetPassword(Guid accountId);
+        string GetPassword(Guid accountId, string passwordKey);
 
-        void SetPassword(Guid accountId, string password);
+        void SetPassword(Guid accountId, string password, string passwordKey);
 
         event EventHandler<RepositorySaveEventArgs> OnSaved;
 

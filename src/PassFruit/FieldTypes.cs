@@ -21,12 +21,12 @@ namespace PassFruit {
             return _fieldTypes.GetEnumerator();
         }
 
-        public IField<TValue> CreateField<TValue>(FieldTypeKey key, TValue value) {
+        public IField CreateField(FieldTypeKey key, object value) {
             var fieldType = _repository.FieldTypes.SingleOrDefault(ft => ft.Key == key);
             if (fieldType == null) {
                 fieldType = new FieldType(key);
             }
-            var field = new Field<TValue>(fieldType, typeof(TValue));
+            var field = new Field(fieldType);
             field.Value = value;
             return field;
         }

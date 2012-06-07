@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using PassFruit.AccountImpl;
 using PassFruit.Contracts;
 
 namespace PassFruit {
@@ -32,9 +31,9 @@ namespace PassFruit {
             return new Account(_repository, provider);
         }
 
-        private static bool FindField(IAccount account, Contracts.FieldTypeKey fieldTypeKey, string fieldValue) {
-            return account.GetFieldsByKey<string>(fieldTypeKey).Any(
-                field => field.Value.Equals(fieldValue, StringComparison.OrdinalIgnoreCase)
+        private static bool FindField(IAccount account, FieldTypeKey fieldTypeKey, string fieldValue) {
+            return account.GetFieldsByKey(fieldTypeKey).Any(
+                field => field.Value.ToString().Equals(fieldValue, StringComparison.OrdinalIgnoreCase)
             );
         }
 

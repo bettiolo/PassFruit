@@ -14,20 +14,20 @@ namespace PassFruit {
             _repository = repository;
         }
 
-        public string Name { get; set; }
+        public string Key { get; set; }
 
         public IEnumerable<IAccount> Accounts {
             get { return _repository.Accounts.Where(account => account.Tags.Contains(this)); }
         }
 
         public override string ToString() {
-            return Name;
+            return Key;
         }
 
         public bool Equals(Tag other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name, Name);
+            return Equals(other.Key, Key);
         }
 
         public override bool Equals(object obj) {
@@ -38,7 +38,7 @@ namespace PassFruit {
         }
 
         public override int GetHashCode() {
-            return (Name != null ? Name.GetHashCode() : 0);
+            return (Key != null ? Key.GetHashCode() : 0);
         }
 
     }

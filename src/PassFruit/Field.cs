@@ -6,17 +6,10 @@ using PassFruit.Contracts;
 
 namespace PassFruit.FieldImpl {
 
-    public class Field<TValue> : IField<TValue> {
+    public class Field : IField {
 
-        private readonly Type _valueType;
-
-        public Field(IFieldType fieldType, Type valueType) {
-            _valueType = valueType;
+        public Field(IFieldType fieldType) {
             FieldType = fieldType;
-        }
-
-        public Type ValueType {
-            get { return _valueType; }
         }
 
         public IFieldType FieldType { get; private set; }
@@ -32,10 +25,19 @@ namespace PassFruit.FieldImpl {
             set { _name = value; } 
         }
         
-        public TValue Value { get; set; }
+        public object Value { get; set; }
 
         public override string ToString() {
             return Name;
+        }
+
+        public override int GetHashCode() {
+            unchecked {
+                int result = (FieldType != null ? FieldType.GetHashCode() : 0);
+                result = (result * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+                result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                return result;
+            }
         }
 
     }

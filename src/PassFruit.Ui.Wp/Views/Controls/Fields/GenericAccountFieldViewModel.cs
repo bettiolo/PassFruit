@@ -15,9 +15,9 @@ namespace PassFruit.Ui.Wp.Views.Controls.Fields {
 
     public class GenericAccountFieldViewModel : AccountFieldBase {
 
-        public GenericAccountFieldViewModel(IField<string> field) {
+        public GenericAccountFieldViewModel(IField field) {
             FieldName = field.Name;
-            FieldValue = field.Value;
+            FieldValue = field.Value as string;
             CopyButtonText = "copy " + FieldName;
             IsCopyButtonVisible = true;
         }
