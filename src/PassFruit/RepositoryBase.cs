@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PassFruit.Contracts;
@@ -25,7 +26,9 @@ namespace PassFruit {
             get {
                 if (_accounts == null) {
                     _accounts = new Accounts(this);
-                    LoadAllAccountsExceptDeleted();
+                    foreach (var account in GetAllAccountIds().Select(GetAccount).Where(account => account != null)) {
+                        _accounts.Add(account);
+                    }
                 }
                 return _accounts;
             }
@@ -64,11 +67,14 @@ namespace PassFruit {
             if (OnSaving != null) {
                 OnSaving(this, new RepositorySaveEventArgs(this, account));
             }
+            InternalSave(account);
             account.SetClean();
             if (OnSaved != null) {
                 OnSaved(this, new RepositorySaveEventArgs(this, account));
             }
         }
+
+        protected abstract void InternalSave(IAccount account);
 
         public event EventHandler<RepositorySaveEventArgs> OnSaved;
 
@@ -80,9 +86,9 @@ namespace PassFruit {
             }
         }
 
-        protected abstract void LoadAllAccounts();
+        protected abstract IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false);
 
-        protected abstract void LoadAllAccountsExceptDeleted();
+        protected abstract IAccount GetAccount(Guid accountId);
 
         protected void LoadAllAccountProviders() {
             Providers.Add("generic", "Generic", true, true, false, "");

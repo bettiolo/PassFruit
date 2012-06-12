@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using PassFruit.Contracts;
 
 namespace PassFruit.Client.XmlRepository {
 
@@ -11,10 +12,8 @@ namespace PassFruit.Client.XmlRepository {
         /*  <passfruit>
          *      <accounts>
          *          <0000-0000-0000-0000>
-         *              <details>
-         *                  <username>user name</username>
-         *                  <email>info@example.org</email>
-         *              </details>
+         *              <username>user name</username>
+         *              <email>info@example.org</email>
          *          </0000-0000-0000-0000>
          *      </accounts>
          *      <passwords>
@@ -31,9 +30,15 @@ namespace PassFruit.Client.XmlRepository {
             LoadXDocument();
         }
 
+        private const string AccountIdPrefix = "id-";
+
         private XDocument _xDoc;
 
         private readonly string _xmlFilePath;
+
+        public string XmlFilePath {
+            get { return _xmlFilePath; }
+        }
 
         public override string Name {
             get { return "XML Repository"; }
@@ -47,30 +52,35 @@ namespace PassFruit.Client.XmlRepository {
             if (String.IsNullOrEmpty(passwordKey)) {
                 passwordKey = DefaultPasswordKey;
             }
-            var passwordElement = GetPasswordElement(accountId, passwordKey);
-            return passwordElement == null ? "" : passwordElement.Value;
+            return GetPasswordElement(accountId, passwordKey).Value;
         }
 
         public override void SetPassword(Guid accountId, string password, string passwordKey = DefaultPasswordKey) {
             if (String.IsNullOrEmpty(passwordKey)) {
                 passwordKey = DefaultPasswordKey;
             }
-            var passwordElement = GetPasswordElement(accountId, passwordKey);
-            if (passwordElement == null) {
-                passwordElement = new XElement(passwordKey);
-                var accountPasswordsElement = GetAccountPasswordsElement(accountId);
-                accountPasswordsElement.Add(passwordElement);
-            }
-            passwordElement.Value = password;
+            GetPasswordElement(accountId, passwordKey).Value = password;
             SaveXml();
         }
 
-        protected override void LoadAllAccounts() {
-            // Accounts.Add(Accounts.Create());
+        protected override IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false) {
+            var accountsElement = GetAccountsElement();
+            var accountIds = new List<Guid>();
+            foreach (var element in accountsElement.Elements()) {
+                var accountId = element.Name.LocalName;
+                accountId = accountId.Remove(0, AccountIdPrefix.Length);
+                Guid guid;
+                if (Guid.TryParse(accountId, out guid)) {
+                    accountIds.Add(guid);                    
+                }
+            }
+            return accountIds;
         }
 
-        protected override void LoadAllAccountsExceptDeleted() {
-            // Accounts.Add(Accounts.Create());
+        protected override IAccount GetAccount(Guid accountId) {
+            var accountElement = GetAccountElement(accountId);
+            // var account = Accounts.Add()
+            return null;
         }
 
         protected override void LoadAllFieldTypes() {
@@ -88,45 +98,52 @@ namespace PassFruit.Client.XmlRepository {
         }
 
         private XElement GetPassfruitElement() {
-            const string passfruitElementName = "passfruit";
-            var passfruitElement = _xDoc.Element(passfruitElementName);
-            if (passfruitElement == null) {
-                passfruitElement = new XElement(passfruitElementName);
-                _xDoc.Add(passfruitElement);
-            }
-            return passfruitElement;
+            return GetOrCreateElement("passfruit", _xDoc); ;
         }
 
         private XElement GetPasswordsElement() {
-            const string passwordsElementName = "passwords";
-            var passfruitElement = GetPassfruitElement();
-            var passwordsElement = passfruitElement.Element(passwordsElementName);
-            if (passwordsElement == null) {
-                passwordsElement = new XElement(passwordsElementName);
-                passfruitElement.Add(passwordsElement);
-            }
-            return passwordsElement;
+            return GetOrCreateElement("passwords", GetPassfruitElement());
         }
 
         private XElement GetAccountPasswordsElement(Guid accountId) {
-            var accountIdElementName = "ID-" + accountId.ToString();
-            var passwordsElement = GetPasswordsElement();
-            var accountPasswordsElement = passwordsElement.Element(accountIdElementName);
-            if (accountPasswordsElement == null) {
-                accountPasswordsElement = new XElement(accountIdElementName);
-                passwordsElement.Add(passwordsElement);
-            }
-            return accountPasswordsElement;
+            return GetOrCreateElement(AccountIdPrefix + accountId, GetPasswordsElement());
         }
 
         private XElement GetPasswordElement(Guid accountId, string passwordKey) {
-            var accountPasswordsElement = GetAccountPasswordsElement(accountId);
-            var passwordElement = accountPasswordsElement.Element(passwordKey);
-            return passwordElement;
+            return GetOrCreateElement(passwordKey, GetAccountPasswordsElement(accountId));
+        }
+
+        private XElement GetAccountsElement() {
+            return GetOrCreateElement("accounts", GetPasswordsElement());
+        }
+
+        private XElement GetAccountElement(Guid accountId) {
+            return GetOrCreateElement(AccountIdPrefix + accountId, GetAccountsElement());
+        }
+
+        private XElement GetAccountField(IField field, Guid accountId) {
+            return GetOrCreateElement(field.FieldType.Key.ToString(), GetAccountElement(accountId));
+        }
+
+        private XElement GetOrCreateElement(string elementName, XContainer parentElement) {
+            elementName = elementName.ToLowerInvariant();
+            var element = parentElement.Element(elementName);
+            if (element == null) {
+                element = new XElement(elementName);
+                parentElement.Add(element);
+            }
+            return element;
         }
 
         private void SaveXml() {
             _xDoc.Save(_xmlFilePath);
+        }
+
+        protected override void InternalSave(IAccount account) {
+            foreach (var field in account.Fields) {
+                GetAccountField(field, account.Id).Value = field.Value.ToString();
+            }
+            SaveXml();
         }
 
     }

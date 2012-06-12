@@ -44,12 +44,17 @@ namespace PassFruit.Client.InMemoryRepository {
             _passwords[accountId][passwordKey] = password;
         }
 
-        protected override void LoadAllAccounts() {
-            // Accounts.Add(Accounts.Create());
+        protected override void InternalSave(IAccount account) {
+            // Nothing to do as the account is already changed in memory;
         }
 
-        protected override void LoadAllAccountsExceptDeleted() {
-            // Accounts.Add(Accounts.Create());
+        protected override IAccount GetAccount(Guid accountId) {
+            // The accounts are not persisted
+            return null;
+        }
+
+        protected override IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false) {
+            return new List<Guid>();
         }
 
         protected override void LoadAllFieldTypes() {

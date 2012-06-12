@@ -146,11 +146,12 @@ namespace PassFruit.Tests {
             var originalCustomPassword = account.GetPassword("custom");
             var newDefaultPassword = "new password 123131 \"\"\"\"$£&!£&!\'\'\'\'|!£!><><>><";
             var newCustomPassword = "new Pasw0rd";
+            var newEmail = "test@example.org";
 
             // When
             var actChangeDefaultPassword = new Action(() => account.SetPassword(newDefaultPassword));
             var actChangeCustomPassword = new Action(() => account.SetPassword(newCustomPassword, "CuStoM"));
-            var actChangeEmail = new Action(() => account.SetField(FieldTypeKey.Email, "test@example.org"));
+            var actChangeEmail = new Action(() => account.SetField(FieldTypeKey.Email, newEmail));
             var actSave = new Action(account.Save);
 
             // Then
@@ -166,6 +167,7 @@ namespace PassFruit.Tests {
             account.IsDirty.Should().BeFalse();
             account.GetPassword().Should().Be(newDefaultPassword);
             account.GetPassword("CUStom").Should().Be(newCustomPassword);
+            account.GetFieldsByKey(FieldTypeKey.Email).First().Value.Should().Be(newEmail);
 
         }
 
