@@ -8,7 +8,16 @@ namespace PassFruit.Client.InMemoryRepository {
 
     public class InMemoryRepository : RepositoryBase {
 
-        private readonly Dictionary<Guid, Dictionary<string, string>> _passwords = new Dictionary<Guid, Dictionary<string, string>>();
+        public InMemoryRepository(InMemoryRepositoryConfiguration configuration) : base(configuration) {
+            
+        }
+
+        public new InMemoryRepositoryConfiguration Configuration {
+            get { return (InMemoryRepositoryConfiguration)base.Configuration; }
+        }
+
+        private readonly Dictionary<Guid, Dictionary<string, string>> _passwords = 
+            new Dictionary<Guid, Dictionary<string, string>>();
 
         public override string Name {
             get { return "In Memory Repository"; }
@@ -45,21 +54,21 @@ namespace PassFruit.Client.InMemoryRepository {
         }
 
         protected override void InternalSave(IAccount account) {
-            // Nothing to do as the account is already changed in memory;
+            throw new NotImplementedException();
         }
 
         protected override IAccount GetAccount(Guid accountId) {
-            // The accounts are not persisted
-            return null;
+            throw new NotImplementedException();
         }
 
         protected override IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false) {
-            return new List<Guid>();
+            throw new NotImplementedException();
         }
 
         protected override void LoadAllFieldTypes() {
-            // FieldTypes.Add(FieldTypes.Create());
+            throw new NotImplementedException();
         }
+
     }
 
 }

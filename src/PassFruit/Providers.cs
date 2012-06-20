@@ -27,12 +27,13 @@ namespace PassFruit {
         }
 
         public void Add(string key, string name, bool hasEmail, bool hasUserName, bool hasPassword, string url) {
-            var provider = new Provider(key);
-            provider.Name = name;
-            provider.HasEmail = hasEmail;
-            provider.HasPassword = hasPassword;
-            provider.HasUserName = hasUserName;
-            provider.Url = url;
+            var provider = new Provider(key) {
+                Name = name,
+                HasEmail = hasEmail,
+                HasPassword = hasPassword,
+                HasUserName = hasUserName,
+                Url = url
+            };
             _providers.Add(provider);
         }
 

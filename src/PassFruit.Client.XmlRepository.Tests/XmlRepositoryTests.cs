@@ -25,7 +25,8 @@ namespace PassFruit.Client.XmlRepository.Tests {
             // Given
             var repository = (XmlRepository)GetRepositoryWithFakeData();
             XmlRepository reloadedRepository = null;
-            var account = repository.Accounts.GetByUserName("tWiTTeRUsEr").First();
+            var userName = "tWiTTeRUsEr";
+            var account = repository.Accounts.GetByUserName(userName).First();
             IAccount reloadedAccount = null;
             var originalDefaultPassword = account.GetPassword();
             var originalCustomPassword = account.GetPassword("custom");
@@ -40,7 +41,7 @@ namespace PassFruit.Client.XmlRepository.Tests {
             var actSave = new Action(account.Save);
             var actReloadRepository = new Action(() => reloadedRepository = new XmlRepository(repository.XmlFilePath));
             var actReloadAccount = new Action(() =>
-                reloadedAccount = reloadedRepository.Accounts.GetByUserName("tWiTTeRUsEr").First()
+                reloadedAccount = reloadedRepository.Accounts.GetByUserName(userName.ToLowerInvariant()).First()
             );
 
             // Then

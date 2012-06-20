@@ -13,7 +13,7 @@ namespace PassFruit.Contracts {
 
         IEnumerable<IAccount> GetByUserName(string userName);
 
-        IAccount Create(string providerKey);
+        IAccount Create(string providerKey, Guid? id = null);
 
     }
 

@@ -19,16 +19,16 @@ namespace PassFruit {
         }
 
         public IEnumerable<IAccount> GetByEmail(string email) {
-            return this.Where(account => FindField(account, Contracts.FieldTypeKey.Email, email));
+            return this.Where(account => FindField(account, FieldTypeKey.Email, email));
         }
 
         public IEnumerable<IAccount> GetByUserName(string userName) {
-            return this.Where(account => FindField(account, Contracts.FieldTypeKey.UserName, userName));
+            return this.Where(account => FindField(account, FieldTypeKey.UserName, userName));
         }
 
-        public IAccount Create(string providerKey) {
+        public IAccount Create(string providerKey, Guid? id) {
             var provider = _repository.Providers.GetByKey(providerKey);
-            return new Account(_repository, provider);
+            return new Account(_repository, provider, id);
         }
 
         private static bool FindField(IAccount account, FieldTypeKey fieldTypeKey, string fieldValue) {

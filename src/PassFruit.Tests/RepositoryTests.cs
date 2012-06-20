@@ -3,6 +3,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using PassFruit.Contracts;
+using PassFruit.Tests.FakeData;
 
 namespace PassFruit.Tests {
 
@@ -11,21 +12,25 @@ namespace PassFruit.Tests {
 
         protected abstract IRepository GetRepositoryWithFakeData();
 
+        protected abstract IRepository GetReloadedRepository();
+
         [Test]
         public void When_An_Account_Is_Loaded_The_Correct_One_Should_Be_Returned() {
 
             // Given
             var repository = GetRepositoryWithFakeData();
-            var testFacebookEmail = "testFacebook@example.com";
-            var testTwitterAccount = "TwitterUser";
-            var testTwitterEmail = "testTwitter@example.com";
-            var testGoogleEmail = "user.name.example@gmail.com";
+            var testFacebookEmail = FakeDataGenerator.FacebookEmail;
+            var testTwitterAccount = FakeDataGenerator.TwitterUserName;
+            var testTwitterEmail = FakeDataGenerator.TwitterEmail;
+            var testGoogleEmail = FakeDataGenerator.Google1Email;
+            IRepository reloadedRepository = null;
 
             // When
             var facebookAccount = repository.Accounts.GetByEmail(testFacebookEmail).FirstOrDefault();
             var twitterAccountByUserName = repository.Accounts.GetByUserName(testTwitterAccount).FirstOrDefault();
             var twitterAccountByEmail = repository.Accounts.GetByEmail(testTwitterEmail).FirstOrDefault();
             var gmailAccount = repository.Accounts.GetByEmail(testGoogleEmail).FirstOrDefault();
+            Action actReloadRepository = () => reloadedRepository = GetReloadedRepository(); 
 
             // Then
             facebookAccount.Should().NotBeNull();
@@ -43,6 +48,9 @@ namespace PassFruit.Tests {
             gmailAccount.Should().NotBeNull();
             gmailAccount.GetDefaultField(FieldTypeKey.Email).Value.Should().Be(testGoogleEmail);
             gmailAccount.Provider.Key.Should().Be("google");
+
+            actReloadRepository();
+            reloadedRepository.Should().NotBeNull();
 
         }
 
@@ -134,6 +142,17 @@ namespace PassFruit.Tests {
             repository.Tags.Contains("test tag b").Should().BeFalse();
             repository.Tags.Contains("test tag a").Should().BeTrue();
 
+        }
+
+        [Test]
+        public void When_A_Tag_Is_Deleted_Then_The_Number_Of_Tags_Should_Decrease() {
+            throw new NotImplementedException();
+        }
+
+
+        [Test]
+        public void When_A_Tag_Is_Changed_Then_The_Change_Should_Be_Persisted() {
+            throw new NotImplementedException();
         }
 
         [Test]

@@ -46,6 +46,7 @@
     <Compile Include="IFieldType.cs" />
     <Compile Include="IProvider.cs" />
     <Compile Include="IProviders.cs" />
+    <Compile Include="IRepositoryConfiguration.cs" />
     <Compile Include="ITag.cs" />
     <Compile Include="ITags.cs" />
     <Compile Include="IAccounts.cs" />

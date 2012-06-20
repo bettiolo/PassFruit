@@ -25,20 +25,18 @@ namespace PassFruit.Client.XmlRepository {
          *  </passfruit>    
          */
 
-        public XmlRepository(string xmlFilePath) {
-            _xmlFilePath = xmlFilePath;
+        public XmlRepository(XmlRepositoryConfiguration configuration) : base(configuration) {
             LoadXDocument();
         }
 
+        public new XmlRepositoryConfiguration Configuration {
+            get { return (XmlRepositoryConfiguration) base.Configuration; }
+        }
+
         private const string AccountIdPrefix = "id-";
+        private const string TagPrefix = "tag-";
 
         private XDocument _xDoc;
-
-        private readonly string _xmlFilePath;
-
-        public string XmlFilePath {
-            get { return _xmlFilePath; }
-        }
 
         public override string Name {
             get { return "XML Repository"; }
@@ -71,16 +69,24 @@ namespace PassFruit.Client.XmlRepository {
                 accountId = accountId.Remove(0, AccountIdPrefix.Length);
                 Guid guid;
                 if (Guid.TryParse(accountId, out guid)) {
-                    accountIds.Add(guid);                    
+                    accountIds.Add(guid);
                 }
             }
             return accountIds;
         }
 
         protected override IAccount GetAccount(Guid accountId) {
-            var accountElement = GetAccountElement(accountId);
-            // var account = Accounts.Add()
-            return null;
+            var accountFieldsElement = GetAccountFieldsElement(accountId);
+            IAccount account = null;
+            foreach (var fieldElement in accountFieldsElement.Elements()) {
+                if (account == null) {
+                    account = Accounts.Create("", accountId);
+                }
+                var fieldTypeKey = (FieldTypeKey)Enum.Parse(typeof (FieldTypeKey), fieldElement.Name.LocalName, true);
+                account.SetField(fieldTypeKey, fieldElement.Value);
+                account.SetClean();
+            }
+            return account;
         }
 
         protected override void LoadAllFieldTypes() {
@@ -88,10 +94,10 @@ namespace PassFruit.Client.XmlRepository {
         }
 
         private void LoadXDocument() {
-            var xmlFile = new FileInfo(_xmlFilePath);
+            var xmlFile = new FileInfo(Configuration.XmlFilePath);
             
             if (xmlFile.Exists && xmlFile.Length > 0) {
-                _xDoc = XDocument.Load(_xmlFilePath);
+                _xDoc = XDocument.Load(xmlFile.FullName);
             } else {
                 _xDoc = new XDocument();
             }
@@ -114,15 +120,31 @@ namespace PassFruit.Client.XmlRepository {
         }
 
         private XElement GetAccountsElement() {
-            return GetOrCreateElement("accounts", GetPasswordsElement());
+            return GetOrCreateElement("accounts", GetPassfruitElement());
         }
 
         private XElement GetAccountElement(Guid accountId) {
             return GetOrCreateElement(AccountIdPrefix + accountId, GetAccountsElement());
         }
 
+        private XElement GetAccountFieldsElement(Guid accountId) {
+            return GetOrCreateElement("fields", GetAccountElement(accountId));
+        }
+
+        private XElement GetProviderField(Guid accountId) {
+            return GetOrCreateElement("provider", GetAccountElement(accountId));
+        }
+
+        private XElement GetTagsElement() {
+            return GetOrCreateElement("tags", GetPassfruitElement());
+        }
+
+        private XElement GetTagElement(string tagName) {
+            return GetOrCreateElement(TagPrefix + tagName, GetPassfruitElement());
+        }
+
         private XElement GetAccountField(IField field, Guid accountId) {
-            return GetOrCreateElement(field.FieldType.Key.ToString(), GetAccountElement(accountId));
+            return GetOrCreateElement(field.FieldType.Key.ToString(), GetAccountFieldsElement(accountId));
         }
 
         private XElement GetOrCreateElement(string elementName, XContainer parentElement) {
@@ -136,12 +158,19 @@ namespace PassFruit.Client.XmlRepository {
         }
 
         private void SaveXml() {
-            _xDoc.Save(_xmlFilePath);
+            _xDoc.Save(Configuration.XmlFilePath);
         }
 
         protected override void InternalSave(IAccount account) {
+            if (account.Provider != null) {
+                GetProviderField(account.Id).Value = account.Provider.Key;
+            }
             foreach (var field in account.Fields) {
                 GetAccountField(field, account.Id).Value = field.Value.ToString();
+            }
+            foreach (var tag in account.Tags) {
+                // var tagElement = GetTagElement(tag.Key);
+                // ToDo: Should handle adding, removing and changing tags
             }
             SaveXml();
         }

@@ -60,7 +60,7 @@ namespace PassFruit {
             return GetAccountName() + " | " + Provider.Name;
         }
 
-        private IProvider _provider;
+        private readonly IProvider _provider;
         public IProvider Provider {
             get { return _provider; }
         }

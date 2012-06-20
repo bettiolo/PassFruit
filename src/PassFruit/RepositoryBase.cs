@@ -10,6 +10,12 @@ namespace PassFruit {
 
         public const string DefaultPasswordKey = "default";
 
+        public RepositoryBase(IRepositoryConfiguration configuration) {
+            Configuration = configuration;
+        }
+
+        protected IRepositoryConfiguration Configuration { get; set; }
+
         private IAccounts _accounts;
 
         private ITags _tags;
