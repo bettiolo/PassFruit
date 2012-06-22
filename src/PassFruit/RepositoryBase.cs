@@ -80,6 +80,10 @@ namespace PassFruit {
             }
         }
 
+        public bool IsDirty() {
+            return Accounts.Any(account => account.IsDirty);
+        }
+
         protected abstract void InternalSave(IAccount account);
 
         public event EventHandler<RepositorySaveEventArgs> OnSaved;
@@ -87,8 +91,16 @@ namespace PassFruit {
         public event EventHandler<RepositorySaveEventArgs> OnSaving;
 
         public void SaveAll() {
+            var deletedAccounts = new List<DeletedAccount>();
             foreach (var account in Accounts.Where(a => a.IsDirty)) {
                 account.Save();
+                var deletedAccount = account as DeletedAccount;
+                if (deletedAccount != null) {
+                    deletedAccounts.Add(deletedAccount);
+                }
+            }
+            foreach (var deletedAccount in deletedAccounts) {
+                Accounts.Remove(deletedAccount);
             }
         }
 

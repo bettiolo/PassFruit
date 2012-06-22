@@ -30,6 +30,7 @@ namespace PassFruit.Contracts {
         void SaveAll();
 
         void Save(IAccount account);
-        
+
+        bool IsDirty();
     }
 }

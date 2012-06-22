@@ -80,7 +80,7 @@ namespace PassFruit.Client.XmlRepository {
             IAccount account = null;
             foreach (var fieldElement in accountFieldsElement.Elements()) {
                 if (account == null) {
-                    account = Accounts.Create("", accountId);
+                    account = Accounts.Create(GetProviderFieldElement(accountId).Value, accountId);
                 }
                 var fieldTypeKey = (FieldTypeKey)Enum.Parse(typeof (FieldTypeKey), fieldElement.Name.LocalName, true);
                 account.SetField(fieldTypeKey, fieldElement.Value);
@@ -131,7 +131,7 @@ namespace PassFruit.Client.XmlRepository {
             return GetOrCreateElement("fields", GetAccountElement(accountId));
         }
 
-        private XElement GetProviderField(Guid accountId) {
+        private XElement GetProviderFieldElement(Guid accountId) {
             return GetOrCreateElement("provider", GetAccountElement(accountId));
         }
 
@@ -163,7 +163,7 @@ namespace PassFruit.Client.XmlRepository {
 
         protected override void InternalSave(IAccount account) {
             if (account.Provider != null) {
-                GetProviderField(account.Id).Value = account.Provider.Key;
+                GetProviderFieldElement(account.Id).Value = account.Provider.Key;
             }
             foreach (var field in account.Fields) {
                 GetAccountField(field, account.Id).Value = field.Value.ToString();

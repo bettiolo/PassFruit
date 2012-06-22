@@ -39,9 +39,14 @@ namespace PassFruit {
 
         protected override void RemoveItem(int index) {
             var accountId = this[index].Id;
-            this[index] = new DeletedAccount(_repository, accountId);
-            _repository.Save(this[index]);
-        } 
+            if (this[index] is DeletedAccount) {
+                if (!this[index].IsDirty) {
+                    base.RemoveItem(index);
+                }
+            } else {
+                this[index] = new DeletedAccount(_repository, accountId);
+            }
+        }
 
     }
 
