@@ -32,7 +32,7 @@ namespace PassFruit {
             get {
                 if (_accounts == null) {
                     _accounts = new Accounts(this);
-                    foreach (var account in GetAllAccountIds().Select(GetAccount).Where(account => account != null)) {
+                    foreach (var account in GetAllAccountIds().Select(LoadAccount).Where(account => account != null)) {
                         _accounts.Add(account);
                     }
                 }
@@ -84,6 +84,8 @@ namespace PassFruit {
             return Accounts.Any(account => account.IsDirty);
         }
 
+        public abstract void DeletePasswords(Guid accountId);
+
         protected abstract void InternalSave(IAccount account);
 
         public event EventHandler<RepositorySaveEventArgs> OnSaved;
@@ -106,7 +108,7 @@ namespace PassFruit {
 
         protected abstract IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false);
 
-        protected abstract IAccount GetAccount(Guid accountId);
+        protected abstract IAccount LoadAccount(Guid accountId);
 
         protected void LoadAllAccountProviders() {
             Providers.Add("generic", "Generic", true, true, false, "");

@@ -53,11 +53,15 @@ namespace PassFruit.Client.InMemoryRepository {
             _passwords[accountId][passwordKey] = password;
         }
 
+        public override void DeletePasswords(Guid accountId) {
+            _passwords.Remove(accountId);
+        }
+
         protected override void InternalSave(IAccount account) {
             throw new NotImplementedException();
         }
 
-        protected override IAccount GetAccount(Guid accountId) {
+        protected override IAccount LoadAccount(Guid accountId) {
             throw new NotImplementedException();
         }
 

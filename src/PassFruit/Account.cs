@@ -105,6 +105,10 @@ namespace PassFruit {
             _tags.Add(_repository.Tags.Create(tagName));
         }
 
+        public void DeletePasswords() {
+            _repository.DeletePasswords(Id);
+        }
+
         public virtual void Save() {
             if (IsDirty) {
                 _repository.Save(this);

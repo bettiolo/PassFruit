@@ -19,9 +19,9 @@ namespace PassFruit.Contracts {
 
         IFieldTypes FieldTypes { get; }
 
-        string GetPassword(Guid accountId, string passwordKey);
+        string GetPassword(Guid accountId, string passwordKey = null);
 
-        void SetPassword(Guid accountId, string password, string passwordKey);
+        void SetPassword(Guid accountId, string password, string passwordKey = null);
 
         event EventHandler<RepositorySaveEventArgs> OnSaved;
 
@@ -32,5 +32,7 @@ namespace PassFruit.Contracts {
         void Save(IAccount account);
 
         bool IsDirty();
+
+        void DeletePasswords(Guid accountId);
     }
 }

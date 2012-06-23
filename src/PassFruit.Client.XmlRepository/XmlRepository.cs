@@ -58,7 +58,6 @@ namespace PassFruit.Client.XmlRepository {
                 passwordKey = DefaultPasswordKey;
             }
             GetPasswordElement(accountId, passwordKey).Value = password;
-            SaveXml();
         }
 
         protected override IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false) {
@@ -75,7 +74,7 @@ namespace PassFruit.Client.XmlRepository {
             return accountIds;
         }
 
-        protected override IAccount GetAccount(Guid accountId) {
+        protected override IAccount LoadAccount(Guid accountId) {
             var accountFieldsElement = GetAccountFieldsElement(accountId);
             IAccount account = null;
             foreach (var fieldElement in accountFieldsElement.Elements()) {
@@ -143,7 +142,7 @@ namespace PassFruit.Client.XmlRepository {
             return GetOrCreateElement(TagPrefix + tagName, GetPassfruitElement());
         }
 
-        private XElement GetAccountField(IField field, Guid accountId) {
+        private XElement GetAccountFieldElement(IField field, Guid accountId) {
             return GetOrCreateElement(field.FieldType.Key.ToString(), GetAccountFieldsElement(accountId));
         }
 
@@ -157,22 +156,23 @@ namespace PassFruit.Client.XmlRepository {
             return element;
         }
 
-        private void SaveXml() {
-            _xDoc.Save(Configuration.XmlFilePath);
+        public override void DeletePasswords(Guid accountId) {
+            GetAccountPasswordsElement(accountId).Remove();
         }
 
         protected override void InternalSave(IAccount account) {
+            GetAccountElement(account.Id).Remove();
             if (account.Provider != null) {
                 GetProviderFieldElement(account.Id).Value = account.Provider.Key;
             }
             foreach (var field in account.Fields) {
-                GetAccountField(field, account.Id).Value = field.Value.ToString();
+                GetAccountFieldElement(field, account.Id).Value = field.Value.ToString();
             }
             foreach (var tag in account.Tags) {
                 // var tagElement = GetTagElement(tag.Key);
                 // ToDo: Should handle adding, removing and changing tags
             }
-            SaveXml();
+            _xDoc.Save(Configuration.XmlFilePath);
         }
 
     }

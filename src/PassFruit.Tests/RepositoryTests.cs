@@ -14,7 +14,11 @@ namespace PassFruit.Tests {
 
         protected abstract IRepository GetReloadedRepository();
 
-        private void TestWithReloadedRepository(Action<IRepository> test) {
+        private void TestWithLoadedRepository(Action<IRepository> test) {
+            test(GetReloadedRepository());
+        }
+
+        private void TestWithPrepopulatedReloadedRepository(Action<IRepository> test) {
             GetRepositoryWithFakeData().SaveAll();
             test(GetReloadedRepository());
         }
@@ -125,7 +129,7 @@ namespace PassFruit.Tests {
                 deletedAccount = repository.Accounts.First(a => a is DeletedAccount);
 
             // Then
-            TestWithReloadedRepository(repository => {
+            TestWithPrepopulatedReloadedRepository(repository => {
                 actLoadAccount(repository);
                 for (int i = 0; i < 3; i++) {
                     if (i < 2) {
@@ -140,24 +144,22 @@ namespace PassFruit.Tests {
                     repository.Accounts.First(a => a is DeletedAccount).IsDirty.Should().BeTrue();
                     repository.IsDirty().Should().BeTrue();
                 }
+                repository.GetPassword(facebookAccount.Id).Should().BeBlank();
+                repository.IsDirty().Should().BeFalse();
                 repository.SaveAll();
+                facebookAccount.GetPassword().Should().BeBlank();
+                repository.GetPassword(facebookAccount.Id).Should().BeBlank();
                 repository.IsDirty().Should().BeFalse();
                 repository.Accounts.GetByEmail(FakeDataGenerator.FacebookEmail).Should().BeEmpty();
                 repository.Accounts.Count().Should().Be(originalAccountCount - 1);
                 repository.Accounts.Should().NotContain(a => a is DeletedAccount);
-
-                // check password
-
-                throw new NotImplementedException();
             });
-            TestWithReloadedRepository(repository => {
+
+            TestWithLoadedRepository(repository => {
                 repository.IsDirty().Should().BeFalse();
                 repository.Accounts.GetByEmail(FakeDataGenerator.FacebookEmail).Should().BeEmpty();
                 repository.Accounts.Count().Should().Be(originalAccountCount - 1);
-
-                // check password
-
-                throw new NotImplementedException();
+                repository.GetPassword(facebookAccount.Id).Should().BeBlank();
             });
 
         }

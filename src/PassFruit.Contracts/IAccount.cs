@@ -37,6 +37,7 @@ namespace PassFruit.Contracts {
 
         void AddTag(string tagName);
 
+        void DeletePasswords();
     }
 
 }
