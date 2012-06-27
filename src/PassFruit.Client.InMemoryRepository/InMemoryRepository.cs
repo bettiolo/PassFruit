@@ -61,11 +61,15 @@ namespace PassFruit.Client.InMemoryRepository {
             throw new NotImplementedException();
         }
 
-        protected override IAccount LoadAccount(Guid accountId) {
+        protected override IEnumerable<Guid> GetAllAccountIds() {
             throw new NotImplementedException();
         }
 
-        protected override IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false) {
+        protected override IEnumerable<Guid> GetDeletedAccountIds() {
+            throw new NotImplementedException();
+        }
+
+        protected override IAccount LoadAccount(Guid accountId) {
             throw new NotImplementedException();
         }
 

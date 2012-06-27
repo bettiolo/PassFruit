@@ -10,21 +10,25 @@ namespace PassFruit.Tests {
     [TestFixture]
     public abstract class RepositoryTests {
 
-        protected abstract IRepository GetRepositoryWithFakeData();
+        protected abstract IRepository GetNewRepositoryWithFakeData();
 
         protected abstract IRepository GetReloadedRepository();
 
-        private void TestWithLoadedRepository(Action<IRepository> test) {
+        private void TestWithUnsavedFakeData(Action<IRepository> test) {
+            test(GetNewRepositoryWithFakeData());
+        }
+
+        private void TestWithReloadedRepository(Action<IRepository> test) {
             test(GetReloadedRepository());
         }
 
         private void TestWithPrepopulatedReloadedRepository(Action<IRepository> test) {
-            GetRepositoryWithFakeData().SaveAll();
+            GetNewRepositoryWithFakeData().SaveAll();
             test(GetReloadedRepository());
         }
 
         private void TestWithBothRepositories(Action<IRepository> test) {
-            test(GetRepositoryWithFakeData());
+            test(GetNewRepositoryWithFakeData());
             test(GetReloadedRepository());
         }
 
@@ -51,7 +55,7 @@ namespace PassFruit.Tests {
 
             // Then
             TestWithBothRepositories(repository => {
-                
+
                 actLoadAccounts(repository);
 
                 facebookAccount.Should().NotBeNull();
@@ -90,11 +94,11 @@ namespace PassFruit.Tests {
                 originalAccountCount = repository.Accounts.Count();
                 facebookAccount = repository.Accounts.Create("generic");
             };
-            Action<IRepository> actEditAccount = repository => 
+            Action<IRepository> actEditAccount = repository =>
                 facebookAccount.SetField(FieldTypeKey.Email, "testFacebookTemp@tin.it");
-            Action<IRepository> actAddAccount = repository => 
+            Action<IRepository> actAddAccount = repository =>
                 repository.Accounts.Add(facebookAccount);
-            Action<IRepository> actRepositorySaveAll = repository => 
+            Action<IRepository> actRepositorySaveAll = repository =>
                 repository.SaveAll();
 
             // Then
@@ -117,11 +121,13 @@ namespace PassFruit.Tests {
             var originalAccountCount = 0;
             IAccount facebookAccount = null;
             IAccount deletedAccount = null;
+            var facebookAccountId = Guid.Empty;
 
             // When
             Action<IRepository> actLoadAccount = repository => {
                 originalAccountCount = repository.Accounts.Count();
                 facebookAccount = repository.Accounts.GetByEmail(FakeDataGenerator.FacebookEmail).First();
+                facebookAccountId = facebookAccount.Id;
             };
             Action<IRepository> actRemoveAccount = repository =>
                 repository.Accounts.Remove(facebookAccount);
@@ -145,7 +151,7 @@ namespace PassFruit.Tests {
                     repository.IsDirty().Should().BeTrue();
                 }
                 repository.GetPassword(facebookAccount.Id).Should().BeBlank();
-                repository.IsDirty().Should().BeFalse();
+                repository.IsDirty().Should().BeTrue();
                 repository.SaveAll();
                 facebookAccount.GetPassword().Should().BeBlank();
                 repository.GetPassword(facebookAccount.Id).Should().BeBlank();
@@ -155,11 +161,15 @@ namespace PassFruit.Tests {
                 repository.Accounts.Should().NotContain(a => a is DeletedAccount);
             });
 
-            TestWithLoadedRepository(repository => {
+
+            TestWithReloadedRepository(repository => {
                 repository.IsDirty().Should().BeFalse();
                 repository.Accounts.GetByEmail(FakeDataGenerator.FacebookEmail).Should().BeEmpty();
                 repository.Accounts.Count().Should().Be(originalAccountCount - 1);
-                repository.GetPassword(facebookAccount.Id).Should().BeBlank();
+                repository.GetPassword(facebookAccountId).Should().BeBlank();
+                var deletedAccounts = repository.GetDeletedAccounts();
+                deletedAccounts.Any().Should().BeTrue();
+                deletedAccounts.Should().Contain(account => account.Id == facebookAccountId);
             });
 
         }
@@ -168,23 +178,30 @@ namespace PassFruit.Tests {
         public void When_An_Account_Is_Edited_Then_The_Correct_Data_Should_Be_Retrieved() {
 
             // Given
-            var editedUser = "edItedUsEr";
-            var editedEmail = "editedEmail@twitter.example";
-            var repository = GetRepositoryWithFakeData();
-            var accountWithUserName = repository.Accounts.GetByUserName(FakeDataGenerator.TwitterUserName).First();
-            var accountWithEmail = repository.Accounts.GetByEmail(FakeDataGenerator.TwitterEmail).First();
-            var originalId = accountWithUserName.Id;
+            const string editedUser = "edItedUsEr";
+            const string editedEmail = "editedEmail@twitter.example";
+            IAccount accountWithUserName = null;
+            var originalId = Guid.Empty;
 
             // When
-            accountWithUserName.SetField(FieldTypeKey.UserName, editedUser);
-            accountWithUserName.SetField(FieldTypeKey.Email, editedEmail);
-            accountWithUserName.Save();
-            var retrievedAccount = repository.Accounts.GetByUserName(editedUser).First();
+            Action<IRepository> actLoadAndEditAccount = repository => {
+                accountWithUserName = repository.Accounts.GetByUserName(FakeDataGenerator.TwitterUserName).First();
+                originalId = accountWithUserName.Id;
+                accountWithUserName.SetField(FieldTypeKey.UserName, editedUser);
+                accountWithUserName.SetField(FieldTypeKey.Email, editedEmail);
+                accountWithUserName.Save();
+            };
 
             // Then
-            retrievedAccount.Id.Should().Be(originalId);
-            retrievedAccount.GetDefaultField(FieldTypeKey.UserName).Value.Should().Be(editedUser);
-            retrievedAccount.GetDefaultField(FieldTypeKey.Email).Value.Should().Be(editedEmail);
+            TestWithBothRepositories(repository => {
+                if (accountWithUserName == null) {
+                    actLoadAndEditAccount(repository);
+                }
+                var retrievedAccount = repository.Accounts.GetByUserName(editedUser).First();
+                retrievedAccount.Id.Should().Be(originalId);
+                retrievedAccount.GetDefaultField(FieldTypeKey.UserName).Value.Should().Be(editedUser);
+                retrievedAccount.GetDefaultField(FieldTypeKey.Email).Value.Should().Be(editedEmail);
+            });
 
         }
 
@@ -192,27 +209,32 @@ namespace PassFruit.Tests {
         public void When_A_Tag_Is_Added_Then_The_Number_Of_Tags_Should_Increase() {
 
             // Given
-            var repository = GetRepositoryWithFakeData();
-            var account = repository.Accounts.GetByUserName(FakeDataGenerator.TwitterUserName).First();
-            var originalTotalTagCount = repository.Tags.Count();
-            var originalAccountTagCount = account.Tags.Count();
+            IAccount twitterAccount = null;
+            var originalTotalTagCount = -1;
+            var originalAccountTagCount = -1;
 
             // When
-            var actAddTag = new Action(() => account.AddTag("test tag A"));
-            var actSave = new Action(account.Save);
+            Action<IAccount> actAddTag = account => account.AddTag("test tag A");
+            Action<IAccount> actSave = account => account.Save();
 
             // Then
-            account.IsDirty.Should().BeFalse();
-            actAddTag();
-            account.IsDirty.Should().BeTrue();
-            repository.Tags.Count().Should().Be(originalTotalTagCount);
-            actSave();
-            account.IsDirty.Should().BeFalse();
-            account.Tags.Count().Should().Be(originalAccountTagCount + 1);
-            repository.Tags.Count().Should().Be(originalTotalTagCount + 1);
-            repository.Tags.Contains("test tag b").Should().BeFalse();
-            repository.Tags.Contains("test tag a").Should().BeTrue();
-
+            TestWithUnsavedFakeData(repository => {
+                twitterAccount = repository.Accounts.GetByUserName(FakeDataGenerator.TwitterUserName).First();
+                originalTotalTagCount = repository.Tags.Count();
+                originalAccountTagCount = twitterAccount.Tags.Count();
+                twitterAccount.IsDirty.Should().BeFalse();
+                actAddTag(twitterAccount);
+                twitterAccount.IsDirty.Should().BeTrue();
+                repository.Tags.Count().Should().Be(originalTotalTagCount);
+                actSave(twitterAccount);
+            });
+            TestWithReloadedRepository(repository => {
+                twitterAccount.IsDirty.Should().BeFalse();
+                twitterAccount.Tags.Count().Should().Be(originalAccountTagCount + 1);
+                repository.Tags.Count().Should().Be(originalTotalTagCount + 1);
+                repository.Tags.Contains("test tag b").Should().BeFalse();
+                repository.Tags.Contains("test tag a").Should().BeTrue();
+            });
         }
 
         [Test]
@@ -230,7 +252,7 @@ namespace PassFruit.Tests {
         public void When_A_Password_Is_Changed_Then_The_Account_Should_Not_Be_Dirty_And_The_Password_Shold_Be_Saved() {
 
             // Given
-            var repository = GetRepositoryWithFakeData();
+            var repository = GetNewRepositoryWithFakeData();
             var account = repository.Accounts.GetByUserName(FakeDataGenerator.TwitterUserName).First();
             var originalDefaultPassword = account.GetPassword();
             var originalCustomPassword = account.GetPassword("custom");

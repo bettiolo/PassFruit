@@ -140,7 +140,7 @@ namespace PassFruit {
         public bool Equals(IAccount other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.Id.Equals(Id) && Equals(other.Notes, Notes) && Equals(other.Tags, Tags);
+            return other.GetHashCode() == GetHashCode();
         }
 
         public override bool Equals(object obj) {

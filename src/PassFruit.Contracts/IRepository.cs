@@ -34,5 +34,8 @@ namespace PassFruit.Contracts {
         bool IsDirty();
 
         void DeletePasswords(Guid accountId);
+
+        IEnumerable<IAccount> GetDeletedAccounts();
+
     }
 }

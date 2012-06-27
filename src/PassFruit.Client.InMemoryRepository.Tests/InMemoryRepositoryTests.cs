@@ -16,7 +16,7 @@ namespace PassFruit.Client.InMemoryRepository.Tests {
 
         private readonly InMemoryRepositoryConfiguration _configuration = new InMemoryRepositoryConfiguration(Path.GetTempFileName());
 
-        protected override IRepository GetRepositoryWithFakeData() {
+        protected override IRepository GetNewRepositoryWithFakeData() {
             var repository = new InMemoryRepository(_configuration);
             var fakeDataGenerator = new FakeDataGenerator();
             fakeDataGenerator.GenerateFakeData(repository);

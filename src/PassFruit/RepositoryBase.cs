@@ -86,6 +86,10 @@ namespace PassFruit {
 
         public abstract void DeletePasswords(Guid accountId);
 
+        public IEnumerable<IAccount> GetDeletedAccounts() {
+            return GetDeletedAccountIds().Select(LoadAccount).Where(account => account != null).ToList();
+        }
+
         protected abstract void InternalSave(IAccount account);
 
         public event EventHandler<RepositorySaveEventArgs> OnSaved;
@@ -106,7 +110,9 @@ namespace PassFruit {
             }
         }
 
-        protected abstract IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false);
+        protected abstract IEnumerable<Guid> GetAllAccountIds();
+
+        protected abstract IEnumerable<Guid> GetDeletedAccountIds();
 
         protected abstract IAccount LoadAccount(Guid accountId);
 

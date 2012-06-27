@@ -11,16 +11,25 @@ namespace PassFruit.Client.XmlRepository {
 
         /*  <passfruit>
          *      <accounts>
-         *          <0000-0000-0000-0000>
-         *              <username>user name</username>
-         *              <email>info@example.org</email>
-         *          </0000-0000-0000-0000>
+         *          <id-0000-0000-0000-0000>
+         *              <provider>
+         *                  provider name
+         *              </provider>
+         *              <fields>
+         *                  <username>user name</username>
+         *                  <email>info@example.org</email>
+         *              </fields>
+         *              <tags>
+         *                  <tag-key />
+         *              </tags>
+         *          </id-0000-0000-0000-0000>
          *      </accounts>
          *      <passwords>
-         *          <0000-0000-0000-0000>
+         *          <id-0000-0000-0000-0000>
          *              <default>
-         *                  ENCRYPTED DATA
+         *                  password
          *              </default>
+         *          </id-0000-0000-0000-0000>
          *      </passwords>
          *  </passfruit>    
          */
@@ -34,6 +43,7 @@ namespace PassFruit.Client.XmlRepository {
         }
 
         private const string AccountIdPrefix = "id-";
+        
         private const string TagPrefix = "tag-";
 
         private XDocument _xDoc;
@@ -60,15 +70,25 @@ namespace PassFruit.Client.XmlRepository {
             GetPasswordElement(accountId, passwordKey).Value = password;
         }
 
-        protected override IEnumerable<Guid> GetAllAccountIds(bool includingDeleted = false) {
+        protected override IEnumerable<Guid> GetAllAccountIds() {
+            return GetAccountIdsWithFilter(accountId => !AccountElementIsDeleted(accountId));
+        }
+
+        protected override IEnumerable<Guid> GetDeletedAccountIds() {
+            return GetAccountIdsWithFilter(AccountElementIsDeleted);
+        }
+        private bool AccountElementIsDeleted(Guid accountId) {
+            return GetAccountDeletedElement(accountId).Value == bool.TrueString;
+        }
+
+        private IEnumerable<Guid> GetAccountIdsWithFilter(Func<Guid, bool> filterAccount) {
             var accountsElement = GetAccountsElement();
             var accountIds = new List<Guid>();
             foreach (var element in accountsElement.Elements()) {
-                var accountId = element.Name.LocalName;
-                accountId = accountId.Remove(0, AccountIdPrefix.Length);
+                var accountId = element.Name.LocalName.Remove(0, AccountIdPrefix.Length);
                 Guid guid;
-                if (Guid.TryParse(accountId, out guid)) {
-                    accountIds.Add(guid);
+                if (Guid.TryParse(accountId, out guid) && filterAccount(guid)) {
+                    accountIds.Add(guid);    
                 }
             }
             return accountIds;
@@ -76,15 +96,12 @@ namespace PassFruit.Client.XmlRepository {
 
         protected override IAccount LoadAccount(Guid accountId) {
             var accountFieldsElement = GetAccountFieldsElement(accountId);
-            IAccount account = null;
+            var account = Accounts.Create(GetProviderFieldElement(accountId).Value, accountId);
             foreach (var fieldElement in accountFieldsElement.Elements()) {
-                if (account == null) {
-                    account = Accounts.Create(GetProviderFieldElement(accountId).Value, accountId);
-                }
                 var fieldTypeKey = (FieldTypeKey)Enum.Parse(typeof (FieldTypeKey), fieldElement.Name.LocalName, true);
                 account.SetField(fieldTypeKey, fieldElement.Value);
-                account.SetClean();
             }
+            account.SetClean();
             return account;
         }
 
@@ -134,6 +151,10 @@ namespace PassFruit.Client.XmlRepository {
             return GetOrCreateElement("provider", GetAccountElement(accountId));
         }
 
+        private XElement GetAccountDeletedElement(Guid accountId) {
+            return GetOrCreateElement("deleted", GetAccountElement(accountId));
+        }
+
         private XElement GetTagsElement() {
             return GetOrCreateElement("tags", GetPassfruitElement());
         }
@@ -169,8 +190,11 @@ namespace PassFruit.Client.XmlRepository {
                 GetAccountFieldElement(field, account.Id).Value = field.Value.ToString();
             }
             foreach (var tag in account.Tags) {
-                // var tagElement = GetTagElement(tag.Key);
+                var tagElement = GetTagElement(tag.Key);
                 // ToDo: Should handle adding, removing and changing tags
+            }
+            if (account is DeletedAccount) {
+                GetAccountDeletedElement(account.Id).Value = bool.TrueString;
             }
             _xDoc.Save(Configuration.XmlFilePath);
         }
