@@ -10,11 +10,11 @@ Security
 
 PassFruit lets you manage your password in a secure way by ensuring they are never displayed in clear when not needed.
 
-Your passwords are crypted with your master key in the client and sent crypted through the wire to the cloud where they remain crypted. When a password is requested, it is sent crypted to the client.
+Your passwords are encrypted with your master key in the client and sent encrypted through the wire to the cloud where they remain encrypted. When a password is requested, it is sent encrypted to the client.
 
 Your masterkey is never persisted and never sent to the server.
 
-Only one password at a time is in memory in cleartext and they are decrypted always in the client.
+Only one password at a time is in memory in cleartext and they are deencrypted always in the client.
 
 If using a cloud password storage service you can enable double security that consist in requesting an access token with limited duration which is sent by email to the registered addess and enables a one-time password storage access. No one will be able to access your passwords without access to your email addess.
 
@@ -25,9 +25,9 @@ All the code is opensource, you can check by yourself the implementation.
 Password storage services
 -------------------------
 
-You can have your crypted password persisted using the following services:
+You can have your encrypted password persisted using the following services:
 
-- [Local crypted XML file (Single device mode)](https://trello.com/c/ZwoEyIgn)
+- [Local encrypted XML file (Single device mode)](https://trello.com/c/ZwoEyIgn)
 - [Dropbox](https://trello.com/c/RPC56yxs)
 - [Windows SkyDrive](https://trello.com/c/Rqxb2V5t)
 - [CloudApp](https://trello.com/c/QiaOKOCn)
@@ -45,7 +45,7 @@ Client password access
 This is the selection of available clients
 
 - [Windows (WPF)](https://trello.com/c/1lZZ3HGM)
-- [Web (HTML + JS + Crypted JSON)](https://trello.com/c/bzMgVngO)
+- [Web (HTML + JS + encrypted JSON)](https://trello.com/c/bzMgVngO)
 - [Windows Phone (Silverlight)](https://trello.com/c/0a5Qc5Oi)
 - [Android](https://trello.com/c/M26yUbVf)
 - [Mac OS X (Cocoa)](https://trello.com/c/7chNcCXr)
