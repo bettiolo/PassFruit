@@ -14,7 +14,7 @@ Your passwords are encrypted with your master key in the client and sent encrypt
 
 Your masterkey is never persisted and never sent to the server.
 
-Only one password at a time is in memory in cleartext and they are deencrypted always in the client.
+Only one password at a time is in memory in cleartext and they are decrypted always in the client.
 
 If using a cloud password storage service you can enable double security that consist in requesting an access token with limited duration which is sent by email to the registered addess and enables a one-time password storage access. No one will be able to access your passwords without access to your email addess.
 
