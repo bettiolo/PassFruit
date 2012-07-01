@@ -24,7 +24,8 @@ namespace PassFruit.Ui.Wp {
 
         public Repositories GetRepositories() {
             var repositories = new Repositories();
-            var fakeRepository = new InMemoryRepository();
+            var repositoryConfiguration = new InMemoryRepositoryConfiguration("");
+            var fakeRepository = new InMemoryRepository(repositoryConfiguration);
             repositories.AddRepository(fakeRepository);
             repositories.SelectRepository(fakeRepository);
             return repositories;

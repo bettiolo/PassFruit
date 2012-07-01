@@ -33,7 +33,7 @@ namespace PassFruit.FieldImpl {
 
         public override int GetHashCode() {
             unchecked {
-                int result = (FieldType != null ? FieldType.GetHashCode() : 0);
+                int result = (FieldType != null ? FieldType.Key.GetHashCode() : 0);
                 result = (result * 397) ^ (Value != null ? Value.GetHashCode() : 0);
                 result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
                 return result;

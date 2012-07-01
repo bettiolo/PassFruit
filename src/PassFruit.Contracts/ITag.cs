@@ -7,7 +7,7 @@ namespace PassFruit.Contracts {
 
     public interface ITag {
 
-        string Key { get; set; }
+        string Key { get; }
 
         IEnumerable<IAccount> Accounts { get; }
 

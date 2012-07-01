@@ -11,9 +11,11 @@ namespace PassFruit.Contracts {
 
         string Description { get; }
 
+        IRepositoryConfiguration Configuration { get; }
+
         IAccounts Accounts { get; }
 
-        ITags Tags { get; }
+        IEnumerable<ITag> GetAllTags();
 
         IProviders Providers { get; }
 

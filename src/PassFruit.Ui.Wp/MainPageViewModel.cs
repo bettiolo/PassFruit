@@ -61,7 +61,7 @@ namespace PassFruit.Ui.Wp {
 
         private void PopulateTags() {
             Tags.Clear();
-            var tagViewModels = _repository.Tags.Select(accountTag => new TagViewModel(accountTag));
+            var tagViewModels = _repository.GetAllTags().Select(accountTag => new TagViewModel(accountTag));
             foreach (var tagViewModel in tagViewModels) {
                 Tags.Add(tagViewModel);
             }

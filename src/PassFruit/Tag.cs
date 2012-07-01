@@ -10,11 +10,19 @@ namespace PassFruit {
 
         private readonly IRepository _repository;
 
-        internal Tag(IRepository repository) {
+        internal Tag(IRepository repository, string key) {
             _repository = repository;
+            CheckForValidity(key);
+            Key = key.ToLowerInvariant();
         }
 
-        public string Key { get; set; }
+        private void CheckForValidity(string key) {
+            if (key.Contains(" ")) {
+                throw new Exception("Space character is not valid in a tag. Use a dash (-) instead.");
+            }
+        }
+
+        public string Key { get; private set; }
 
         public IEnumerable<IAccount> Accounts {
             get { return _repository.Accounts.Where(account => account.Tags.Contains(this)); }

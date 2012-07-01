@@ -19,7 +19,9 @@ namespace PassFruit.Contracts {
 
         void SetPassword(string password, string passwordKey = "");
 
-        IEnumerable<ITag> Tags { get; }
+        void DeleteAllPasswords();
+
+        ITags Tags { get; }
 
         IEnumerable<IField> Fields { get; }
 
@@ -35,9 +37,6 @@ namespace PassFruit.Contracts {
         
         void SetField(FieldTypeKey fieldTypeKey, object value);
 
-        void AddTag(string tagName);
-
-        void DeletePasswords();
     }
 
 }

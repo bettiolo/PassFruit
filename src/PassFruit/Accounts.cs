@@ -44,7 +44,7 @@ namespace PassFruit {
                     base.RemoveItem(index);
                 }
             } else {
-                this[index].DeletePasswords();
+                this[index].DeleteAllPasswords();
                 this[index] = new DeletedAccount(_repository, accountId);
             }
         }

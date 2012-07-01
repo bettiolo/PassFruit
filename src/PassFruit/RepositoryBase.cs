@@ -14,11 +14,9 @@ namespace PassFruit {
             Configuration = configuration;
         }
 
-        protected IRepositoryConfiguration Configuration { get; set; }
+        public IRepositoryConfiguration Configuration { get; private set; }
 
         private IAccounts _accounts;
-
-        private ITags _tags;
 
         private IProviders _providers;
 
@@ -40,8 +38,8 @@ namespace PassFruit {
             }
         }
 
-        public ITags Tags {
-            get { return _tags ?? (_tags = new Tags(this)); }
+        public IEnumerable<ITag> GetAllTags() {
+            return Accounts.SelectMany(account => account.Tags).Distinct();
         }
 
         public IProviders Providers {
@@ -69,7 +67,6 @@ namespace PassFruit {
         public abstract void SetPassword(Guid accountId, string password, string passwordKey = DefaultPasswordKey);
 
         public void Save(IAccount account) {
-            _tags = null;
             if (OnSaving != null) {
                 OnSaving(this, new RepositorySaveEventArgs(this, account));
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using PassFruit.Contracts;
 using PassFruit.FieldImpl;
@@ -12,16 +13,15 @@ namespace PassFruit {
 
         private int _orignalHash;
 
-        private readonly List<ITag> _tags;
-
         private readonly List<IField> _fields;
 
         internal Account(IRepository repository, IProvider provider, Guid? id = null) {
             _repository = repository;
             _provider = provider;
-            _tags = new List<ITag>();
-            _fields = new List<IField>();
             Id = id.HasValue ? id.Value : Guid.NewGuid();
+            _fields = new List<IField>();
+            Tags = new Tags(_repository);
+            Notes = "";
         }
 
         public Guid Id { get; private set; }
@@ -73,7 +73,7 @@ namespace PassFruit {
             _repository.SetPassword(Id, password, passwordKey);
         }
 
-        public IEnumerable<ITag> Tags { get { return _tags.ToArray(); } }
+        public ITags Tags { get; private set; }
 
         public IEnumerable<IField> Fields { get { return _fields.ToArray(); } }
 
@@ -101,11 +101,15 @@ namespace PassFruit {
             }
         }
 
-        public void AddTag(string tagName) {
-            _tags.Add(_repository.Tags.Create(tagName));
+        public void AddTag(string tagKey) {
+            Tags.Add(tagKey);
         }
 
-        public void DeletePasswords() {
+        public void DeleteTag(string tagKey) {
+            Tags.Remove(tagKey);
+        }
+
+        public void DeleteAllPasswords() {
             _repository.DeletePasswords(Id);
         }
 
@@ -126,13 +130,20 @@ namespace PassFruit {
         public override int GetHashCode() {
             unchecked {
                 var result = Id.GetHashCode();
+                Debug.WriteLine("Account ID: " + Id);
+
                 result = (result * 397) ^ (Notes != null ? Notes.GetHashCode() : 0);
+                Debug.WriteLine(" - HashCode after notes: " + result);
                 foreach (var field in Fields) {
                     result = (result * 397) ^ (field != null ? field.GetHashCode() : 0);
                 }
+                Debug.WriteLine(" - Fields: " + string.Join(", ", Fields.Select(field => field.Name + "<" + field.FieldType.Key + "> " + field.Value).ToArray()));
+                Debug.WriteLine(" - HashCode after fields: " + result);
                 foreach (var tag in Tags) {
                     result = (result * 397) ^ (tag != null ? tag.GetHashCode() : 0);
                 }
+                Debug.WriteLine(" - Tags: " + string.Join(", ", Tags.Select(tag => tag.Key).ToArray()));
+                Debug.WriteLine(" - HashCode after tags: " + result);
                 return result;
             }
         }

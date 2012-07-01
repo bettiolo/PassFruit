@@ -16,15 +16,18 @@ namespace PassFruit.Client.InMemoryRepository {
             get { return (InMemoryRepositoryConfiguration)base.Configuration; }
         }
 
-        private readonly Dictionary<Guid, Dictionary<string, string>> _passwords = 
+        private readonly Dictionary<Guid, Dictionary<string, string>> _passwords =
             new Dictionary<Guid, Dictionary<string, string>>();
+
+        private readonly Dictionary<Guid, IAccount> _accounts =
+            new Dictionary<Guid, IAccount>();
 
         public override string Name {
             get { return "In Memory Repository"; }
         }
 
         public override string Description {
-            get { return "In Memory repository, the data is not persisted anywhere"; }
+            get { return "In Memory repository, the data is serialized"; }
         }
 
         public override string GetPassword(Guid accountId, string passwordKey = DefaultPasswordKey) {
@@ -58,23 +61,23 @@ namespace PassFruit.Client.InMemoryRepository {
         }
 
         protected override void InternalSave(IAccount account) {
-            throw new NotImplementedException();
+            _accounts[account.Id] = account;
         }
 
         protected override IEnumerable<Guid> GetAllAccountIds() {
-            throw new NotImplementedException();
+            return _accounts.Select(item => item.Key);
         }
 
         protected override IEnumerable<Guid> GetDeletedAccountIds() {
-            throw new NotImplementedException();
+            return _accounts.Where(item => item.Value is DeletedAccount).Select(account => account.Key);
         }
 
         protected override IAccount LoadAccount(Guid accountId) {
-            throw new NotImplementedException();
+            return _accounts[accountId];
         }
 
         protected override void LoadAllFieldTypes() {
-            throw new NotImplementedException();
+            // ?
         }
 
     }

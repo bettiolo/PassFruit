@@ -14,12 +14,6 @@ namespace PassFruit {
 
         internal Tags(IRepository repository) {
             _repository = repository;
-            ReloadTags();
-        }
-
-        private void ReloadTags() {
-            _tags.Clear();
-            _tags.AddRange(_repository.Accounts.SelectMany(account => account.Tags).Distinct());
         }
 
         public ITag this[string key] {
@@ -33,8 +27,18 @@ namespace PassFruit {
             return _tags.Any(accountTag => accountTag.Key.Equals(key, StringComparison.OrdinalIgnoreCase));
         }
 
-        public IEnumerable<ITag> GetByAccountId(Guid accountId) {
-            return this.Where(accountTag => accountTag.Accounts.Any(account => account.Id == accountId));
+        public void Add(string key) {
+            if (Contains(key)) {
+                throw new Exception(string.Format("The tag '{0}' has already been added to the list", key));
+            }
+            _tags.Add(new Tag(_repository, key));
+        }
+
+        public void Remove(string key) {
+            if (!Contains(key)) {
+                throw new Exception(string.Format("The tag '{0}' has not been found in the list", key));
+            }
+            _tags.Remove(this[key]);
         }
 
         public IEnumerator<ITag> GetEnumerator() {
@@ -45,8 +49,21 @@ namespace PassFruit {
             return GetEnumerator();
         }
 
-        public ITag Create(string key) {
-            return new Tag(_repository) { Key = key };
+        public bool Equals(Tags other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._tags, _tags);
+        }
+
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Tags)) return false;
+            return Equals((Tags) obj);
+        }
+
+        public override int GetHashCode() {
+            return _tags.GetHashCode();
         }
 
     }

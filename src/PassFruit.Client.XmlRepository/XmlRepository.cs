@@ -22,12 +22,15 @@ namespace PassFruit.Client.XmlRepository {
          *              <tags>
          *                  <tag-key />
          *              </tags>
+         *              <note>
+         *                  bla bla bla
+         *              </note>
          *          </id-0000-0000-0000-0000>
          *      </accounts>
          *      <passwords>
          *          <id-0000-0000-0000-0000>
          *              <default>
-         *                  password
+         *                  passwo0rd1
          *              </default>
          *          </id-0000-0000-0000-0000>
          *      </passwords>
@@ -84,8 +87,12 @@ namespace PassFruit.Client.XmlRepository {
         private IEnumerable<Guid> GetAccountIdsWithFilter(Func<Guid, bool> filterAccount) {
             var accountsElement = GetAccountsElement();
             var accountIds = new List<Guid>();
-            foreach (var element in accountsElement.Elements()) {
-                var accountId = element.Name.LocalName.Remove(0, AccountIdPrefix.Length);
+            foreach (var accountElement in accountsElement.Elements()) {
+                var accountElementName = accountElement.Name.LocalName;
+                if (!accountElementName.StartsWith(AccountIdPrefix)) {
+                    throw new Exception(string.Format("The account id '{0}' is not starting with the prefix '{1}'", accountElementName, AccountIdPrefix));
+                }
+                var accountId = accountElementName.Remove(0, AccountIdPrefix.Length);
                 Guid guid;
                 if (Guid.TryParse(accountId, out guid) && filterAccount(guid)) {
                     accountIds.Add(guid);    
@@ -95,12 +102,21 @@ namespace PassFruit.Client.XmlRepository {
         }
 
         protected override IAccount LoadAccount(Guid accountId) {
-            var accountFieldsElement = GetAccountFieldsElement(accountId);
             var account = Accounts.Create(GetProviderFieldElement(accountId).Value, accountId);
-            foreach (var fieldElement in accountFieldsElement.Elements()) {
-                var fieldTypeKey = (FieldTypeKey)Enum.Parse(typeof (FieldTypeKey), fieldElement.Name.LocalName, true);
+            foreach (var fieldElement in GetAccountFieldsElement(account.Id).Elements()) {
+                var fieldElementName = fieldElement.Name.LocalName;
+                var fieldTypeKey = (FieldTypeKey)Enum.Parse(typeof (FieldTypeKey), fieldElementName, true);
                 account.SetField(fieldTypeKey, fieldElement.Value);
             }
+            foreach (var tagElement in GetTagsElement(account.Id).Elements()) {
+                var tagElementName = tagElement.Name.LocalName;
+                if (!tagElementName.StartsWith(TagPrefix)) {
+                    throw new Exception(string.Format("The tag name '{0}' is not starting with the prefix '{1}'", tagElementName, TagPrefix));
+                }
+                var tagKey = tagElement.Name.LocalName.Remove(0, TagPrefix.Length);
+                account.Tags.Add(tagKey);
+            }
+            account.Notes = GetNoteElement(account.Id).Value;
             account.SetClean();
             return account;
         }
@@ -155,12 +171,16 @@ namespace PassFruit.Client.XmlRepository {
             return GetOrCreateElement("deleted", GetAccountElement(accountId));
         }
 
-        private XElement GetTagsElement() {
-            return GetOrCreateElement("tags", GetPassfruitElement());
+        private XElement GetTagsElement(Guid accountId) {
+            return GetOrCreateElement("tags", GetAccountElement(accountId));
         }
 
-        private XElement GetTagElement(string tagName) {
-            return GetOrCreateElement(TagPrefix + tagName, GetPassfruitElement());
+        private XElement GetNoteElement(Guid accountId) {
+            return GetOrCreateElement("note", GetAccountElement(accountId));
+        }
+
+        private XElement GetTagElement(string tagName, Guid accountId) {
+            return GetOrCreateElement(TagPrefix + tagName, GetTagsElement(accountId));
         }
 
         private XElement GetAccountFieldElement(IField field, Guid accountId) {
@@ -190,12 +210,12 @@ namespace PassFruit.Client.XmlRepository {
                 GetAccountFieldElement(field, account.Id).Value = field.Value.ToString();
             }
             foreach (var tag in account.Tags) {
-                var tagElement = GetTagElement(tag.Key);
-                // ToDo: Should handle adding, removing and changing tags
+                GetTagElement(tag.Key, account.Id);
             }
             if (account is DeletedAccount) {
                 GetAccountDeletedElement(account.Id).Value = bool.TrueString;
             }
+            GetNoteElement(account.Id).Value = account.Notes ?? "";
             _xDoc.Save(Configuration.XmlFilePath);
         }
 

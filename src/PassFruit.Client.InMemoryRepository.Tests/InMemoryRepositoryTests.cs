@@ -12,7 +12,7 @@ using PassFruit.Tests.FakeData;
 namespace PassFruit.Client.InMemoryRepository.Tests {
 
     [TestFixture]
-    public class InMemoryRepositoryTests : RepositoryTests {
+    public class InMemoryRepositoryTests : RepositoryTestsBase {
 
         private readonly InMemoryRepositoryConfiguration _configuration = new InMemoryRepositoryConfiguration(Path.GetTempFileName());
 

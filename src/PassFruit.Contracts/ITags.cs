@@ -9,11 +9,11 @@ namespace PassFruit.Contracts {
 
         ITag this[string key] { get; }
 
-        IEnumerable<ITag> GetByAccountId(Guid accountId);
-
         bool Contains(string key);
 
-        ITag Create(string key);
+        void Add(string key);
+
+        void Remove(string key);
 
     }
 
