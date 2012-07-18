@@ -9,8 +9,6 @@ namespace PassFruit.Contracts {
 
         string Key { get; }
 
-        IEnumerable<IAccount> Accounts { get; }
-
     }
 
 }

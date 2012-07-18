@@ -25,6 +25,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Tests", "PassFrui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Client.XmlRepository", "PassFruit.Client.XmlRepository\PassFruit.Client.XmlRepository.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Repository", "PassFruit.Repository", "{9EE1F13A-A8AD-439D-AE65-F9529B9FAAB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Repository", "PassFruit.Repository\PassFruit.Repository.csproj", "{D8B90A43-5567-40B1-95E4-9639D6312615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Repository.Contracts", "PassFruit.Repository.Contracts\PassFruit.Repository.Contracts.csproj", "{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +73,14 @@ Global
 		{5DACB670-3923-49D9-815F-ECEE33835DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DACB670-3923-49D9-815F-ECEE33835DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DACB670-3923-49D9-815F-ECEE33835DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B90A43-5567-40B1-95E4-9639D6312615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B90A43-5567-40B1-95E4-9639D6312615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B90A43-5567-40B1-95E4-9639D6312615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B90A43-5567-40B1-95E4-9639D6312615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +95,7 @@ Global
 		{BACCC516-255A-466D-8988-5281345F9BFB} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
 		{6140384A-8A30-4916-BAC5-6AD1E0FC5049} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
 		{CBC6B226-8231-4F44-946A-9A4BA83BFD29} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
+		{D8B90A43-5567-40B1-95E4-9639D6312615} = {9EE1F13A-A8AD-439D-AE65-F9529B9FAAB3}
+		{328B1FC3-5ED3-4C46-8E87-D0380F519E7A} = {9EE1F13A-A8AD-439D-AE65-F9529B9FAAB3}
 	EndGlobalSection
 EndGlobal

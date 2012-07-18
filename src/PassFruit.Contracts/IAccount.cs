@@ -27,8 +27,6 @@ namespace PassFruit.Contracts {
 
         bool IsDirty { get; }
 
-        void Save();
-
         void SetClean();
 
         IEnumerable<IField> GetFieldsByKey(FieldTypeKey fieldTypeKey);
@@ -36,6 +34,8 @@ namespace PassFruit.Contracts {
         IField GetDefaultField(FieldTypeKey fieldTypeKey);
         
         void SetField(FieldTypeKey fieldTypeKey, object value);
+
+        DateTime LastChangedUtc { get; }
 
     }
 

@@ -197,21 +197,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PassFruit.Client.InMemoryRepository\PassFruit.Client.InMemoryRepository.csproj">
-      <Project>{EF5C1406-CD43-46C7-A5C3-DBC74770585F}</Project>
-      <Name>PassFruit.Client.InMemoryRepository</Name>
+    <ProjectReference Include="..\PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj">
+      <Project>{5DACB670-3923-49D9-815F-ECEE33835DC8}</Project>
+      <Name>PassFruit.DataStore.XmlDataStore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.Client\PassFruit.Client.csproj">
+    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
       <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
-      <Name>PassFruit.Client %28PassFruit.Client\PassFruit.Client%29</Name>
+      <Name>PassFruit.DataStore %28PassFruit.DataStore\PassFruit.DataStore%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
       <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
       <Name>PassFruit.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.Tests.FakeData\PassFruit.Tests.FakeData.csproj">
+    <ProjectReference Include="..\PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj">
       <Project>{6140384A-8A30-4916-BAC5-6AD1E0FC5049}</Project>
-      <Name>PassFruit.Tests.FakeData</Name>
+      <Name>PassFruit.DataStore.Tests.FakeData</Name>
     </ProjectReference>
     <ProjectReference Include="..\PassFruit\PassFruit.csproj">
       <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>

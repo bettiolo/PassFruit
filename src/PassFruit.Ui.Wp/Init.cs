@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using PassFruit.Client;
-using PassFruit.Client.InMemoryRepository;
+using PassFruit.Client.XmlRepository;
 using PassFruit.Contracts;
 using PassFruit.Ui.Wp.Controls;
 
@@ -24,8 +24,8 @@ namespace PassFruit.Ui.Wp {
 
         public Repositories GetRepositories() {
             var repositories = new Repositories();
-            var repositoryConfiguration = new InMemoryRepositoryConfiguration("");
-            var fakeRepository = new InMemoryRepository(repositoryConfiguration);
+            var repositoryConfiguration = new XmlRepositoryConfiguration(System.IO.Path.GetTempFileName());
+            var fakeRepository = new XmlRepository(repositoryConfiguration);
             repositories.AddRepository(fakeRepository);
             repositories.SelectRepository(fakeRepository);
             return repositories;

@@ -8,10 +8,7 @@ namespace PassFruit {
 
     public class Tag : ITag {
 
-        private readonly IRepository _repository;
-
-        internal Tag(IRepository repository, string key) {
-            _repository = repository;
+        internal Tag(string key) {
             CheckForValidity(key);
             Key = key.ToLowerInvariant();
         }
@@ -23,10 +20,6 @@ namespace PassFruit {
         }
 
         public string Key { get; private set; }
-
-        public IEnumerable<IAccount> Accounts {
-            get { return _repository.Accounts.Where(account => account.Tags.Contains(this)); }
-        }
 
         public override string ToString() {
             return Key;

@@ -9,12 +9,10 @@ namespace PassFruit {
 
     public class Providers : IProviders {
 
-        private readonly IRepository _repository;
-
         private readonly IList<IProvider> _providers = new List<IProvider>();
 
-        public Providers(IRepository repository) {
-            _repository = repository;
+        public Providers() {
+
         }
 
         public IEnumerator<IProvider> GetEnumerator() {

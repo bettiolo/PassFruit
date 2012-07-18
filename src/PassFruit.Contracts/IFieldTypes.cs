@@ -7,7 +7,9 @@ namespace PassFruit.Contracts {
 
     public interface IFieldTypes : IEnumerable<IFieldType> {
 
-        IField CreateField(FieldTypeKey key, object value);
+        void Add(IFieldType fieldType);
+
+        IField CreateField(FieldTypeKey key, object value, Guid? fieldId = null);
 
     }
 

@@ -1,21 +1,39 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using PassFruit.Contracts;
+using PassFruit.DataStore.Contracts;
 
 namespace PassFruit {
 
-    public class Accounts : Collection<IAccount>, IAccounts {
+    public class Accounts : IAccounts {
 
-        private readonly IRepository _repository;
+        private readonly IDataStore _dataStore;
 
-        internal Accounts(IRepository repository) {
-            _repository = repository;
+        private readonly IPasswords _passwords;
+
+        private readonly List<IAccount> _accounts = new List<IAccount>();
+
+        private readonly Providers _providers;
+
+        private FieldTypes _fieldTypes;
+
+        public Accounts(IDataStore dataStore, IPasswords passwords) {
+            _dataStore = dataStore;
+            _passwords = passwords;
+            _providers = new Providers();
+            _fieldTypes = new FieldTypes();
+            _accounts.AddRange(dataStore.GetActiveAccountDtos().Select(accountDto => new Account(accountDto)));
         }
 
         public IAccount this[Guid accountId] {
             get { return this.Single(account => account.Id == accountId); }
+        }
+
+        public IAccount GetById(Guid accountId) {
+            return this.SingleOrDefault(account => account.Id == accountId);
         }
 
         public IEnumerable<IAccount> GetByEmail(string email) {
@@ -26,9 +44,13 @@ namespace PassFruit {
             return this.Where(account => FindField(account, FieldTypeKey.UserName, userName));
         }
 
-        public IAccount Create(string providerKey, Guid? id) {
-            var provider = _repository.Providers.GetByKey(providerKey);
-            return new Account(_repository, provider, id);
+        public IEnumerable<IAccount> GetByTag(string tagKey) {
+            return _accounts.Where(account => account.Tags.Contains(tagKey));
+        }
+
+        public IAccount Create(string providerKey, Guid? id = null) {
+            var provider = _providers.GetByKey(providerKey);
+            return new Account(_passwords, provider, _fieldTypes, DateTime.UtcNow, id);
         }
 
         private static bool FindField(IAccount account, FieldTypeKey fieldTypeKey, string fieldValue) {
@@ -37,18 +59,28 @@ namespace PassFruit {
             );
         }
 
-        protected override void RemoveItem(int index) {
-            var accountId = this[index].Id;
-            if (this[index] is DeletedAccount) {
-                if (!this[index].IsDirty) {
-                    base.RemoveItem(index);
+        public void Remove(Guid accountId) {
+            var account = GetById(accountId);
+            if (account is DeletedAccount) {
+                if (!account.IsDirty) {
+                    _accounts.Remove(account);
                 }
             } else {
-                this[index].DeleteAllPasswords();
-                this[index] = new DeletedAccount(_repository, accountId);
+                account.DeleteAllPasswords();
+                _accounts.Remove(account);
+                _accounts.Add(new DeletedAccount(_passwords, accountId));
             }
         }
 
+        public IEnumerator<IAccount> GetEnumerator() {
+            return _accounts.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
+        }
+
+         
     }
 
 }

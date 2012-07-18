@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PassFruit.Contracts {
 
-    public interface IAccounts : IList<IAccount> {
+    public interface IAccounts : IEnumerable<IAccount> {
 
         IAccount this[Guid accountId] { get; }
 
@@ -13,8 +13,13 @@ namespace PassFruit.Contracts {
 
         IEnumerable<IAccount> GetByUserName(string userName);
 
+        IEnumerable<IAccount> GetByTag(string tagKey); 
+            
         IAccount Create(string providerKey, Guid? id = null);
 
+        IAccount GetById(Guid accountId);
+
+        void Remove(Guid accountId);
     }
 
 }

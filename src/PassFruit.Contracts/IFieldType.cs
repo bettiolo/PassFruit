@@ -13,6 +13,8 @@ namespace PassFruit.Contracts {
 
         string Description { get; }
 
+        bool IsPassword { get; set; }
+
     }
 
 }

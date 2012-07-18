@@ -3,24 +3,49 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using PassFruit.Contracts;
-using PassFruit.FieldImpl;
+using PassFruit.DataStore.Contracts;
 
 namespace PassFruit {
 
     public class Account : IAccount {
 
-        private readonly IRepository _repository;
-
         private int _orignalHash;
+
+        private readonly IProvider _provider;
+
+        private readonly IFieldTypes _fieldTypes;
 
         private readonly List<IField> _fields;
 
-        internal Account(IRepository repository, IProvider provider, Guid? id = null) {
-            _repository = repository;
+        private readonly IPasswords _passwords;
+
+        private Account() {
+            Tags = new Tags(Id);
+            _fields = new List<IField>();
+        }
+
+        internal Account(IAccountDto accountDto, IPasswords passwords, IFieldTypes fieldTypes) : this() {
+            _passwords = passwords;
+            _provider = new Provider(accountDto.ProviderKey);
+            _fieldTypes = fieldTypes;
+            Id = accountDto.Id;
+            foreach (var fieldDto in accountDto.Fields) {
+                _fields.Add(new Field());
+            }
+            foreach (var tag in accountDto.Tags) {
+                Tags.Add(tag);
+            }
+            Notes = "";
+        }
+
+        internal Account(IPasswords passwords, IProvider provider, IFieldTypes fieldTypes, DateTime lastChangedUtc, 
+                         Guid? id = null) : this() {
+            _passwords = passwords;
             _provider = provider;
+            _fieldTypes = fieldTypes;
             Id = id.HasValue ? id.Value : Guid.NewGuid();
             _fields = new List<IField>();
-            Tags = new Tags(_repository);
+            Tags = new Tags(Id);
             Notes = "";
         }
 
@@ -60,17 +85,16 @@ namespace PassFruit {
             return GetAccountName() + " | " + Provider.Name;
         }
 
-        private readonly IProvider _provider;
         public IProvider Provider {
             get { return _provider; }
         }
 
         public string GetPassword(string passwordKey = "") {
-            return _repository.GetPassword(Id, passwordKey);
+            return _passwords.GetPassword(Id, passwordKey);
         }
 
         public void SetPassword(string password, string passwordKey = "") {
-            _repository.SetPassword(Id, password, passwordKey);
+            _passwords.SetPassword(Id, password, passwordKey);
         }
 
         public ITags Tags { get; private set; }
@@ -94,12 +118,14 @@ namespace PassFruit {
         public void SetField(FieldTypeKey fieldTypeKey, object value) {
             var field = _fields.SingleOrDefault(f => f.FieldType.Key == fieldTypeKey);
             if (field == null) {
-                var newField = _repository.FieldTypes.CreateField(fieldTypeKey, value);
+                var newField = _fieldTypes.CreateField(fieldTypeKey, value);
                 _fields.Add(newField);
             } else {
                 field.Value = value;
             }
         }
+
+        public DateTime LastChangedUtc { get; private set; }
 
         public void AddTag(string tagKey) {
             Tags.Add(tagKey);
@@ -110,13 +136,7 @@ namespace PassFruit {
         }
 
         public void DeleteAllPasswords() {
-            _repository.DeletePasswords(Id);
-        }
-
-        public virtual void Save() {
-            if (IsDirty) {
-                _repository.Save(this);
-            }
+            _passwords.DeleteAccountPasswords(Id);
         }
 
         public bool IsDirty {
@@ -162,7 +182,6 @@ namespace PassFruit {
         }
 
     }
-
 }
 
 

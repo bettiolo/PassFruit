@@ -7,6 +7,8 @@ namespace PassFruit.Contracts {
 
     public interface IField {
 
+        Guid Id { get; }
+
         string Name { get; set; }
 
         IFieldType FieldType { get; }

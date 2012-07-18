@@ -5,8 +5,8 @@ namespace PassFruit {
     
     public class DeletedAccount : Account {
 
-        public DeletedAccount(IRepository repository, Guid? id = null) 
-            : base(repository, null, id) {
+        internal DeletedAccount(IPasswords passwords, Guid id) 
+            : base(passwords, null, null, id) {
 
         }
 

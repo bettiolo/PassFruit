@@ -8,12 +8,12 @@ namespace PassFruit {
 
     public class Tags : ITags {
 
-        private readonly IRepository _repository;
-
         private readonly List<ITag> _tags = new List<ITag>();
 
-        internal Tags(IRepository repository) {
-            _repository = repository;
+        private readonly Guid _accountId;
+
+        internal Tags(Guid accountId) {
+            _accountId = accountId;
         }
 
         public ITag this[string key] {
@@ -31,7 +31,7 @@ namespace PassFruit {
             if (Contains(key)) {
                 throw new Exception(string.Format("The tag '{0}' has already been added to the list", key));
             }
-            _tags.Add(new Tag(_repository, key));
+            _tags.Add(new Tag(key));
         }
 
         public void Remove(string key) {
@@ -52,7 +52,8 @@ namespace PassFruit {
         public bool Equals(Tags other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other._tags, _tags);
+            return other._accountId.Equals(_accountId) 
+                && Equals(other._tags, _tags);
         }
 
         public override bool Equals(object obj) {
@@ -63,7 +64,10 @@ namespace PassFruit {
         }
 
         public override int GetHashCode() {
-            return _tags.GetHashCode();
+            unchecked {
+                return (_accountId.GetHashCode() * 397) 
+                    ^ (_tags != null ? _tags.GetHashCode() : 0);
+            }
         }
 
     }
