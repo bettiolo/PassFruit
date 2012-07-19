@@ -4,15 +4,17 @@ namespace PassFruit.DataStore.InMemoryDataStore {
 
     public class InMemoryDataStoreConfiguration : IDataStoreConfiguration {
 
-        public InMemoryDataStoreConfiguration(string serializedFilePath) {
-            _serializedFilePath = serializedFilePath;
-        }
+        public readonly InMemoryDataStore Instance = new InMemoryDataStore();
 
-        private readonly string _serializedFilePath;
+        //public InMemoryDataStoreConfiguration(string serializedFilePath) {
+        //    _serializedFilePath = serializedFilePath;
+        //}
 
-        public string SerializedFilePath {
-            get { return _serializedFilePath; }
-        }
+        //private readonly string _serializedFilePath;
+
+        //public string SerializedFilePath {
+        //    get { return _serializedFilePath; }
+        //}
 
     }
 

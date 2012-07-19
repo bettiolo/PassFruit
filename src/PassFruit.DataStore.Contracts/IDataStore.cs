@@ -9,11 +9,9 @@ namespace PassFruit.DataStore.Contracts {
 
         string Description { get; }
 
-        IEnumerable<Guid> GetActiveAccountIds();
+        IEnumerable<Guid> GetAllAccountIds();
 
-        IEnumerable<IAccountDto> GetActiveAccountDtos();
-
-        IEnumerable<Guid> GetDeletedAccountIds();
+        IEnumerable<IAccountDto> GetAccountDtos(AccountDtoStatus accountStatus = AccountDtoStatus.Active);
 
         IAccountDto GetAccountDto(Guid accountId);
 

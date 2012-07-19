@@ -13,7 +13,7 @@ namespace PassFruit.DataStore.Contracts {
 
         IList<IFieldDto> Fields { get; set; }
 
-        IList<string> Tags { get; set; }
+        IList<ITagDto> Tags { get; set; }
 
         string Notes { get; set; }
 

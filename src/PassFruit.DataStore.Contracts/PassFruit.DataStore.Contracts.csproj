@@ -33,11 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AccountDtoStatus.cs" />
     <Compile Include="IAccountDto.cs" />
     <Compile Include="IFieldDto.cs" />
     <Compile Include="IPasswordDto.cs" />
     <Compile Include="IDataStore.cs" />
     <Compile Include="IDataStoreConfiguration.cs" />
+    <Compile Include="ITagDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

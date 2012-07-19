@@ -68,12 +68,8 @@ namespace PassFruit.DataStore.XmlDataStore {
             get { return "XML dataStore, the data is persisted in a XML file"; }
         }
 
-        public override IEnumerable<Guid> GetActiveAccountIds() {
+        public override IEnumerable<Guid> GetAllAccountIds() {
             return GetAccountIdsWithFilter(accountId => !AccountElementIsDeleted(accountId));
-        }
-
-        public override IEnumerable<Guid> GetDeletedAccountIds() {
-            return GetAccountIdsWithFilter(AccountElementIsDeleted);
         }
 
         public override IAccountDto GetAccountDto(Guid accountId) {
@@ -93,10 +89,12 @@ namespace PassFruit.DataStore.XmlDataStore {
             GetAccountElement(accountDto.Id).Remove();
             GetProviderElement(accountDto.Id).Value = accountDto.ProviderKey;
             foreach (var field in accountDto.Fields) {
-                GetFieldElement(field.Id, accountDto.Id).Value = field.Value.ToString();
+                GetFieldNameElement(accountDto.Id, field.Id).Value = field.Name;
+                GetFieldTypeKeyElement(accountDto.Id, field.Id).Value = field.FieldTypeKey;
+                GetFieldValueElement(accountDto.Id, field.Id).Value = field.Value.ToString();
             }
             foreach (var tag in accountDto.Tags) {
-                GetTagElement(tag, accountDto.Id);
+                GetTagElement(tag.Name, accountDto.Id);
             }
             GetNoteElement(accountDto.Id).Value = accountDto.Notes ?? "";
             UpdateLastChangedUtc(GetAccountElement(accountDto.Id));
@@ -155,8 +153,8 @@ namespace PassFruit.DataStore.XmlDataStore {
             return accountIds;
         }
 
-        private IList<string> GetTags(Guid accountId) {
-            var tags = new List<string>();
+        private IList<ITagDto> GetTags(Guid accountId) {
+            var tags = new List<ITagDto>();
             foreach (var tagElement in GetTagsElement(accountId).Elements()) {
                 var tagElementName = tagElement.Name.LocalName;
                 if (!tagElementName.StartsWith(TagPrefix)) {
@@ -164,7 +162,7 @@ namespace PassFruit.DataStore.XmlDataStore {
                         tagElementName, TagPrefix));
                 }
                 var tagKey = tagElement.Name.LocalName.Remove(0, TagPrefix.Length);
-                tags.Add(tagKey);
+                tags.Add(new TagDto { Name = tagKey });
             }
             return tags;
         }
@@ -222,7 +220,7 @@ namespace PassFruit.DataStore.XmlDataStore {
         }
 
         private XAttribute GetLastChangedUtcAttribute(XElement element) {
-            return element.Attribute("lastChanged");
+            return GetOrCreateAttribute("lastChanged", element);
         }
 
         private XElement GetAccountsElement() {
@@ -281,6 +279,16 @@ namespace PassFruit.DataStore.XmlDataStore {
                 parentElement.Add(element);
             }
             return element;
+        }
+
+        private XAttribute GetOrCreateAttribute(string attributeName, XElement element) {
+            attributeName = attributeName.ToLowerInvariant();
+            var attribute = element.Attribute(attributeName);
+            if (attribute == null) {
+                attribute = new XAttribute(attributeName, "");
+                element.Add(attribute);
+            }
+            return attribute;
         }
 
         private void GetElementsWithId(XContainer containingElement, string idPrefix,

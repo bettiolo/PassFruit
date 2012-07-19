@@ -23,7 +23,10 @@ namespace PassFruit.DataStore {
         public bool Equals(IFieldDto otherFieldDto) {
             if (ReferenceEquals(null, otherFieldDto)) return false;
             if (ReferenceEquals(this, otherFieldDto)) return true;
-            return otherFieldDto.Id.Equals(Id) && Equals(otherFieldDto.Name, Name) && Equals(otherFieldDto.FieldTypeKey, FieldTypeKey) && Equals(otherFieldDto.Value, Value);
+            return otherFieldDto.Id.Equals(Id) 
+                && Equals(otherFieldDto.Name, Name) 
+                && Equals(otherFieldDto.FieldTypeKey, FieldTypeKey) 
+                && Equals(otherFieldDto.Value, Value);
         }
 
         public override bool Equals(object obj) {
@@ -36,9 +39,9 @@ namespace PassFruit.DataStore {
         public override int GetHashCode() {
             unchecked {
                 int result = Id.GetHashCode();
-                result = (result * 397) ^ Name.GetHashCode();
-                result = (result * 397) ^ FieldTypeKey.GetHashCode();
-                result = (result * 397) ^ Value.GetHashCode();
+                result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                result = (result * 397) ^ (FieldTypeKey != null ? FieldTypeKey.GetHashCode() : 0);
+                result = (result * 397) ^ (Value != null ? Value.GetHashCode() : 0);
                 return result;
             }
         }

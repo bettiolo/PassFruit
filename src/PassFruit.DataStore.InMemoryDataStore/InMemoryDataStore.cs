@@ -7,11 +7,11 @@ namespace PassFruit.DataStore.InMemoryDataStore {
 
     public class InMemoryDataStore : DataStoreBase {
 
-        private readonly InMemoryDataStoreConfiguration _configuration;
+        //private readonly InMemoryDataStoreConfiguration _configuration;
 
-        public InMemoryDataStore(InMemoryDataStoreConfiguration configuration) {
-            _configuration = configuration;
-        }
+        //public InMemoryDataStore(InMemoryDataStoreConfiguration configuration) {
+        //    _configuration = configuration;
+        //}
 
         private readonly Dictionary<Guid, IAccountDto> _accountDtos =
             new Dictionary<Guid, IAccountDto>();
@@ -55,13 +55,8 @@ namespace PassFruit.DataStore.InMemoryDataStore {
             _passwordDtos.Remove(accountId);
         }
 
-        public override IEnumerable<Guid> GetActiveAccountIds() {
-            return _accountDtos.Where(accountDto => !accountDto.Value.IsDeleted)
-                               .Select(item => item.Key);
-        }
-
-        public override IEnumerable<Guid> GetDeletedAccountIds() {
-            return _accountDtos.Where(item => item.Value.IsDeleted).Select(account => account.Key);
+        public override IEnumerable<Guid> GetAllAccountIds() {
+            return _accountDtos.Select(item => item.Key);
         }
 
         public override IAccountDto GetAccountDto(Guid accountId) {

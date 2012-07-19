@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using PassFruit.DataStore.Contracts;
+using System.Linq;
+using System.Collections;
 
 namespace PassFruit.DataStore {
 
@@ -11,7 +13,7 @@ namespace PassFruit.DataStore {
                 ? Guid.NewGuid() 
                 : accuntId.Value;
             Fields = new List<IFieldDto>();
-            Tags = new List<string>();
+            Tags = new List<ITagDto>();
         }
 
         public Guid Id { get; private set; }
@@ -22,7 +24,7 @@ namespace PassFruit.DataStore {
 
         public IList<IFieldDto> Fields { get; set; }
 
-        public IList<string> Tags { get; set; }
+        public IList<ITagDto> Tags { get; set; }
 
         public DateTime LastChangedUtc { get; set; }
 
@@ -31,12 +33,12 @@ namespace PassFruit.DataStore {
         public bool Equals(IAccountDto otherAccountDto) {
             if (ReferenceEquals(null, otherAccountDto)) return false;
             if (ReferenceEquals(this, otherAccountDto)) return true;
-            return Equals(otherAccountDto.ProviderKey, ProviderKey)
+            return otherAccountDto.ProviderKey.Equals(ProviderKey)
                 && otherAccountDto.IsDeleted.Equals(IsDeleted) 
-                && otherAccountDto.Id.Equals(Id) 
-                && Equals(otherAccountDto.Fields, Fields) 
-                && Equals(otherAccountDto.Tags, Tags) 
-                && Equals(otherAccountDto.Notes, Notes);
+                && otherAccountDto.Id.Equals(Id)
+                && otherAccountDto.Fields.SequenceEqual(Fields)
+                && otherAccountDto.Tags.SequenceEqual(Tags)
+                && otherAccountDto.Notes.Equals(Notes);
         }
 
         public override bool Equals(object obj) {

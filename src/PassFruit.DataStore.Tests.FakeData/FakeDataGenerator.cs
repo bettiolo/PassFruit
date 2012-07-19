@@ -52,8 +52,8 @@ namespace PassFruit.DataStore.Tests.FakeData {
         public static IAccountDto GetFacebookAccount() {
             var facebookAccount = new AccountDto { ProviderKey = FacebookProviderKey, Notes = Note1 };
             facebookAccount.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = FacebookEmail });
-            facebookAccount.Tags.Add(Tag1);
-            facebookAccount.Tags.Add(Tag2);
+            facebookAccount.Tags.Add(new TagDto { Name = Tag1 });
+            facebookAccount.Tags.Add(new TagDto { Name = Tag2 });
             return facebookAccount;
         }
 
@@ -65,7 +65,7 @@ namespace PassFruit.DataStore.Tests.FakeData {
             var twitterAccount = new AccountDto { ProviderKey = TwitterProviderKey, Notes = Note2 };
             twitterAccount.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = TwitterEmail });
             twitterAccount.Fields.Add(new FieldDto { FieldTypeKey = "username", Name = "User name", Value = TwitterUserName });
-            twitterAccount.Tags.Add(Tag1);
+            twitterAccount.Tags.Add(new TagDto { Name = Tag1 });
             return twitterAccount;
         }
 
@@ -76,9 +76,9 @@ namespace PassFruit.DataStore.Tests.FakeData {
         private IAccountDto GetGoogle1Account() {
             var google1Account = new AccountDto { ProviderKey = GoogleProviderKey };
             google1Account.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = Google1Email });
-            google1Account.Tags.Add(Tag1);
-            google1Account.Tags.Add(Tag2);
-            google1Account.Tags.Add(Tag3);
+            google1Account.Tags.Add(new TagDto { Name = Tag1 });
+            google1Account.Tags.Add(new TagDto { Name = Tag2 });
+            google1Account.Tags.Add(new TagDto { Name = Tag3 });
             return google1Account;
         }
 
@@ -89,8 +89,8 @@ namespace PassFruit.DataStore.Tests.FakeData {
         private IAccountDto GetGoogle2Account() {
             var google2Account = new AccountDto { ProviderKey = GoogleProviderKey };
             google2Account.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = Google2Email });
-            google2Account.Tags.Add(Tag2);
-            google2Account.Tags.Add(Tag3);
+            google2Account.Tags.Add(new TagDto { Name = Tag2 });
+            google2Account.Tags.Add(new TagDto { Name = Tag3 });
             return google2Account;
         }
 

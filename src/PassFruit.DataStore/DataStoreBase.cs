@@ -12,12 +12,11 @@ namespace PassFruit.DataStore {
 
         public abstract string Description { get; }
 
-        public abstract IEnumerable<Guid> GetActiveAccountIds();
+        public abstract IEnumerable<Guid> GetAllAccountIds();
 
-        public abstract IEnumerable<Guid> GetDeletedAccountIds();
-
-        public IEnumerable<IAccountDto> GetActiveAccountDtos() {
-            return GetActiveAccountIds().Select(GetAccountDto);
+        public IEnumerable<IAccountDto> GetAccountDtos(AccountDtoStatus accountStatus = AccountDtoStatus.Active) {
+            return GetAllAccountIds().Select(GetAccountDto).Where(accountDto => 
+                IsAccountDtoMatchedByStatus(accountStatus, accountDto.IsDeleted));
         }
 
         public abstract IAccountDto GetAccountDto(Guid accountId);
@@ -35,6 +34,19 @@ namespace PassFruit.DataStore {
         public abstract void SavePasswordDto(Guid accountId, IPasswordDto passwordDto);
 
         public abstract void DeleteAccountPasswords(Guid accountId);
+
+        private bool IsAccountDtoMatchedByStatus(AccountDtoStatus accountDtoStatus, bool isDeleted) {
+            switch (accountDtoStatus) {
+                case AccountDtoStatus.All:
+                    return true;
+                case AccountDtoStatus.Active:
+                    return !isDeleted;
+                case AccountDtoStatus.Deleted:
+                    return isDeleted;
+                default:
+                    throw new NotSupportedException("The account status filter specified is not supported: " + accountDtoStatus);
+            }
+        }
 
     }
 

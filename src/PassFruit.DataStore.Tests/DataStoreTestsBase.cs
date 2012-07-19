@@ -32,21 +32,25 @@ namespace PassFruit.DataStore.Tests {
             // Given
             var facebookAccount = FakeData.FakeDataGenerator.GetFacebookAccount();
             var facebookPassword = FakeData.FakeDataGenerator.GetFacebookPassword();
+            IDataStore originalDataStore = null;
 
             // When
             TestWithDataStore(dataStore => {
                 dataStore.SaveAccountDto(facebookAccount);
                 dataStore.SavePasswordDto(facebookAccount.Id, facebookPassword);
+                originalDataStore = dataStore;
             });
-
+            
             // Then
-            TestWithDataStore(dataStore => {
-                dataStore.GetActiveAccountIds().Should().Contain(id => id.Equals(facebookAccount.Id));
-                dataStore.GetActiveAccountIds().Should().HaveCount(1);
-                dataStore.GetActiveAccountDtos().Should().HaveCount(1);
-                dataStore.GetActiveAccountDtos().Should().Contain(accountDto => accountDto.Id == facebookAccount.Id);
+            Action<IDataStore> readDataStore = dataStore => {
+                dataStore.GetAllAccountIds().Should().Contain(id => id.Equals(facebookAccount.Id));
+                dataStore.GetAllAccountIds().Should().HaveCount(1);
+                dataStore.GetAccountDtos().Should().HaveCount(1);
+                dataStore.GetAccountDtos().Should().Contain(accountDto => accountDto.Id == facebookAccount.Id);
                 dataStore.GetAccountDto(facebookAccount.Id).Equals(facebookAccount).Should().BeTrue();
-            });
+            };
+            readDataStore(originalDataStore);
+            TestWithDataStore(readDataStore);
         }
 
         /*
