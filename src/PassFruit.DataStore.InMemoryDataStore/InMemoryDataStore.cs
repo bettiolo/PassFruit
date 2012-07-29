@@ -36,7 +36,8 @@ namespace PassFruit.DataStore.InMemoryDataStore {
                 : _passwordDtos[accountId].Select(accountPasswordDto => accountPasswordDto.Value);
         }
 
-        public override void SavePasswordDto(Guid accountId, IPasswordDto passwordDto) {
+        public override void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto) {
+            var accountId = accountDto.Id;
             if (_passwordDtos.ContainsKey(accountId)
                 && _passwordDtos[accountId] != null
                 && _passwordDtos[accountId][passwordDto.Id] != null
@@ -48,11 +49,13 @@ namespace PassFruit.DataStore.InMemoryDataStore {
                 || _passwordDtos[accountId] == null) {
                 _passwordDtos.Add(accountId, new Dictionary<Guid, IPasswordDto>());
             }
-            _passwordDtos[accountId][passwordDto.Id] = passwordDto;    
+            _passwordDtos[accountId][passwordDto.Id] = passwordDto;
+            accountDto.LastChangedUtc = DateTime.UtcNow;
         }
 
-        public override void DeleteAccountPasswords(Guid accountId) {
-            _passwordDtos.Remove(accountId);
+        public override void DeleteAccountPasswords(IAccountDto accountDto) {
+            _passwordDtos.Remove(accountDto.Id);
+            accountDto.LastChangedUtc = DateTime.UtcNow;
         }
 
         public override IEnumerable<Guid> GetAllAccountIds() {

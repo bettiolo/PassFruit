@@ -77,7 +77,8 @@ namespace PassFruit.DataStore.XmlDataStore {
                 ProviderKey = GetProviderElement(accountId).Value,
                 Fields = GetAccountFieldDtos(accountId),
                 Tags = GetTags(accountId),
-                Notes = GetNoteElement(accountId).Value
+                Notes = GetNoteElement(accountId).Value,
+                LastChangedUtc = GetLastChangedUtc(GetAccountElement(accountId))
             };
         }
 
@@ -97,8 +98,10 @@ namespace PassFruit.DataStore.XmlDataStore {
                 GetTagElement(tag.Name, accountDto.Id);
             }
             GetNoteElement(accountDto.Id).Value = accountDto.Notes ?? "";
-            UpdateLastChangedUtc(GetAccountElement(accountDto.Id));
+            var accountElement = GetAccountElement(accountDto.Id);
+            UpdateLastChangedUtc(accountElement);
             SaveXml();
+            accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
         }
 
         //public override void DeletedAccount(Guid accountId) {
@@ -123,7 +126,8 @@ namespace PassFruit.DataStore.XmlDataStore {
             }
         }
 
-        public override void SavePasswordDto(Guid accountId, IPasswordDto passwordDto) {
+        public override void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto) {
+            var accountId = accountDto.Id;
             var originalPasswordDto = GetPasswordDtos(accountId).SingleOrDefault(pwdDto => pwdDto.Id == accountId);
             if (originalPasswordDto != null && originalPasswordDto.Equals(passwordDto)) {
                 return;
@@ -131,16 +135,22 @@ namespace PassFruit.DataStore.XmlDataStore {
             GetPasswordElement(accountId, passwordDto.Id).Remove();
             GetPasswordNameElement(accountId, passwordDto.Id).Value = passwordDto.Name;
             GetPasswordValueElement(accountId, passwordDto.Id).Value = passwordDto.Password;
-            UpdateLastChangedUtc(GetPasswordElement(accountId, passwordDto.Id));
+            var accountElement = GetAccountElement(accountId);
+            var passwordElement = GetPasswordElement(accountId, passwordDto.Id);
+            UpdateLastChangedUtc(passwordElement);
             UpdateLastChangedUtc(GetAccountPasswordsElement(accountId));
-            UpdateLastChangedUtc(GetAccountElement(accountId));
+            UpdateLastChangedUtc(accountElement);
             SaveXml();
+            passwordDto.LastChangedUtc = GetLastChangedUtc(passwordElement);
+            accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
         }
 
-        public override void DeleteAccountPasswords(Guid accountId) {
-            GetAccountPasswordsElement(accountId).Remove();
-            UpdateLastChangedUtc(GetAccountElement(accountId));
+        public override void DeleteAccountPasswords(IAccountDto accountDto) {
+            GetAccountPasswordsElement(accountDto.Id).Remove();
+            var accountElement = GetAccountElement(accountDto.Id);
+            UpdateLastChangedUtc(accountElement);
             SaveXml();
+            accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
         }
 
         private IEnumerable<Guid> GetAccountIdsWithFilter(Func<Guid, bool> filterAccount) {
@@ -184,11 +194,14 @@ namespace PassFruit.DataStore.XmlDataStore {
         }
 
         private void UpdateLastChangedUtc(XElement element) {
-            GetLastChangedUtcAttribute(element).Value = DateTime.UtcNow.ToString();
+            GetLastChangedUtcAttribute(element).Value = DateTime.UtcNow.Ticks.ToString();
         }
 
         private DateTime GetLastChangedUtc(XElement element) {
-            return DateTime.Parse(GetLastChangedUtcAttribute(element).Value,  null, DateTimeStyles.AssumeUniversal);
+            var lastChangedUtcString = GetLastChangedUtcAttribute(element).Value;
+            return string.IsNullOrWhiteSpace(lastChangedUtcString) 
+                ? DateTime.MinValue 
+                : new DateTime(long.Parse(lastChangedUtcString), DateTimeKind.Utc).ToUniversalTime();
         }
 
         private void LoadXDocument() {

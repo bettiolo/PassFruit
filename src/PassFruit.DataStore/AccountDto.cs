@@ -14,6 +14,8 @@ namespace PassFruit.DataStore {
                 : accuntId.Value;
             Fields = new List<IFieldDto>();
             Tags = new List<ITagDto>();
+            ProviderKey = "";
+            Notes = "";
         }
 
         public Guid Id { get; private set; }

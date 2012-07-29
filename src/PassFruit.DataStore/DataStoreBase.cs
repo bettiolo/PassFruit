@@ -25,15 +25,15 @@ namespace PassFruit.DataStore {
 
         public void DeleteAccount(Guid accountId) {
             var deletedAccountDto = new AccountDto(accountId) { IsDeleted = true };
-            DeleteAccountPasswords(accountId);
+            DeleteAccountPasswords(deletedAccountDto);
             SaveAccountDto(deletedAccountDto);
         }
 
         public abstract IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId);
 
-        public abstract void SavePasswordDto(Guid accountId, IPasswordDto passwordDto);
+        public abstract void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto);
 
-        public abstract void DeleteAccountPasswords(Guid accountId);
+        public abstract void DeleteAccountPasswords(IAccountDto accountDto);
 
         private bool IsAccountDtoMatchedByStatus(AccountDtoStatus accountDtoStatus, bool isDeleted) {
             switch (accountDtoStatus) {

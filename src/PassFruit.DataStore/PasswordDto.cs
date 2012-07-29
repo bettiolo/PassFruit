@@ -25,7 +25,9 @@ namespace PassFruit.DataStore {
         public bool Equals(IPasswordDto other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.Id.Equals(Id) && Equals(other.Name, Name) && Equals(other.Password, Password);
+            return other.Id.Equals(Id) 
+                && other.Name.Equals(Name) 
+                && other.Password.Equals(Password);
         }
 
         public override bool Equals(object obj) {
@@ -40,6 +42,7 @@ namespace PassFruit.DataStore {
                 int result = Id.GetHashCode();
                 result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
                 result = (result * 397) ^ (Password != null ? Password.GetHashCode() : 0);
+                result = (result * 397) ^ Id.GetHashCode();
                 return result;
             }
         }

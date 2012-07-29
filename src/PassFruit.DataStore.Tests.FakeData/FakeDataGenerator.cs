@@ -30,22 +30,22 @@ namespace PassFruit.DataStore.Tests.FakeData {
             var facebookAccount = GetFacebookAccount();
             dataStore.SaveAccountDto(facebookAccount);
             var facebookPassword = GetFacebookPassword();
-            dataStore.SavePasswordDto(facebookAccount.Id, facebookPassword);
+            dataStore.SavePasswordDto(facebookAccount, facebookPassword);
 
             var twitterAccount = GetTwitterAccount();
             dataStore.SaveAccountDto(twitterAccount);
             var twitterPassword = GetTwitterPassword();
-            dataStore.SavePasswordDto(twitterAccount.Id, twitterPassword);
+            dataStore.SavePasswordDto(twitterAccount, twitterPassword);
 
             var google1Account = GetGoogle1Account();
             dataStore.SaveAccountDto(google1Account);
             var google1Password = GetGoogle1Password();
-            dataStore.SavePasswordDto(google1Account.Id, google1Password);
+            dataStore.SavePasswordDto(google1Account, google1Password);
 
             var google2Account = GetGoogle2Account();
             dataStore.SaveAccountDto(google2Account);
             var google2Password = GetGoogle2Password();
-            dataStore.SavePasswordDto(google2Account.Id, google2Password);
+            dataStore.SavePasswordDto(google2Account, google2Password);
 
         }
 

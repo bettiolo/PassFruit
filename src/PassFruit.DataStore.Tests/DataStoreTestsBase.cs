@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
 using PassFruit.DataStore.Contracts;
@@ -27,8 +30,32 @@ namespace PassFruit.DataStore.Tests {
             test(GetDataStore());
         }
 
+        private void TestAccountAndPassword(IDataStore dataStore, IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos) {
+            dataStore.GetAllAccountIds().Should().Contain(id => id.Equals(accountDto.Id));
+            dataStore.GetAccountDtos().Should().Contain(dataStoreAccountDto => accountDto.Id == dataStoreAccountDto.Id);
+            dataStore.GetAccountDto(accountDto.Id).Equals(accountDto).Should().BeTrue();
+            dataStore.GetAccountDto(accountDto.Id).IsDeleted.Should().Be(accountDto.IsDeleted);
+            dataStore.GetAccountDto(accountDto.Id).Id.Should().Be(accountDto.Id);
+            dataStore.GetAccountDto(accountDto.Id).LastChangedUtc.Should().Be(accountDto.LastChangedUtc);
+            dataStore.GetAccountDto(accountDto.Id).Notes.Should().Be(accountDto.Notes);
+            dataStore.GetAccountDto(accountDto.Id).ProviderKey.Should().Be(accountDto.ProviderKey);
+            dataStore.GetAccountDto(accountDto.Id).Tags.Should().Equal(accountDto.Tags);
+            dataStore.GetAccountDto(accountDto.Id).Fields.Should().Equal(accountDto.Fields);
+            dataStore.GetPasswordDtos(accountDto.Id).Should().HaveCount(passwordDtos.Count());
+            dataStore.GetPasswordDtos(accountDto.Id).First().Equals(passwordDtos.First()).Should().BeTrue();
+            dataStore.GetPasswordDtos(accountDto.Id).ToArray().Should().Equal(passwordDtos.ToArray());
+        }
+
+        private void ComparePasswords(IPasswordDto passwordDto1, IPasswordDto passwordDto2) {
+            passwordDto1.Id.Should().Be(passwordDto2.Id);
+            passwordDto1.LastChangedUtc.Should().Be(passwordDto2.LastChangedUtc);
+            passwordDto1.Name.Should().Be(passwordDto2.Name);
+            passwordDto1.Password.Should().Be(passwordDto2.Password);
+        }
+
         [Test]
-        public void WhenAddingDataToRepository_TheDataShouldBeAdded() {
+        public void WhenAddingASingleAcount_ItShouldBeAdded() {
+
             // Given
             var facebookAccount = FakeData.FakeDataGenerator.GetFacebookAccount();
             var facebookPassword = FakeData.FakeDataGenerator.GetFacebookPassword();
@@ -37,20 +64,40 @@ namespace PassFruit.DataStore.Tests {
             // When
             TestWithDataStore(dataStore => {
                 dataStore.SaveAccountDto(facebookAccount);
-                dataStore.SavePasswordDto(facebookAccount.Id, facebookPassword);
+                dataStore.SavePasswordDto(facebookAccount, facebookPassword);
                 originalDataStore = dataStore;
             });
             
             // Then
             Action<IDataStore> readDataStore = dataStore => {
-                dataStore.GetAllAccountIds().Should().Contain(id => id.Equals(facebookAccount.Id));
                 dataStore.GetAllAccountIds().Should().HaveCount(1);
                 dataStore.GetAccountDtos().Should().HaveCount(1);
-                dataStore.GetAccountDtos().Should().Contain(accountDto => accountDto.Id == facebookAccount.Id);
-                dataStore.GetAccountDto(facebookAccount.Id).Equals(facebookAccount).Should().BeTrue();
+                TestAccountAndPassword(dataStore, facebookAccount, new[] {facebookPassword});
             };
             readDataStore(originalDataStore);
             TestWithDataStore(readDataStore);
+        }
+
+        [Test]
+        public void WhenAddingMultipeAccounts_TheyShouldBeAdded() {
+
+            // Given
+            var accountDtos = new Dictionary<IAccountDto, IEnumerable<IPasswordDto>>();
+            
+            // When
+            TestWithPrepopulatedDataStore(dataStore => {
+                foreach (var accountDto in dataStore.GetAccountDtos()) {
+                    accountDtos.Add(accountDto, dataStore.GetPasswordDtos(accountDto.Id));
+                }
+            });
+
+            // Then
+            TestWithDataStore(dataStore => {
+                foreach (var accountDto in accountDtos.Keys) {
+                    TestAccountAndPassword(dataStore, accountDto, accountDtos[accountDto]);
+                }
+            });
+
         }
 
         /*
