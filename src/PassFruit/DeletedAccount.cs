@@ -3,17 +3,17 @@ using PassFruit.Contracts;
 
 namespace PassFruit {
     
-    public class DeletedAccount : Account {
+    //public class DeletedAccount : Account {
 
-        internal DeletedAccount(IPasswords passwords, Guid id) 
-            : base(passwords, null, null, id) {
+    //    internal DeletedAccount(Guid id) 
+    //        : base(passwords, null, null, id) {
 
-        }
+    //    }
 
-        public override string GetAccountName() {
-            return "< deleted >";
-        }
+    //    public override string GetAccountName() {
+    //        return "< deleted >";
+    //    }
 
-    }
+    //}
 
 }

@@ -34,8 +34,8 @@ namespace PassFruit.Ui.Wp.Views {
 
         public void LoadAccount() {
             //_passwordLoaded = false;
-            var repository = Init.GetRepository();
-            _account = repository.Accounts[_accountId];
+            var dataStore = Init.GetDataStore();
+            _account = new Accounts(dataStore).GetById(_accountId);
             NotifyOfPropertyChange(() => AccountName);
             NotifyOfPropertyChange(() => Title);
             //NotifyOfPropertyChange(() => Email);
@@ -66,7 +66,8 @@ namespace PassFruit.Ui.Wp.Views {
         }
 
         private void SaveAccount() {
-            _account.Save();
+            // _account.Save();
+            throw new NotSupportedException();
         }
 
         //public Visibility IsUserNameEnabled {

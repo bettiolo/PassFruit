@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,40 +10,47 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-using PassFruit.Client;
-using PassFruit.Client.XmlRepository;
 using PassFruit.Contracts;
+using PassFruit.DataStore;
+using PassFruit.DataStore.Contracts;
+using PassFruit.DataStore.InMemoryDataStore;
+using PassFruit.DataStore.XmlDataStore;
 using PassFruit.Ui.Wp.Controls;
 
 namespace PassFruit.Ui.Wp {
 
     public class Init {
 
-       public Init() {
-           TiltEffect.TiltableItems.Add(typeof(SettingsItem)); 
+        public Init() {
+            TiltEffect.TiltableItems.Add(typeof(SettingsItem));
         }
 
-        public Repositories GetRepositories() {
-            var repositories = new Repositories();
-            var repositoryConfiguration = new XmlRepositoryConfiguration(System.IO.Path.GetTempFileName());
-            var fakeRepository = new XmlRepository(repositoryConfiguration);
-            repositories.AddRepository(fakeRepository);
-            repositories.SelectRepository(fakeRepository);
-            return repositories;
+        public DataStores GetDataStores() {
+            var dataStores = new DataStores();
+            var xmlDataStoreConfiguration = new XmlDataStoreConfiguration(null, null);
+            var xmlDataStore = new XmlDataStore(xmlDataStoreConfiguration);
+            dataStores.AddDataStore(xmlDataStore);
+
+            var inMemoryDatasToreConfiguration = new InMemoryDataStoreConfiguration();
+            var inMemoryDataStore = new InMemoryDataStore();
+            dataStores.AddDataStore(inMemoryDataStore);
+
+            dataStores.SelectDataStore(inMemoryDataStore);
+            return dataStores;
         }
 
-        public static IRepository GetRepository() {
-            IRepository repository;
+        public static IDataStore GetDataStore() {
+            IDataStore dataStore;
             var app = Application.Current as App;
             if (app != null) {
-                repository = app.Repositories.GetSelectedRepository();
+                dataStore = app.DataStores.GetSelectedDataStore();
             } else {
                 var init = new Init();
-                repository = init.GetRepositories().GetSelectedRepository();
+                dataStore = init.GetDataStores().GetSelectedDataStore();
             }
-            return repository;
+            return dataStore;
         }
-        
+
     }
 
 }

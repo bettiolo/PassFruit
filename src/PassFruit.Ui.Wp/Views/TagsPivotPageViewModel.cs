@@ -40,15 +40,14 @@ namespace PassFruit.Ui.Wp.Views {
             var test = "ciao";
         }
 
-
         //TagsPivotPageViewModel(Guid ActiveId) {
         //    var actie = ActiveId;
         //}
 
         private void PopulateTags() {
-            var repository = Init.GetRepository();
+            var dataStore = Init.GetDataStore();
             _tags = new ObservableCollection<TagViewModel>();
-            var tagViewModels = repository.GetAllTags().Select(accountTag => new TagViewModel(accountTag));
+            var tagViewModels = new Accounts(dataStore).GetAllTags().Select(accountTag => new TagViewModel(accountTag));
             foreach (var tagViewModel in tagViewModels) {
                 Tags.Add(tagViewModel);
             }

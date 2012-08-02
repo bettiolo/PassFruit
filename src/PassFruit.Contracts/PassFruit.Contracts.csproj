@@ -44,7 +44,7 @@
     <Compile Include="IField.cs" />
     <Compile Include="IAccount.cs" />
     <Compile Include="IFieldType.cs" />
-    <Compile Include="IPasswords.cs" />
+    <Compile Include="IPassword.cs" />
     <Compile Include="IProvider.cs" />
     <Compile Include="IProviders.cs" />
     <Compile Include="ITag.cs" />

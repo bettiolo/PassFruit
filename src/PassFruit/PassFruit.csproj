@@ -44,7 +44,7 @@
     <Compile Include="Field.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="FieldTypes.cs" />
-    <Compile Include="Passwords.cs" />
+    <Compile Include="Password.cs" />
     <Compile Include="Providers.cs" />
     <Compile Include="Accounts.cs" />
     <Compile Include="Account.cs" />

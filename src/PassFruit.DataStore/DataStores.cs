@@ -13,7 +13,7 @@ namespace PassFruit.DataStore {
             _dataStores.Add(dataStore);
         }
 
-        public IList<IDataStore> GetAvailableDataStores() {
+        public IEnumerable<IDataStore> GetAvailableDataStores() {
             return _dataStores;
         }
 

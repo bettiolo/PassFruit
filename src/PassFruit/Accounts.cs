@@ -12,20 +12,20 @@ namespace PassFruit {
 
         private readonly IDataStore _dataStore;
 
-        private readonly IPasswords _passwords;
-
         private readonly List<IAccount> _accounts = new List<IAccount>();
 
         private readonly Providers _providers;
 
         private FieldTypes _fieldTypes;
 
-        public Accounts(IDataStore dataStore, IPasswords passwords) {
+        public Accounts(IDataStore dataStore) {
             _dataStore = dataStore;
-            _passwords = passwords;
             _providers = new Providers();
             _fieldTypes = new FieldTypes();
-            _accounts.AddRange(dataStore.GetActiveAccountDtos().Select(accountDto => new Account(accountDto)));
+            foreach (var accountDto in dataStore.GetAccountDtos()) {
+                var account = new Account(accountDto, _dataStore.GetPasswordDtos(accountDto.Id), _fieldTypes);
+                _accounts.Add(account);
+            }
         }
 
         public IAccount this[Guid accountId] {
@@ -50,7 +50,8 @@ namespace PassFruit {
 
         public IAccount Create(string providerKey, Guid? id = null) {
             var provider = _providers.GetByKey(providerKey);
-            return new Account(_passwords, provider, _fieldTypes, DateTime.UtcNow, id);
+            // return new Account(_passwords, provider, _fieldTypes, DateTime.UtcNow, id);
+            throw new NotSupportedException();
         }
 
         private static bool FindField(IAccount account, FieldTypeKey fieldTypeKey, string fieldValue) {
@@ -60,16 +61,17 @@ namespace PassFruit {
         }
 
         public void Remove(Guid accountId) {
-            var account = GetById(accountId);
-            if (account is DeletedAccount) {
-                if (!account.IsDirty) {
-                    _accounts.Remove(account);
-                }
-            } else {
-                account.DeleteAllPasswords();
-                _accounts.Remove(account);
-                _accounts.Add(new DeletedAccount(_passwords, accountId));
-            }
+            //var account = GetById(accountId);
+            //if (account is DeletedAccount) {
+            //    if (!account.IsDirty) {
+            //        _accounts.Remove(account);
+            //    }
+            //} else {
+            //    account.DeleteAllPasswords();
+            //    _accounts.Remove(account);
+            //    // _accounts.Add(new DeletedAccount(_passwords, accountId));
+            //}
+            throw new NotSupportedException();
         }
 
         public IEnumerator<IAccount> GetEnumerator() {
@@ -80,7 +82,14 @@ namespace PassFruit {
             return GetEnumerator();
         }
 
-         
+        public IEnumerable<ITag> GetAllTags() {
+            IList<ITag> tags = new List<ITag>();
+            foreach (var tag in _accounts.SelectMany(account => account.Tags.Where(tag => !tags.Contains(tag)))) {
+                tags.Add(tag);
+            }
+            return tags;
+        }
+
     }
 
 }

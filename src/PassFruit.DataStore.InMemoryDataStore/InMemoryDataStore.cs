@@ -31,25 +31,30 @@ namespace PassFruit.DataStore.InMemoryDataStore {
         }
 
         public override IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId) {
-            return _passwordDtos[accountId] == null 
-                ? new List<IPasswordDto>() 
+            return _passwordDtos[accountId] == null
+                ? new List<IPasswordDto>()
                 : _passwordDtos[accountId].Select(accountPasswordDto => accountPasswordDto.Value);
         }
 
-        public override void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto) {
+        public override void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos) {
             var accountId = accountDto.Id;
             if (_passwordDtos.ContainsKey(accountId)
-                && _passwordDtos[accountId] != null
-                && _passwordDtos[accountId][passwordDto.Id] != null
-                && _passwordDtos[accountId][passwordDto.Id].Equals(passwordDto)) {
-                return;
+                    && _passwordDtos[accountId] != null) {
+                if (_passwordDtos[accountId].Values.SequenceEqual(passwordDtos)) {
+                    return;
+                } else {
+                    _passwordDtos[accountId].Clear();
+                }
             }
-            passwordDto.LastChangedUtc = DateTime.UtcNow;
-            if (!_passwordDtos.ContainsKey(accountId) 
-                || _passwordDtos[accountId] == null) {
-                _passwordDtos.Add(accountId, new Dictionary<Guid, IPasswordDto>());
+
+            foreach (var passwordDto in passwordDtos) {
+                passwordDto.LastChangedUtc = DateTime.UtcNow;
+                if (!_passwordDtos.ContainsKey(accountId)
+                    || _passwordDtos[accountId] == null) {
+                    _passwordDtos.Add(accountId, new Dictionary<Guid, IPasswordDto>());
+                }
+                _passwordDtos[accountId][passwordDto.Id] = passwordDto;
             }
-            _passwordDtos[accountId][passwordDto.Id] = passwordDto;
             accountDto.LastChangedUtc = DateTime.UtcNow;
         }
 

@@ -30,22 +30,22 @@ namespace PassFruit.DataStore.Tests.FakeData {
             var facebookAccount = GetFacebookAccount();
             dataStore.SaveAccountDto(facebookAccount);
             var facebookPassword = GetFacebookPassword();
-            dataStore.SavePasswordDto(facebookAccount, facebookPassword);
+            dataStore.SavePasswordDtos(facebookAccount, new [] { facebookPassword });
 
             var twitterAccount = GetTwitterAccount();
             dataStore.SaveAccountDto(twitterAccount);
             var twitterPassword = GetTwitterPassword();
-            dataStore.SavePasswordDto(twitterAccount, twitterPassword);
+            dataStore.SavePasswordDtos(twitterAccount, new [] { twitterPassword });
 
             var google1Account = GetGoogle1Account();
             dataStore.SaveAccountDto(google1Account);
             var google1Password = GetGoogle1Password();
-            dataStore.SavePasswordDto(google1Account, google1Password);
+            dataStore.SavePasswordDtos(google1Account, new [] { google1Password });
 
             var google2Account = GetGoogle2Account();
             dataStore.SaveAccountDto(google2Account);
             var google2Password = GetGoogle2Password();
-            dataStore.SavePasswordDto(google2Account, google2Password);
+            dataStore.SavePasswordDtos(google2Account, new [] { google2Password });
 
         }
 
@@ -69,11 +69,11 @@ namespace PassFruit.DataStore.Tests.FakeData {
             return twitterAccount;
         }
 
-        private IPasswordDto GetTwitterPassword() {
+        public static IPasswordDto GetTwitterPassword() {
             return new PasswordDto { Name = "password", Password = TwitterPassword };
         }
 
-        private IAccountDto GetGoogle1Account() {
+        public IAccountDto GetGoogle1Account() {
             var google1Account = new AccountDto { ProviderKey = GoogleProviderKey };
             google1Account.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = Google1Email });
             google1Account.Tags.Add(new TagDto { Name = Tag1 });
@@ -82,11 +82,11 @@ namespace PassFruit.DataStore.Tests.FakeData {
             return google1Account;
         }
 
-        private IPasswordDto GetGoogle1Password() {
+        public IPasswordDto GetGoogle1Password() {
             return new PasswordDto { Name = "password", Password = Goggle1Password };
         }
 
-        private IAccountDto GetGoogle2Account() {
+        public IAccountDto GetGoogle2Account() {
             var google2Account = new AccountDto { ProviderKey = GoogleProviderKey };
             google2Account.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = Google2Email });
             google2Account.Tags.Add(new TagDto { Name = Tag2 });
@@ -94,7 +94,7 @@ namespace PassFruit.DataStore.Tests.FakeData {
             return google2Account;
         }
 
-        private IPasswordDto GetGoogle2Password() {
+        public IPasswordDto GetGoogle2Password() {
             return new PasswordDto { Name = "Password", Password = Google2Password };
         }
     }

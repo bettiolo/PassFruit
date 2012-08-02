@@ -21,7 +21,7 @@ namespace PassFruit.DataStore.Contracts {
 
         IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId);
 
-        void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto);
+        void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos);
 
         void DeleteAccountPasswords(IAccountDto accountDto);
 

@@ -197,6 +197,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj">
+      <Project>{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}</Project>
+      <Name>PassFruit.DataStore.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.DataStore.InMemoryDataStore\PassFruit.DataStore.InMemoryDataStore.csproj">
+      <Project>{EF5C1406-CD43-46C7-A5C3-DBC74770585F}</Project>
+      <Name>PassFruit.DataStore.InMemoryDataStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj">
       <Project>{5DACB670-3923-49D9-815F-ECEE33835DC8}</Project>
       <Name>PassFruit.DataStore.XmlDataStore</Name>

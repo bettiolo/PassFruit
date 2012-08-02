@@ -31,7 +31,7 @@ namespace PassFruit.DataStore {
 
         public abstract IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId);
 
-        public abstract void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto);
+        public abstract void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos);
 
         public abstract void DeleteAccountPasswords(IAccountDto accountDto);
 

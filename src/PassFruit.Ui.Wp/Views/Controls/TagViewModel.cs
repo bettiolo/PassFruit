@@ -9,7 +9,8 @@ namespace PassFruit.Ui.Wp.Views.Controls {
 
         public TagViewModel(ITag tag) {
             TagName = tag.Key;
-            Description = tag.Accounts.Count() + " account(s)";
+            // Description = tag.Accounts.Count() + " account(s)";
+            throw new NotSupportedException();
         }
 
         private string _tagName;

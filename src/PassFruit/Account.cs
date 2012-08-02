@@ -13,41 +13,48 @@ namespace PassFruit {
 
         private readonly IProvider _provider;
 
+        private readonly IList<IPassword> _passwords; 
+
         private readonly IFieldTypes _fieldTypes;
 
-        private readonly List<IField> _fields;
-
-        private readonly IPasswords _passwords;
+        private readonly IList<IField> _fields;
 
         private Account() {
             Tags = new Tags(Id);
             _fields = new List<IField>();
+            _passwords = new List<IPassword>();
         }
 
-        internal Account(IAccountDto accountDto, IPasswords passwords, IFieldTypes fieldTypes) : this() {
-            _passwords = passwords;
+        internal Account(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos, IFieldTypes fieldTypes) : this() {
             _provider = new Provider(accountDto.ProviderKey);
             _fieldTypes = fieldTypes;
             Id = accountDto.Id;
             foreach (var fieldDto in accountDto.Fields) {
-                _fields.Add(new Field());
+                _fields.Add(new Field(
+                    new FieldType((FieldTypeKey)Enum.Parse(typeof(FieldTypeKey), fieldDto.FieldTypeKey, true)),
+                    fieldDto.Id,
+                    fieldDto.Name
+                ));
             }
             foreach (var tag in accountDto.Tags) {
-                Tags.Add(tag);
+                Tags.Add(tag.Name);
+            }
+            foreach (var passwordDto in passwordDtos) {
+                _passwords.Add(new Password(passwordDto));
             }
             Notes = "";
         }
 
-        internal Account(IPasswords passwords, IProvider provider, IFieldTypes fieldTypes, DateTime lastChangedUtc, 
-                         Guid? id = null) : this() {
-            _passwords = passwords;
-            _provider = provider;
-            _fieldTypes = fieldTypes;
-            Id = id.HasValue ? id.Value : Guid.NewGuid();
-            _fields = new List<IField>();
-            Tags = new Tags(Id);
-            Notes = "";
-        }
+        //internal Account(IPasswords passwords, IProvider provider, IFieldTypes fieldTypes, DateTime lastChangedUtc, 
+        //                 Guid? id = null) : this() {
+        //    _passwords = passwords;
+        //    _provider = provider;
+        //    _fieldTypes = fieldTypes;
+        //    Id = id.HasValue ? id.Value : Guid.NewGuid();
+        //    _fields = new List<IField>();
+        //    Tags = new Tags(Id);
+        //    Notes = "";
+        //}
 
         public Guid Id { get; private set; }
 
@@ -56,7 +63,7 @@ namespace PassFruit {
             set { throw new NotImplementedException(); }
         }
 
-        public virtual string GetAccountName() {
+        public string GetAccountName() {
             var accountName = "";
             if (Provider.HasUserName) {
                 var userNameField = GetDefaultField(FieldTypeKey.UserName);
@@ -89,12 +96,12 @@ namespace PassFruit {
             get { return _provider; }
         }
 
-        public string GetPassword(string passwordKey = "") {
-            return _passwords.GetPassword(Id, passwordKey);
+        public IPassword GetPassword(Guid passwordId) {
+            return _passwords.First(password => password.Id == passwordId);
         }
 
-        public void SetPassword(string password, string passwordKey = "") {
-            _passwords.SetPassword(Id, password, passwordKey);
+        public void SetPassword(string password, string name) {
+            throw new NotSupportedException();
         }
 
         public ITags Tags { get; private set; }
@@ -136,7 +143,7 @@ namespace PassFruit {
         }
 
         public void DeleteAllPasswords() {
-            _passwords.DeleteAccountPasswords(Id);
+            _passwords.Clear();
         }
 
         public bool IsDirty {
@@ -164,6 +171,9 @@ namespace PassFruit {
                 }
                 Debug.WriteLine(" - Tags: " + string.Join(", ", Tags.Select(tag => tag.Key).ToArray()));
                 Debug.WriteLine(" - HashCode after tags: " + result);
+                foreach (var password in _passwords) {
+                    result = (result * 397) ^ (password != null ? password.GetHashCode() : 0);
+                }
                 return result;
             }
         }

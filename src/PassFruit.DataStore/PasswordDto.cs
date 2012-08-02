@@ -33,7 +33,7 @@ namespace PassFruit.DataStore {
         public override bool Equals(object obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(IPasswordDto)) return false;
+            if (!(obj is IPasswordDto)) return false;
             return Equals((IPasswordDto)obj);
         }
 

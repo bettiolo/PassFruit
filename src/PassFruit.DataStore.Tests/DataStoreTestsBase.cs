@@ -43,18 +43,11 @@ namespace PassFruit.DataStore.Tests {
             dataStore.GetAccountDto(accountDto.Id).Fields.Should().Equal(accountDto.Fields);
             dataStore.GetPasswordDtos(accountDto.Id).Should().HaveCount(passwordDtos.Count());
             dataStore.GetPasswordDtos(accountDto.Id).First().Equals(passwordDtos.First()).Should().BeTrue();
-            dataStore.GetPasswordDtos(accountDto.Id).ToArray().Should().Equal(passwordDtos.ToArray());
-        }
-
-        private void ComparePasswords(IPasswordDto passwordDto1, IPasswordDto passwordDto2) {
-            passwordDto1.Id.Should().Be(passwordDto2.Id);
-            passwordDto1.LastChangedUtc.Should().Be(passwordDto2.LastChangedUtc);
-            passwordDto1.Name.Should().Be(passwordDto2.Name);
-            passwordDto1.Password.Should().Be(passwordDto2.Password);
+            dataStore.GetPasswordDtos(accountDto.Id).Should().Equal(passwordDtos);
         }
 
         [Test]
-        public void WhenAddingASingleAcount_ItShouldBeAdded() {
+        public void WhenAddingASingleAccount_ItShouldBeAdded() {
 
             // Given
             var facebookAccount = FakeData.FakeDataGenerator.GetFacebookAccount();
@@ -64,7 +57,7 @@ namespace PassFruit.DataStore.Tests {
             // When
             TestWithDataStore(dataStore => {
                 dataStore.SaveAccountDto(facebookAccount);
-                dataStore.SavePasswordDto(facebookAccount, facebookPassword);
+                dataStore.SavePasswordDtos(facebookAccount, new [] { facebookPassword });
                 originalDataStore = dataStore;
             });
             
@@ -98,6 +91,53 @@ namespace PassFruit.DataStore.Tests {
                 }
             });
 
+        }
+
+        [Test]
+        public void WhenDeletingAnAccount_ItShouldBeDeleted() {
+
+            // Given
+            IDataStore originalDataStore = null;
+            IAccountDto twitterAccount = null;
+
+            // When
+            Action<IDataStore> deleteAccount = dataStore => {
+                originalDataStore = dataStore;
+                twitterAccount =
+                    dataStore.GetAccountDtos().First(account => 
+                        account.ProviderKey == FakeData.FakeDataGenerator.TwitterProviderKey);
+                dataStore.DeleteAccount(twitterAccount.Id);
+            };
+
+            // Then
+            TestWithPrepopulatedDataStore(deleteAccount);
+            originalDataStore.GetAccountDtos().Should().NotContain(account => account.Id == twitterAccount.Id);
+        }
+
+        [Test]
+        public void WhenDeletingAPassword_ItShouldBeDeleted() {
+
+            // Given
+            IDataStore originalDataStore = null;
+            IAccountDto twitterAccount = null;
+            IPasswordDto originalPasswordDto = null;
+            IPasswordDto changedPasswordDto = FakeData.FakeDataGenerator.GetFacebookPassword();
+
+            // When
+            Action<IDataStore> deletePassword = dataStore => {
+                originalDataStore = dataStore;
+                twitterAccount =
+                    dataStore.GetAccountDtos().First(account =>
+                        account.ProviderKey == FakeData.FakeDataGenerator.TwitterProviderKey);
+                originalPasswordDto = dataStore.GetPasswordDtos(twitterAccount.Id).First();
+                dataStore.SavePasswordDtos(twitterAccount, new[] { changedPasswordDto });
+                dataStore.SavePasswordDtos(twitterAccount, new[] { changedPasswordDto });
+            };
+
+            // Then
+            TestWithPrepopulatedDataStore(deletePassword);
+            originalDataStore.GetPasswordDtos(twitterAccount.Id).Should().NotContain(originalPasswordDto);
+            originalDataStore.GetPasswordDtos(twitterAccount.Id).Should().Contain(changedPasswordDto);
         }
 
         /*

@@ -54,12 +54,13 @@ namespace PassFruit.Ui.Wp.Views.Controls.Fields {
         }
 
         public void CopyPassword() {
-            Clipboard.SetText(_account.GetPassword());
-            MessageBox.Show("Password copied");
+            throw new NotSupportedException();
+            // Clipboard.SetText(_account.GetPassword());
+            // MessageBox.Show("Password copied");
         }
 
         public void ShowPassword() {
-            MessageBox.Show("Password is '" + _account.GetPassword() + "'");
+            // MessageBox.Show("Password is '" + _account.GetPassword() + "'");
         }
 
     }

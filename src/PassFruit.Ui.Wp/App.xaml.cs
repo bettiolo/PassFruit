@@ -13,13 +13,14 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using PassFruit.Client;
+using PassFruit.DataStore;
+using PassFruit.DataStore.Contracts;
 
 namespace PassFruit.Ui.Wp {
 
     public partial class App : Application {
 
-        public Repositories Repositories { get; private set; }
+        public DataStores DataStores { get; private set; }
 
         public App() {
 
@@ -45,7 +46,7 @@ namespace PassFruit.Ui.Wp {
             InitializeComponent();
 
             var init = new Init();
-            Repositories = init.GetRepositories();
+            DataStores = init.GetDataStores();
 
         }
 

@@ -98,6 +98,7 @@ namespace PassFruit.DataStore.XmlDataStore {
                 GetTagElement(tag.Name, accountDto.Id);
             }
             GetNoteElement(accountDto.Id).Value = accountDto.Notes ?? "";
+            GetAccountDeletedElement(accountDto.Id).Value = accountDto.IsDeleted.ToString();
             var accountElement = GetAccountElement(accountDto.Id);
             UpdateLastChangedUtc(accountElement);
             SaveXml();
@@ -126,23 +127,25 @@ namespace PassFruit.DataStore.XmlDataStore {
             }
         }
 
-        public override void SavePasswordDto(IAccountDto accountDto, IPasswordDto passwordDto) {
+        public override void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos) {
             var accountId = accountDto.Id;
-            var originalPasswordDto = GetPasswordDtos(accountId).SingleOrDefault(pwdDto => pwdDto.Id == accountId);
-            if (originalPasswordDto != null && originalPasswordDto.Equals(passwordDto)) {
+            if (GetPasswordDtos(accountId).SequenceEqual(passwordDtos)) {
                 return;
             }
-            GetPasswordElement(accountId, passwordDto.Id).Remove();
-            GetPasswordNameElement(accountId, passwordDto.Id).Value = passwordDto.Name;
-            GetPasswordValueElement(accountId, passwordDto.Id).Value = passwordDto.Password;
-            var accountElement = GetAccountElement(accountId);
-            var passwordElement = GetPasswordElement(accountId, passwordDto.Id);
-            UpdateLastChangedUtc(passwordElement);
-            UpdateLastChangedUtc(GetAccountPasswordsElement(accountId));
-            UpdateLastChangedUtc(accountElement);
-            SaveXml();
-            passwordDto.LastChangedUtc = GetLastChangedUtc(passwordElement);
-            accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
+            GetAccountPasswordsElement(accountId).Remove();
+            foreach (var passwordDto in passwordDtos) {
+                GetPasswordElement(accountId, passwordDto.Id).Remove();
+                GetPasswordNameElement(accountId, passwordDto.Id).Value = passwordDto.Name;
+                GetPasswordValueElement(accountId, passwordDto.Id).Value = passwordDto.Password;
+                var accountElement = GetAccountElement(accountId);
+                var passwordElement = GetPasswordElement(accountId, passwordDto.Id);
+                UpdateLastChangedUtc(passwordElement);
+                UpdateLastChangedUtc(GetAccountPasswordsElement(accountId));
+                UpdateLastChangedUtc(accountElement);
+                SaveXml();
+                passwordDto.LastChangedUtc = GetLastChangedUtc(passwordElement);
+                accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
+            }
         }
 
         public override void DeleteAccountPasswords(IAccountDto accountDto) {
@@ -168,7 +171,7 @@ namespace PassFruit.DataStore.XmlDataStore {
             foreach (var tagElement in GetTagsElement(accountId).Elements()) {
                 var tagElementName = tagElement.Name.LocalName;
                 if (!tagElementName.StartsWith(TagPrefix)) {
-                    throw new Exception(string.Format("The tag name '{0}' is not starting with the prefix '{1}'", 
+                    throw new Exception(string.Format("The tag name '{0}' is not starting with the prefix '{1}'",
                         tagElementName, TagPrefix));
                 }
                 var tagKey = tagElement.Name.LocalName.Remove(0, TagPrefix.Length);
@@ -199,8 +202,8 @@ namespace PassFruit.DataStore.XmlDataStore {
 
         private DateTime GetLastChangedUtc(XElement element) {
             var lastChangedUtcString = GetLastChangedUtcAttribute(element).Value;
-            return string.IsNullOrWhiteSpace(lastChangedUtcString) 
-                ? DateTime.MinValue 
+            return string.IsNullOrWhiteSpace(lastChangedUtcString)
+                ? DateTime.MinValue
                 : new DateTime(long.Parse(lastChangedUtcString), DateTimeKind.Utc).ToUniversalTime();
         }
 
@@ -267,7 +270,7 @@ namespace PassFruit.DataStore.XmlDataStore {
         private XElement GetProviderElement(Guid accountId) {
             return GetOrCreateElement("provider", GetAccountElement(accountId));
         }
-        
+
         private XElement GetAccountDeletedElement(Guid accountId) {
             return GetOrCreateElement("deleted", GetAccountElement(accountId));
         }

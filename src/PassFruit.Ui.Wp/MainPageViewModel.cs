@@ -7,7 +7,8 @@ using System.Windows;
 using Caliburn.Micro;
 using IsolatedStorageExtensions;
 using PassFruit.Contracts;
-using PassFruit.Tests.FakeData;
+using PassFruit.DataStore.Contracts;
+using PassFruit.DataStore.Tests.FakeData;
 using PassFruit.Ui.Wp.Views;
 using PassFruit.Ui.Wp.Views.Controls;
 
@@ -15,9 +16,11 @@ namespace PassFruit.Ui.Wp {
 
     public class MainPageViewModel : Screen {
 
-        private readonly IRepository _repository;
+        private readonly IDataStore _dataStore;
 
         INavigationService _navigationService;
+
+        private Accounts _accounts;
 
         public ObservableCollection<TagViewModel> Tags { get; private set; }
 
@@ -28,31 +31,33 @@ namespace PassFruit.Ui.Wp {
             Accounts = new ObservableCollection<AccountViewModel>();
             _navigationService = navigationService;
 
-            var storedRepository = IsolatedStorageHelper.GetApplicationSetting("repository") as IRepository;
-            if (storedRepository == null) {
+            var selectedDataStore = IsolatedStorageHelper.GetApplicationSetting("dataStore") as IDataStore;
+            if (selectedDataStore == null) {
                 var app = Application.Current as App;
                 if (app != null) {
-                    _repository = app.Repositories.GetSelectedRepository();
+                    _dataStore = app.DataStores.GetSelectedDataStore();
                 } else {
                     var init = new Init();
-                    _repository = init.GetRepositories().GetSelectedRepository();
+                    _dataStore = init.GetDataStores().GetSelectedDataStore();
                 }
                 var fakeData = new FakeDataGenerator();
-                fakeData.GenerateFakeData(_repository);
+                fakeData.GenerateFakeData(_dataStore);
             } else {
-                _repository = storedRepository;
+                _dataStore = selectedDataStore;
             }
 
+            _accounts = new Accounts(_dataStore);
+
             UpdateUi();
 
-            _repository.OnSaved += RepositoryChanged;
+            // _dataStore.OnSaved += RepositoryChanged;
 
         }
 
-        private void RepositoryChanged(object sender, RepositorySaveEventArgs eventArgs) {
-            IsolatedStorageHelper.SaveApplicationSetting("repository", _repository);
-            UpdateUi();
-        }
+        //private void RepositoryChanged(object sender, RepositorySaveEventArgs eventArgs) {
+        //    IsolatedStorageHelper.SaveApplicationSetting("repository", _dataStore);
+        //    UpdateUi();
+        //}
 
         private void UpdateUi() {
             PopulateTags();
@@ -61,7 +66,7 @@ namespace PassFruit.Ui.Wp {
 
         private void PopulateTags() {
             Tags.Clear();
-            var tagViewModels = _repository.GetAllTags().Select(accountTag => new TagViewModel(accountTag));
+            var tagViewModels = _accounts.GetAllTags().Select(accountTag => new TagViewModel(accountTag));
             foreach (var tagViewModel in tagViewModels) {
                 Tags.Add(tagViewModel);
             }
@@ -69,7 +74,7 @@ namespace PassFruit.Ui.Wp {
 
         private void PopulateAccounts() {
             Accounts.Clear();
-            var accountViewModels = _repository.Accounts.Select(account => new AccountViewModel(account));
+            var accountViewModels = _accounts.Select(account => new AccountViewModel(account));
             foreach (var accountViewModel in accountViewModels) {
                 Accounts.Add(accountViewModel);
             }

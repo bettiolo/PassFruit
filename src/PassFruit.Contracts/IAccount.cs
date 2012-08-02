@@ -15,7 +15,7 @@ namespace PassFruit.Contracts {
 
         IProvider Provider { get; }
 
-        string GetPassword(string passwordKey = "");
+        IPassword GetPassword(Guid passwordId);
 
         void SetPassword(string password, string passwordKey = "");
 
