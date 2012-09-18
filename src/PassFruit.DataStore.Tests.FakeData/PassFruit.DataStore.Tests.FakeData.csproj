@@ -49,8 +49,8 @@
       <Name>PassFruit.DataStore.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
-      <Project>{D8B90A43-5567-40B1-95E4-9639D6312615}</Project>
-      <Name>PassFruit.DataStore %28PassFruit.DataStore\PassFruit.DataStore%29</Name>
+      <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
+      <Name>PassFruit.DataStore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

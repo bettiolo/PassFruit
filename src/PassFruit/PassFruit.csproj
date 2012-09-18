@@ -40,7 +40,10 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PasswordTypes.cs" />
+    <Compile Include="PasswordType.cs" />
     <Compile Include="DeletedAccount.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="FieldTypes.cs" />
@@ -61,6 +64,10 @@
     <ProjectReference Include="..\PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj">
       <Project>{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}</Project>
       <Name>PassFruit.DataStore.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
+      <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
+      <Name>PassFruit.DataStore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

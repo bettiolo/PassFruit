@@ -22,6 +22,8 @@ namespace PassFruit.DataStore {
 
         public DateTime LastChangedUtc { get; set; }
 
+        public string PasswordTypeKey { get; set; }
+
         public bool Equals(IPasswordDto other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

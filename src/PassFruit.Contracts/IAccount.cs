@@ -15,7 +15,7 @@ namespace PassFruit.Contracts {
 
         IProvider Provider { get; }
 
-        IPassword GetPassword(Guid passwordId);
+        IEnumerable<IPassword> GetPasswords();
 
         void SetPassword(string password, string passwordKey = "");
 
@@ -27,11 +27,11 @@ namespace PassFruit.Contracts {
 
         bool IsDirty { get; }
 
-        void SetClean();
+        // void SetClean();
 
         IEnumerable<IField> GetFieldsByKey(FieldTypeKey fieldTypeKey);
 
-        IField GetDefaultField(FieldTypeKey fieldTypeKey);
+        // IField GetDefaultField(FieldTypeKey fieldTypeKey);
         
         void SetField(FieldTypeKey fieldTypeKey, object value);
 

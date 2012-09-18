@@ -45,15 +45,15 @@ namespace PassFruit.DataStore.Tests.FakeData {
             var google2Account = GetGoogle2Account();
             dataStore.SaveAccountDto(google2Account);
             var google2Password = GetGoogle2Password();
-            dataStore.SavePasswordDtos(google2Account, new [] { google2Password });
+            dataStore.SavePasswordDtos(google2Account, new[] { google1Password, google2Password });
 
         }
 
         public static IAccountDto GetFacebookAccount() {
             var facebookAccount = new AccountDto { ProviderKey = FacebookProviderKey, Notes = Note1 };
             facebookAccount.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = FacebookEmail });
-            facebookAccount.Tags.Add(new TagDto { Name = Tag1 });
-            facebookAccount.Tags.Add(new TagDto { Name = Tag2 });
+            facebookAccount.Tags.Add(new TagDto { Key = Tag1 });
+            facebookAccount.Tags.Add(new TagDto { Key = Tag2 });
             return facebookAccount;
         }
 
@@ -65,37 +65,37 @@ namespace PassFruit.DataStore.Tests.FakeData {
             var twitterAccount = new AccountDto { ProviderKey = TwitterProviderKey, Notes = Note2 };
             twitterAccount.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = TwitterEmail });
             twitterAccount.Fields.Add(new FieldDto { FieldTypeKey = "username", Name = "User name", Value = TwitterUserName });
-            twitterAccount.Tags.Add(new TagDto { Name = Tag1 });
+            twitterAccount.Tags.Add(new TagDto { Key = Tag1 });
             return twitterAccount;
         }
 
         public static IPasswordDto GetTwitterPassword() {
-            return new PasswordDto { Name = "password", Password = TwitterPassword };
+            return new PasswordDto { Name = "PIN", Password = TwitterPassword };
         }
 
         public IAccountDto GetGoogle1Account() {
             var google1Account = new AccountDto { ProviderKey = GoogleProviderKey };
             google1Account.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = Google1Email });
-            google1Account.Tags.Add(new TagDto { Name = Tag1 });
-            google1Account.Tags.Add(new TagDto { Name = Tag2 });
-            google1Account.Tags.Add(new TagDto { Name = Tag3 });
+            google1Account.Tags.Add(new TagDto { Key = Tag1 });
+            google1Account.Tags.Add(new TagDto { Key = Tag2 });
+            google1Account.Tags.Add(new TagDto { Key = Tag3 });
             return google1Account;
         }
 
         public IPasswordDto GetGoogle1Password() {
-            return new PasswordDto { Name = "password", Password = Goggle1Password };
+            return new PasswordDto { Name = "password 1", Password = Goggle1Password };
         }
 
         public IAccountDto GetGoogle2Account() {
             var google2Account = new AccountDto { ProviderKey = GoogleProviderKey };
             google2Account.Fields.Add(new FieldDto { FieldTypeKey = "email", Name = "E-Mail", Value = Google2Email });
-            google2Account.Tags.Add(new TagDto { Name = Tag2 });
-            google2Account.Tags.Add(new TagDto { Name = Tag3 });
+            google2Account.Tags.Add(new TagDto { Key = Tag2 });
+            google2Account.Tags.Add(new TagDto { Key = Tag3 });
             return google2Account;
         }
 
         public IPasswordDto GetGoogle2Password() {
-            return new PasswordDto { Name = "Password", Password = Google2Password };
+            return new PasswordDto { Name = "Password 2", Password = Google2Password };
         }
     }
 }

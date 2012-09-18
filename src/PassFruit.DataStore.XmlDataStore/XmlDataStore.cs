@@ -98,7 +98,7 @@ namespace PassFruit.DataStore.XmlDataStore {
                 GetFieldValueElement(accountDto.Id, field.Id).Value = field.Value.ToString();
             }
             foreach (var tag in accountDto.Tags) {
-                GetTagElement(tag.Name, accountDto.Id);
+                GetTagElement(tag.Key, accountDto.Id);
             }
             GetNoteElement(accountDto.Id).Value = accountDto.Notes ?? "";
             GetAccountDeletedElement(accountDto.Id).Value = accountDto.IsDeleted.ToString();
@@ -191,7 +191,7 @@ namespace PassFruit.DataStore.XmlDataStore {
                         tagElementName, TagPrefix));
                 }
                 var tagKey = tagElement.Name.LocalName.Remove(0, TagPrefix.Length);
-                tags.Add(new TagDto { Name = tagKey });
+                tags.Add(new TagDto { Key = tagKey });
             }
             return tags;
         }

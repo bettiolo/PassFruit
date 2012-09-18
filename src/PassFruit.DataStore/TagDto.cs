@@ -8,21 +8,21 @@ namespace PassFruit.DataStore {
 
     public class TagDto : ITagDto {
 
-        private string _name;
+        private string _key;
 
-        public string Name {
+        public string Key {
             get {
-                return _name;
+                return _key;
             }
             set {
-                _name = value.ToLowerInvariant();
+                _key = value.ToLowerInvariant();
             }
         }
 
         public bool Equals(TagDto other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other._name, _name);
+            return Equals(other._key, _key);
         }
 
         public override bool Equals(object obj) {
@@ -33,7 +33,7 @@ namespace PassFruit.DataStore {
         }
 
         public override int GetHashCode() {
-            return (_name != null ? _name.GetHashCode() : 0);
+            return (_key != null ? _key.GetHashCode() : 0);
         }
     }
 

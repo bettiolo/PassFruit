@@ -70,6 +70,13 @@ namespace PassFruit {
             }
         }
 
+        public override string ToString() {
+            if (!_tags.Any()) {
+                return "< empty >";
+            }
+            return string.Join(", ", _tags.Select(tag => tag.ToString()));
+        }
+
     }
 
 }

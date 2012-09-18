@@ -14,16 +14,12 @@ namespace PassFruit {
 
         }
 
-        public void Add(IFieldType fieldType) {
-            _fieldTypes.Add(fieldType);
-        }
-
-        public IField CreateField(FieldTypeKey key, object value, Guid? fieldId = null) {
+        public IField CreateField(FieldTypeKey key, object value) {
             var fieldType = _fieldTypes.SingleOrDefault(ft => ft.Key == key);
             if (fieldType == null) {
                 fieldType = new FieldType(key);
             }
-            var field = new Field(fieldType, fieldId);
+            var field = new Field(fieldType);
             field.Value = value;
             return field;
         }

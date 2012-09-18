@@ -45,12 +45,15 @@
     <Compile Include="IAccount.cs" />
     <Compile Include="IFieldType.cs" />
     <Compile Include="IPassword.cs" />
+    <Compile Include="IPasswordType.cs" />
+    <Compile Include="IPasswordTypes.cs" />
     <Compile Include="IProvider.cs" />
     <Compile Include="IProviders.cs" />
     <Compile Include="ITag.cs" />
     <Compile Include="ITags.cs" />
     <Compile Include="IAccounts.cs" />
     <Compile Include="IFieldTypes.cs" />
+    <Compile Include="PasswordTypeKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

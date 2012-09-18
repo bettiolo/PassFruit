@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passfruit.Ui.ConsoleApp", "Passfruit.Ui.Console\Passfruit.Ui.ConsoleApp.csproj", "{CAB3F184-A2AE-407C-AA53-804795DDBC0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Ui.ConsoleApp", "Passfruit.Ui.Console\PassFruit.Ui.ConsoleApp.csproj", "{CAB3F184-A2AE-407C-AA53-804795DDBC0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "PassFruit\PassFruit.csproj", "{02D15B96-AD18-466A-88D7-454652E8347A}"
 EndProject

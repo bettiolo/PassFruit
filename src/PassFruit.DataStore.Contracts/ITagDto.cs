@@ -7,7 +7,7 @@ namespace PassFruit.DataStore.Contracts {
 
     public interface ITagDto {
 
-        string Name { get; set; }
+        string Key { get; set; }
 
     }
 

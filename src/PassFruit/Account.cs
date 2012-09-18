@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using PassFruit.Contracts;
+using PassFruit.DataStore;
 using PassFruit.DataStore.Contracts;
 
 namespace PassFruit {
@@ -11,38 +12,80 @@ namespace PassFruit {
 
         private int _orignalHash;
 
-        private readonly IProvider _provider;
+        private IProvider _provider;
 
         private readonly IList<IPassword> _passwords; 
 
         private readonly IFieldTypes _fieldTypes;
 
+        private readonly IPasswordTypes _passwordTypes;
+
         private readonly IList<IField> _fields;
 
-        private Account() {
+        internal Account(IFieldTypes fieldTypes, IPasswordTypes passwordTypes) {
             Tags = new Tags(Id);
             _fields = new List<IField>();
             _passwords = new List<IPassword>();
+            _fieldTypes = fieldTypes;
+            _passwordTypes = passwordTypes;
+            // _provider = new Provider();
         }
 
-        internal Account(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos, IFieldTypes fieldTypes) : this() {
-            _provider = new Provider(accountDto.ProviderKey);
-            _fieldTypes = fieldTypes;
+        internal void Load(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos) {
             Id = accountDto.Id;
+            _provider = new Provider(accountDto.ProviderKey);
             foreach (var fieldDto in accountDto.Fields) {
-                _fields.Add(new Field(
-                    new FieldType((FieldTypeKey)Enum.Parse(typeof(FieldTypeKey), fieldDto.FieldTypeKey, true)),
-                    fieldDto.Id,
-                    fieldDto.Name
-                ));
+                var field = new Field(
+                        new FieldType(fieldDto.FieldTypeKey.ToEnum<FieldTypeKey>()),
+                        fieldDto.Id,
+                        fieldDto.Name) {
+                    Value = fieldDto.Value
+                };
+                _fields.Add(field);
             }
-            foreach (var tag in accountDto.Tags) {
-                Tags.Add(tag.Name);
+            foreach (var tagDto in accountDto.Tags) {
+                Tags.Add(tagDto.Key);
             }
+            Notes = accountDto.Notes;
+            LastChangedUtc = accountDto.LastChangedUtc;
+
             foreach (var passwordDto in passwordDtos) {
                 _passwords.Add(new Password(passwordDto));
             }
-            Notes = "";
+
+            SetClean();
+        }
+
+        internal void Update(IAccountDto accountDto, IList<IPasswordDto> passwordDtos) {
+            if (accountDto.Id != Id) {
+                throw new Exception("Cannot update a different DTO, ID don't match");
+            };
+            accountDto.Fields.Clear();
+            foreach (var field in Fields) {
+                var fieldDto = new FieldDto(field.Id) {
+                    FieldTypeKey = field.FieldType.Key.ToString(), 
+                    Name = field.Name, 
+                    Value = field.Value
+                };
+                accountDto.Fields.Add(fieldDto);
+            }
+
+            accountDto.Tags.Clear();
+            foreach (var tag in Tags) {
+                accountDto.Tags.Add(new TagDto {
+                    Key = tag.Key
+                });
+            }
+            accountDto.Notes = Notes;
+
+            passwordDtos.Clear();
+            foreach (var password in _passwords) {
+                passwordDtos.Add(new PasswordDto(password.Id) {
+                    Name = password.Name,
+                    Password = password.Value
+                });
+            }
+
         }
 
         //internal Account(IPasswords passwords, IProvider provider, IFieldTypes fieldTypes, DateTime lastChangedUtc, 
@@ -66,18 +109,23 @@ namespace PassFruit {
         public string GetAccountName() {
             var accountName = "";
             if (Provider.HasUserName) {
-                var userNameField = GetDefaultField(FieldTypeKey.UserName);
+                var userNameField = GetFieldsByKey(FieldTypeKey.UserName).FirstOrDefault();
                 if (userNameField != null) {
                     accountName = userNameField.Value.ToString();
                 }
             }
             if (Provider.HasEmail) {
-                var emailField = GetDefaultField(FieldTypeKey.Email);
+                var emailField = GetFieldsByKey(FieldTypeKey.Email).FirstOrDefault();
                 if (emailField != null) {
                     if (!string.IsNullOrEmpty(accountName)) {
                         accountName += " - ";
                     }
                     accountName += emailField.Value;
+                }
+            }
+            if (string.IsNullOrEmpty(accountName)) {
+                if (Fields.Any()) {
+                    accountName = Fields.First().Value.ToString();
                 }
             }
             if (string.IsNullOrEmpty(accountName)) {
@@ -96,8 +144,8 @@ namespace PassFruit {
             get { return _provider; }
         }
 
-        public IPassword GetPassword(Guid passwordId) {
-            return _passwords.First(password => password.Id == passwordId);
+        public IEnumerable<IPassword> GetPasswords() {
+            return _passwords.ToArray();
         }
 
         public void SetPassword(string password, string name) {
@@ -112,15 +160,15 @@ namespace PassFruit {
             return _fields.Where(field => field.FieldType.Key == fieldTypeKey);
         }
 
-        public IField GetDefaultField(FieldTypeKey fieldTypeKey) {
-            var fields = GetFieldsByKey(fieldTypeKey);
-            var fieldsCount = fields.Count();
-            if (fieldsCount > 0 
-                && (fieldsCount == 1 || !fields.Any((field => field.FieldType.IsDefault)))) {
-                return fields.First();
-            } 
-            return fields.FirstOrDefault(field => field.FieldType.IsDefault);
-        }
+        //public IField GetDefaultField(FieldTypeKey fieldTypeKey) {
+        //    var fields = GetFieldsByKey(fieldTypeKey);
+        //    //var fieldsCount = fields.Count();
+        //    //if (fieldsCount > 0
+        //    //    && (fieldsCount == 1 /*|| !fields.Any((field => field.FieldType.IsDefault))*/)) {
+        //    //    return fields.First();
+        //    //} 
+        //    return fields.FirstOrDefault(/*field => field.FieldType.IsDefault*/);
+        //}
 
         public void SetField(FieldTypeKey fieldTypeKey, object value) {
             var field = _fields.SingleOrDefault(f => f.FieldType.Key == fieldTypeKey);
@@ -150,7 +198,7 @@ namespace PassFruit {
             get { return (_orignalHash != GetHashCode()); }
         }
 
-        public void SetClean() {
+        private void SetClean() {
             _orignalHash = GetHashCode();
         }
 

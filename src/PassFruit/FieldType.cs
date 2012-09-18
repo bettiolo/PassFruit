@@ -15,11 +15,11 @@ namespace PassFruit {
 
         public FieldTypeKey Key { get; private set; }
 
-        public bool IsDefault { get; set; }
-
         public string Description { get; private set; }
 
-        public bool IsPassword { get; set; }
+        public override string ToString() {
+            return Description;
+        }
 
     }
 

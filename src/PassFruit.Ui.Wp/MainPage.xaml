@@ -22,7 +22,8 @@
                             Style="{StaticResource TransitionPageStyle}"
                             SupportedOrientations="Portrait"
                             toolkit:TiltEffect.IsTiltEnabled="True"
-                            mc:Ignorable="d">
+                            mc:Ignorable="d"
+                            d:DataContext="{d:DesignInstance pf:MainPageViewModel, IsDesignTimeCreatable=False}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
 

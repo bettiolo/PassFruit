@@ -9,11 +9,7 @@ namespace PassFruit.Contracts {
 
         FieldTypeKey Key { get; }
 
-        bool IsDefault { get; }
-
         string Description { get; }
-
-        bool IsPassword { get; set; }
 
     }
 

@@ -6,6 +6,7 @@ namespace PassFruit {
 
         internal Provider(string key) {
             Key = key;
+            Name = "Unknown";
         }
 
         public string Key { get; private set; }

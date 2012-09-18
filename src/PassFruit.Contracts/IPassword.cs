@@ -1,4 +1,5 @@
 using System;
+using PassFruit.Contracts;
 
 namespace PassFruit {
     public interface IPassword {
@@ -7,5 +8,7 @@ namespace PassFruit {
         string Value { get; set; }
 
         Guid Id { get; }
+
+        IPasswordType PasswordType { get; }
     }
 }

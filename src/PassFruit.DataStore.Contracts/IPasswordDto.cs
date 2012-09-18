@@ -15,6 +15,8 @@ namespace PassFruit.DataStore.Contracts {
 
         DateTime LastChangedUtc { get; set; }
 
+        string PasswordTypeKey { get; set; }
+
         bool Equals(IPasswordDto other);
 
     }

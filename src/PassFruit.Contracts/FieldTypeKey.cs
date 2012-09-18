@@ -3,8 +3,7 @@
     public enum FieldTypeKey {
         Generic,
         Email,
-        UserName,
-        Password
+        UserName
     }
 
 }
