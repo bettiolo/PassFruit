@@ -45,6 +45,9 @@ namespace PassFruit.DataStore.XmlDataStore {
          *              ENCRYPTED END
          *          </id-0000-0000-0000-0000>
          *      </passwords>
+         *      <providers>
+         *          
+         *      </providers>
          *  </passfruit>    
          */
 
@@ -74,7 +77,7 @@ namespace PassFruit.DataStore.XmlDataStore {
 
         public override IAccountDto GetAccountDto(Guid accountId) {
             return new AccountDto(accountId) {
-                ProviderKey = GetProviderElement(accountId).Value,
+                ProviderKey = GetAccountProviderElement(accountId).Value,
                 Fields = GetAccountFieldDtos(accountId),
                 Tags = GetTags(accountId),
                 Notes = GetNoteElement(accountId).Value,
@@ -88,7 +91,7 @@ namespace PassFruit.DataStore.XmlDataStore {
                 return;
             }
             GetAccountElement(accountDto.Id).Remove();
-            GetProviderElement(accountDto.Id).Value = accountDto.ProviderKey;
+            GetAccountProviderElement(accountDto.Id).Value = accountDto.ProviderKey;
             foreach (var field in accountDto.Fields) {
                 GetFieldNameElement(accountDto.Id, field.Id).Value = field.Name;
                 GetFieldTypeKeyElement(accountDto.Id, field.Id).Value = field.FieldTypeKey;
@@ -148,7 +151,20 @@ namespace PassFruit.DataStore.XmlDataStore {
             }
         }
 
-        public override void DeleteAccountPasswords(IAccountDto accountDto) {
+        public override void ReplaceProviderDtos(IEnumerable<IProviderDto> providerDtos) {
+            if (GetProviderDtos().SequenceEqual(providerDtos)) {
+                return;
+            }
+            GetProvidersElement().Remove();
+            foreach (var providerDto in providerDtos) {
+                var providerElement = GetProviderElement(providerDto.Key);
+                
+                UpdateLastChangedUtc(GetProvidersElement());
+                SaveXml();
+            }
+        }
+
+        public override void DeleteAccountPasswordDtos(IAccountDto accountDto) {
             GetAccountPasswordsElement(accountDto.Id).Remove();
             var accountElement = GetAccountElement(accountDto.Id);
             UpdateLastChangedUtc(accountElement);
@@ -190,6 +206,25 @@ namespace PassFruit.DataStore.XmlDataStore {
                 }
             ));
             return fieldDtos;
+        }
+
+        public override IEnumerable<IProviderDto> GetProviderDtos() {
+            return GetProvidersElement().Elements()
+                .Select(childElement => childElement.Name.LocalName)
+                .Select(GetProviderDto);
+        }
+
+        private IProviderDto GetProviderDto(string providerKey) {
+            var providerElement = GetProviderElement(providerKey);
+            var providerDto = new ProviderDto {
+                HasEmail = Convert.ToBoolean(GetOrCreateElement("hasEmail", providerElement).Value),
+                HasPassword = Convert.ToBoolean(GetOrCreateElement("hasPassword", providerElement).Value),
+                HasUserName = Convert.ToBoolean(GetOrCreateElement("hasUserName", providerElement).Value),
+                Key = providerKey,
+                Name = GetOrCreateElement("name", providerElement).Value,
+                Url = GetOrCreateElement("url", providerElement).Value
+            };
+            return providerDto;
         }
 
         private bool AccountElementIsDeleted(Guid accountId) {
@@ -267,8 +302,8 @@ namespace PassFruit.DataStore.XmlDataStore {
             return GetOrCreateElement("value", GetFieldElement(accountId, fieldId));
         }
 
-        private XElement GetProviderElement(Guid accountId) {
-            return GetOrCreateElement("provider", GetAccountElement(accountId));
+        private XElement GetAccountProviderElement(Guid accountId) {
+            return GetOrCreateElement("providerKey", GetAccountElement(accountId));
         }
 
         private XElement GetAccountDeletedElement(Guid accountId) {
@@ -285,6 +320,14 @@ namespace PassFruit.DataStore.XmlDataStore {
 
         private XElement GetTagElement(string tagName, Guid accountId) {
             return GetOrCreateElement(TagPrefix + tagName, GetTagsElement(accountId));
+        }
+
+        private XElement GetProvidersElement() {
+            return GetOrCreateElement("providers", GetPassfruitElement());
+        }
+
+        private XElement GetProviderElement(string providerKey) {
+            return GetOrCreateElement(providerKey, GetProvidersElement());
         }
 
         private XElement GetOrCreateElement(string elementName, XContainer parentElement) {

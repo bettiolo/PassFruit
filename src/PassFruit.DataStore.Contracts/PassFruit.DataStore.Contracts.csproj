@@ -39,6 +39,7 @@
     <Compile Include="IPasswordDto.cs" />
     <Compile Include="IDataStore.cs" />
     <Compile Include="IDataStoreConfiguration.cs" />
+    <Compile Include="IProviderDto.cs" />
     <Compile Include="ITagDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

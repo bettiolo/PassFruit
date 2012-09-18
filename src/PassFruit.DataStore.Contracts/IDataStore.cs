@@ -17,13 +17,17 @@ namespace PassFruit.DataStore.Contracts {
 
         void SaveAccountDto(IAccountDto accountDto);
 
-        void DeleteAccount(Guid accountId);
+        void DeleteAccountDto(Guid accountId);
 
         IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId);
 
         void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos);
 
-        void DeleteAccountPasswords(IAccountDto accountDto);
+        void DeleteAccountPasswordDtos(IAccountDto accountDto);
+
+        IEnumerable<IProviderDto> GetProviderDtos();
+
+        void ReplaceProviderDtos(IEnumerable<IProviderDto> providerDtos);
 
     }
 
