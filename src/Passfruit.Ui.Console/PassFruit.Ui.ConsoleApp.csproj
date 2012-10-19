@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CAB3F184-A2AE-407C-AA53-804795DDBC0B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Passfruit.Ui.ConsoleApp</RootNamespace>
+    <AssemblyName>Passfruit.Ui.ConsoleApp</AssemblyName>
+    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountDetailSection.cs" />
+    <Compile Include="AccountSection.cs" />
+    <Compile Include="OptionKeys.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="PasswordSection.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringExtensionMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
+      <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
+      <Name>PassFruit.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj">
+      <Project>{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}</Project>
+      <Name>PassFruit.DataStore.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj">
+      <Project>{6140384A-8A30-4916-BAC5-6AD1E0FC5049}</Project>
+      <Name>PassFruit.DataStore.Tests.FakeData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj">
+      <Project>{5DACB670-3923-49D9-815F-ECEE33835DC8}</Project>
+      <Name>PassFruit.DataStore.XmlDataStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
+      <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
+      <Name>PassFruit.DataStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit\PassFruit.csproj">
+      <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>
+      <Name>PassFruit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
