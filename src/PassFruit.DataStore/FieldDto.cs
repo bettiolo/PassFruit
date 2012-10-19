@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PassFruit.DataStore.Contracts;
 
 namespace PassFruit.DataStore {
 
-    public class FieldDto : IFieldDto {
+    public class FieldDto {
 
-        public FieldDto(Guid? id = null) {
-            Id = id ?? Guid.NewGuid();
+        public FieldDto() {
+            Properties = new Dictionary<string, object>();
         }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -20,13 +19,16 @@ namespace PassFruit.DataStore {
 
         public object Value { get; set; }
 
-        public bool Equals(IFieldDto otherFieldDto) {
+        public IDictionary<string, object> Properties { get; set; }
+
+        public bool Equals(FieldDto otherFieldDto) {
             if (ReferenceEquals(null, otherFieldDto)) return false;
             if (ReferenceEquals(this, otherFieldDto)) return true;
-            return otherFieldDto.Id.Equals(Id) 
-                && Equals(otherFieldDto.Name, Name) 
-                && Equals(otherFieldDto.FieldTypeKey, FieldTypeKey) 
-                && Equals(otherFieldDto.Value, Value);
+            return otherFieldDto.Id.Equals(Id)
+                && Equals(otherFieldDto.Name, Name)
+                && Equals(otherFieldDto.FieldTypeKey, FieldTypeKey)
+                && Equals(otherFieldDto.Value, Value)
+                && Properties.SequenceEqual(otherFieldDto.Properties);
         }
 
         public override bool Equals(object obj) {
@@ -42,6 +44,7 @@ namespace PassFruit.DataStore {
                 result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
                 result = (result * 397) ^ (FieldTypeKey != null ? FieldTypeKey.GetHashCode() : 0);
                 result = (result * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+                result = (result * 397) ^ (Properties != null ? Properties.GetHashCode() : 0);
                 return result;
             }
         }

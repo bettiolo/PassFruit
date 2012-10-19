@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using PassFruit.DataStore.Contracts;
 using PassFruit.DataStore.Tests;
 using PassFruit.DataStore.Tests.FakeData;
 using System.Linq;
@@ -18,7 +17,7 @@ namespace PassFruit.DataStore.InMemoryDataStore.Tests {
             var fakeDataGenerator = new FakeDataGenerator();
             var deletedIds = inMemoryDataStore.GetAllAccountIds().ToArray();
             foreach (var accountId in deletedIds) {
-                inMemoryDataStore.DeleteAccount(accountId);
+                inMemoryDataStore.DeleteAccountDto(accountId);
             }
             fakeDataGenerator.GenerateFakeData(inMemoryDataStore);
             return inMemoryDataStore;

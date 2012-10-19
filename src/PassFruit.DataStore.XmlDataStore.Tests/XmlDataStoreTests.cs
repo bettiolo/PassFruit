@@ -2,7 +2,6 @@
 using System.IO;
 using System.Xml.Linq;
 using NUnit.Framework;
-using PassFruit.DataStore.Contracts;
 using PassFruit.DataStore.Tests;
 using PassFruit.DataStore.Tests.FakeData;
 

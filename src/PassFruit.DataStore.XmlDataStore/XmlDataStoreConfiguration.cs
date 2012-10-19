@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Linq;
-using PassFruit.DataStore.Contracts;
 
 namespace PassFruit.DataStore.XmlDataStore {
     

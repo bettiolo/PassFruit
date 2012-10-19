@@ -7,7 +7,7 @@ namespace Passfruit.Ui.ConsoleApp {
 
     public class OptionKeys {
 
-        private readonly Action _writeMessage;
+        private Action _writeMessage;
 
         public OptionKeys(string message) {
             _writeMessage = message.WriteLine;
@@ -59,6 +59,16 @@ namespace Passfruit.Ui.ConsoleApp {
                 throw new NotSupportedException("The confirm dialog must have one and only one option");
             }
             return ConsoleChooser.Confirm(_writeMessage, _keyActions.First().Key, _keyActions.First().Value);
+        }
+
+        public OptionKeys WriteLine(string text)
+        {
+            _writeMessage = () =>
+            {
+                _writeMessage();
+                text.WriteLine();
+            };
+            return this;
         }
 
         private class ConsoleChooser {
@@ -138,10 +148,6 @@ namespace Passfruit.Ui.ConsoleApp {
 
         }
 
-        public OptionKeys WriteLine(string text) {
-            _writeMessage = _writeMessage + text.WriteLine;
-            return this;
-        }
     }
 
 }

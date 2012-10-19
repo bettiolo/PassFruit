@@ -1,38 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using PassFruit.DataStore.Contracts;
 using System.Linq;
 using System.Collections;
 
 namespace PassFruit.DataStore {
 
-    public class AccountDto : IAccountDto {
+    public class AccountDto {
 
-        public AccountDto(Guid? accuntId = null) {
-            Id = accuntId == null 
-                ? Guid.NewGuid() 
-                : accuntId.Value;
-            Fields = new List<IFieldDto>();
-            Tags = new List<ITagDto>();
-            ProviderKey = "";
+        public AccountDto() {
+            Fields = new List<FieldDto>();
+            Tags = new List<TagDto>();
             Notes = "";
         }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         public string ProviderKey { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public IList<IFieldDto> Fields { get; set; }
+        public IList<FieldDto> Fields { get; set; }
 
-        public IList<ITagDto> Tags { get; set; }
+        public IList<TagDto> Tags { get; set; }
 
         public DateTime LastChangedUtc { get; set; }
 
         public string Notes { get; set; }
 
-        public bool Equals(IAccountDto otherAccountDto) {
+        public bool Equals(AccountDto otherAccountDto) {
             if (ReferenceEquals(null, otherAccountDto)) return false;
             if (ReferenceEquals(this, otherAccountDto)) return true;
             return otherAccountDto.ProviderKey.Equals(ProviderKey)
@@ -46,8 +41,8 @@ namespace PassFruit.DataStore {
         public override bool Equals(object obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(IAccountDto)) return false;
-            return Equals((IAccountDto)obj);
+            if (obj.GetType() != typeof(AccountDto)) return false;
+            return Equals((AccountDto)obj);
         }
 
         public override int GetHashCode() {
@@ -60,6 +55,11 @@ namespace PassFruit.DataStore {
                 result = (result * 397) ^ (Notes != null ? Notes.GetHashCode() : 0);
                 return result;
             }
+        }
+
+        public override string ToString()
+        {
+            return Id.ToString() + " " + ProviderKey;
         }
 
     }

@@ -1,5 +1,3 @@
-using PassFruit.DataStore.Contracts;
-
 namespace PassFruit.DataStore.InMemoryDataStore {
 
     public class InMemoryDataStoreConfiguration : IDataStoreConfiguration {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PassFruit.DataStore.Contracts;
 
 namespace PassFruit.DataStore {
 
@@ -14,30 +13,19 @@ namespace PassFruit.DataStore {
 
         public abstract IEnumerable<Guid> GetAllAccountIds();
 
-        public IEnumerable<IAccountDto> GetAccountDtos(AccountDtoStatus accountStatus = AccountDtoStatus.Active) {
+        public IEnumerable<AccountDto> GetAccountDtos(AccountDtoStatus accountStatus = AccountDtoStatus.Active) {
             return GetAllAccountIds().Select(GetAccountDto).Where(accountDto => 
                 IsAccountDtoMatchedByStatus(accountStatus, accountDto.IsDeleted));
         }
 
-        public abstract IAccountDto GetAccountDto(Guid accountId);
+        public abstract AccountDto GetAccountDto(Guid accountId);
 
-        public abstract void SaveAccountDto(IAccountDto accountDto);
+        public abstract void SaveAccountDto(AccountDto accountDto);
 
         public void DeleteAccountDto(Guid accountId) {
-            var deletedAccountDto = new AccountDto(accountId) { IsDeleted = true };
-            DeleteAccountPasswordDtos(deletedAccountDto);
+            var deletedAccountDto = new AccountDto {Id = accountId, IsDeleted = true };
             SaveAccountDto(deletedAccountDto);
         }
-
-        public abstract IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId);
-
-        public abstract void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos);
-
-        public abstract void DeleteAccountPasswordDtos(IAccountDto accountDto);
-
-        public abstract IEnumerable<IProviderDto> GetProviderDtos();
-
-        public abstract void ReplaceProviderDtos(IEnumerable<IProviderDto> providerDtos);
 
         private bool IsAccountDtoMatchedByStatus(AccountDtoStatus accountDtoStatus, bool isDeleted) {
             switch (accountDtoStatus) {

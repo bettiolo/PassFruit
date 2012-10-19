@@ -18,7 +18,9 @@ namespace Passfruit.Ui.ConsoleApp {
         private readonly XmlDataStore _dataStore;
 
         public Main() {
-            const string xmlFilePath = @"C:\passfruit.xml";
+            // const string xmlFileName = @"passfruit.xml";
+            var xmlFilePath = Path.GetTempFileName();
+            File.Delete(xmlFilePath);
             var fileExists = File.Exists(xmlFilePath);
 
             var xmlDataStoreConfiguration = new XmlDataStoreConfiguration(

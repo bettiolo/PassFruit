@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PassFruit.Contracts;
-using PassFruit.DataStore.Contracts;
+using PassFruit.DataStore;
 
 namespace PassFruit {
 
@@ -17,16 +17,13 @@ namespace PassFruit {
 
         private readonly FieldTypes _fieldTypes;
 
-        private readonly PasswordTypes _passwordTypes;
-
         public Accounts(IDataStore dataStore) {
             _dataStore = dataStore;
             _providers = new Providers();
             _fieldTypes = new FieldTypes();
-            _passwordTypes = new PasswordTypes();
             foreach (var accountDto in dataStore.GetAccountDtos()) {
-                var account = new Account(_fieldTypes, _passwordTypes);
-                account.Load(accountDto, _dataStore.GetPasswordDtos(accountDto.Id));
+                var account = new Account(_fieldTypes);
+                account.Load(accountDto);
                 _accounts.Add(account);
             }
         }

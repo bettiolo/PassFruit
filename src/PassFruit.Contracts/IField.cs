@@ -15,6 +15,10 @@ namespace PassFruit.Contracts {
 
         object Value { get; set; }
 
+        IDictionary<string, object> GetProperties();
+
+        void SetProperty(string name, object value);
+
     }
 
 }

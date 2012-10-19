@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PassFruit.DataStore.Contracts;
 
 namespace PassFruit.DataStore {
 
-    public class TagDto : ITagDto {
+    public class TagDto {
 
         private string _key;
 

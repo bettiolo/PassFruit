@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using PassFruit.Contracts;
 
 namespace PassFruit {
 
     public class Field : IField {
+
+        private readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
 
         public Field(IFieldType fieldType, Guid? id = null, string name = "") {
             FieldType = fieldType;
@@ -21,6 +24,16 @@ namespace PassFruit {
         public string Name { get; set; }
         
         public object Value { get; set; }
+
+        public IDictionary<string, object> GetProperties()
+        {
+            return _properties;
+        }
+
+        public void SetProperty(string name, object value)
+        {
+            _properties[name] = value;
+        }
 
         public override string ToString() {
             return Name;

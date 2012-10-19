@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using PassFruit.Contracts;
 using PassFruit.DataStore;
-using PassFruit.DataStore.Contracts;
 
 namespace PassFruit {
 
@@ -12,26 +11,19 @@ namespace PassFruit {
 
         private int _orignalHash;
 
-        private IProvider _provider;
-
-        private readonly IList<IPassword> _passwords; 
+        private IProvider _provider; 
 
         private readonly IFieldTypes _fieldTypes;
 
-        private readonly IPasswordTypes _passwordTypes;
-
         private readonly IList<IField> _fields;
 
-        internal Account(IFieldTypes fieldTypes, IPasswordTypes passwordTypes) {
+        internal Account(IFieldTypes fieldTypes) {
             Tags = new Tags(Id);
             _fields = new List<IField>();
-            _passwords = new List<IPassword>();
             _fieldTypes = fieldTypes;
-            _passwordTypes = passwordTypes;
-            // _provider = new Provider();
         }
 
-        internal void Load(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos) {
+        internal void Load(AccountDto accountDto) {
             Id = accountDto.Id;
             _provider = new Provider(accountDto.ProviderKey);
             foreach (var fieldDto in accountDto.Fields) {
@@ -49,20 +41,17 @@ namespace PassFruit {
             Notes = accountDto.Notes;
             LastChangedUtc = accountDto.LastChangedUtc;
 
-            foreach (var passwordDto in passwordDtos) {
-                _passwords.Add(new Password(passwordDto));
-            }
-
             SetClean();
         }
 
-        internal void Update(IAccountDto accountDto, IList<IPasswordDto> passwordDtos) {
+        internal void Update(AccountDto accountDto) {
             if (accountDto.Id != Id) {
                 throw new Exception("Cannot update a different DTO, ID don't match");
             };
             accountDto.Fields.Clear();
             foreach (var field in Fields) {
-                var fieldDto = new FieldDto(field.Id) {
+                var fieldDto = new FieldDto {
+                    Id = field.Id,
                     FieldTypeKey = field.FieldType.Key.ToString(), 
                     Name = field.Name, 
                     Value = field.Value
@@ -78,26 +67,7 @@ namespace PassFruit {
             }
             accountDto.Notes = Notes;
 
-            passwordDtos.Clear();
-            foreach (var password in _passwords) {
-                passwordDtos.Add(new PasswordDto(password.Id) {
-                    Name = password.Name,
-                    Password = password.Value
-                });
-            }
-
         }
-
-        //internal Account(IPasswords passwords, IProvider provider, IFieldTypes fieldTypes, DateTime lastChangedUtc, 
-        //                 Guid? id = null) : this() {
-        //    _passwords = passwords;
-        //    _provider = provider;
-        //    _fieldTypes = fieldTypes;
-        //    Id = id.HasValue ? id.Value : Guid.NewGuid();
-        //    _fields = new List<IField>();
-        //    Tags = new Tags(Id);
-        //    Notes = "";
-        //}
 
         public Guid Id { get; private set; }
 
@@ -144,14 +114,6 @@ namespace PassFruit {
             get { return _provider; }
         }
 
-        public IEnumerable<IPassword> GetPasswords() {
-            return _passwords.ToArray();
-        }
-
-        public void SetPassword(string password, string name) {
-            throw new NotSupportedException();
-        }
-
         public ITags Tags { get; private set; }
 
         public IEnumerable<IField> Fields { get { return _fields.ToArray(); } }
@@ -159,16 +121,6 @@ namespace PassFruit {
         public IEnumerable<IField> GetFieldsByKey(FieldTypeKey fieldTypeKey) {
             return _fields.Where(field => field.FieldType.Key == fieldTypeKey);
         }
-
-        //public IField GetDefaultField(FieldTypeKey fieldTypeKey) {
-        //    var fields = GetFieldsByKey(fieldTypeKey);
-        //    //var fieldsCount = fields.Count();
-        //    //if (fieldsCount > 0
-        //    //    && (fieldsCount == 1 /*|| !fields.Any((field => field.FieldType.IsDefault))*/)) {
-        //    //    return fields.First();
-        //    //} 
-        //    return fields.FirstOrDefault(/*field => field.FieldType.IsDefault*/);
-        //}
 
         public void SetField(FieldTypeKey fieldTypeKey, object value) {
             var field = _fields.SingleOrDefault(f => f.FieldType.Key == fieldTypeKey);
@@ -188,10 +140,6 @@ namespace PassFruit {
 
         public void DeleteTag(string tagKey) {
             Tags.Remove(tagKey);
-        }
-
-        public void DeleteAllPasswords() {
-            _passwords.Clear();
         }
 
         public bool IsDirty {
@@ -219,9 +167,6 @@ namespace PassFruit {
                 }
                 Debug.WriteLine(" - Tags: " + string.Join(", ", Tags.Select(tag => tag.Key).ToArray()));
                 Debug.WriteLine(" - HashCode after tags: " + result);
-                foreach (var password in _passwords) {
-                    result = (result * 397) ^ (password != null ? password.GetHashCode() : 0);
-                }
                 return result;
             }
         }

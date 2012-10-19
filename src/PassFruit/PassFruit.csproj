@@ -9,9 +9,10 @@
     <RootNamespace>PassFruit</RootNamespace>
     <AssemblyName>PassFruit</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile96</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile104</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,14 +41,11 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PasswordTypes.cs" />
-    <Compile Include="PasswordType.cs" />
     <Compile Include="DeletedAccount.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="FieldTypes.cs" />
-    <Compile Include="Password.cs" />
     <Compile Include="Providers.cs" />
     <Compile Include="Accounts.cs" />
     <Compile Include="Account.cs" />
@@ -61,13 +59,9 @@
       <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
       <Name>PassFruit.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj">
-      <Project>{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}</Project>
-      <Name>PassFruit.DataStore.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
       <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
-      <Name>PassFruit.DataStore</Name>
+      <Name>PassFruit.DataStore %28PassFruit.DataStore\PassFruit.DataStore%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

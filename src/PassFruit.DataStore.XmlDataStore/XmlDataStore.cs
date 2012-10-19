@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
-using PassFruit.DataStore.Contracts;
 
 namespace PassFruit.DataStore.XmlDataStore {
 
@@ -75,8 +74,9 @@ namespace PassFruit.DataStore.XmlDataStore {
             return GetAccountIdsWithFilter(accountId => !AccountElementIsDeleted(accountId));
         }
 
-        public override IAccountDto GetAccountDto(Guid accountId) {
-            return new AccountDto(accountId) {
+        public override AccountDto GetAccountDto(Guid accountId) {
+            return new AccountDto {
+                Id = accountId,
                 ProviderKey = GetAccountProviderElement(accountId).Value,
                 Fields = GetAccountFieldDtos(accountId),
                 Tags = GetTags(accountId),
@@ -85,7 +85,7 @@ namespace PassFruit.DataStore.XmlDataStore {
             };
         }
 
-        public override void SaveAccountDto(IAccountDto accountDto) {
+        public override void SaveAccountDto(AccountDto accountDto) {
             var originalAccountDto = GetAccountDto(accountDto.Id);
             if (originalAccountDto.Equals(accountDto)) {
                 return;
@@ -115,63 +115,6 @@ namespace PassFruit.DataStore.XmlDataStore {
         //    SaveXml();
         //}
 
-        public override IEnumerable<IPasswordDto> GetPasswordDtos(Guid accountId) {
-            foreach (var passwordElement in GetAccountPasswordsElement(accountId).Elements()) {
-                if (!passwordElement.Name.LocalName.StartsWith(PasswordIdPrefix)) {
-                    throw new Exception(string.Format("The password id '{0}' is not starting with the prefix '{1}'",
-                        passwordElement.Name.LocalName, PasswordIdPrefix));
-                }
-                var passwordId = Guid.Parse(passwordElement.Name.LocalName.Remove(0, PasswordIdPrefix.Length));
-                yield return new PasswordDto(passwordId) {
-                    Name = GetPasswordNameElement(accountId, passwordId).Value,
-                    Password = GetPasswordValueElement(accountId, passwordId).Value,
-                    LastChangedUtc = GetLastChangedUtc(passwordElement)
-                };
-            }
-        }
-
-        public override void SavePasswordDtos(IAccountDto accountDto, IEnumerable<IPasswordDto> passwordDtos) {
-            var accountId = accountDto.Id;
-            if (GetPasswordDtos(accountId).SequenceEqual(passwordDtos)) {
-                return;
-            }
-            GetAccountPasswordsElement(accountId).Remove();
-            foreach (var passwordDto in passwordDtos) {
-                GetPasswordElement(accountId, passwordDto.Id).Remove();
-                GetPasswordNameElement(accountId, passwordDto.Id).Value = passwordDto.Name;
-                GetPasswordValueElement(accountId, passwordDto.Id).Value = passwordDto.Password;
-                var accountElement = GetAccountElement(accountId);
-                var passwordElement = GetPasswordElement(accountId, passwordDto.Id);
-                UpdateLastChangedUtc(passwordElement);
-                UpdateLastChangedUtc(GetAccountPasswordsElement(accountId));
-                UpdateLastChangedUtc(accountElement);
-                SaveXml();
-                passwordDto.LastChangedUtc = GetLastChangedUtc(passwordElement);
-                accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
-            }
-        }
-
-        public override void ReplaceProviderDtos(IEnumerable<IProviderDto> providerDtos) {
-            if (GetProviderDtos().SequenceEqual(providerDtos)) {
-                return;
-            }
-            GetProvidersElement().Remove();
-            foreach (var providerDto in providerDtos) {
-                var providerElement = GetProviderElement(providerDto.Key);
-                
-                UpdateLastChangedUtc(GetProvidersElement());
-                SaveXml();
-            }
-        }
-
-        public override void DeleteAccountPasswordDtos(IAccountDto accountDto) {
-            GetAccountPasswordsElement(accountDto.Id).Remove();
-            var accountElement = GetAccountElement(accountDto.Id);
-            UpdateLastChangedUtc(accountElement);
-            SaveXml();
-            accountDto.LastChangedUtc = GetLastChangedUtc(accountElement);
-        }
-
         private IEnumerable<Guid> GetAccountIdsWithFilter(Func<Guid, bool> filterAccount) {
             var accountIds = new List<Guid>();
             GetElementsWithId(GetAccountsElement(), AccountIdPrefix, (accountId, _) => {
@@ -182,8 +125,8 @@ namespace PassFruit.DataStore.XmlDataStore {
             return accountIds;
         }
 
-        private IList<ITagDto> GetTags(Guid accountId) {
-            var tags = new List<ITagDto>();
+        private IList<TagDto> GetTags(Guid accountId) {
+            var tags = new List<TagDto>();
             foreach (var tagElement in GetTagsElement(accountId).Elements()) {
                 var tagElementName = tagElement.Name.LocalName;
                 if (!tagElementName.StartsWith(TagPrefix)) {
@@ -196,10 +139,11 @@ namespace PassFruit.DataStore.XmlDataStore {
             return tags;
         }
 
-        public IList<IFieldDto> GetAccountFieldDtos(Guid accountId) {
-            var fieldDtos = new List<IFieldDto>();
+        public IList<FieldDto> GetAccountFieldDtos(Guid accountId) {
+            var fieldDtos = new List<FieldDto>();
             GetElementsWithId(GetAccountFieldsElement(accountId), FieldIdPrefix, (fieldId, _) =>
-                fieldDtos.Add(new FieldDto(fieldId) {
+                fieldDtos.Add(new FieldDto {
+                    Id = fieldId,
                     FieldTypeKey = GetFieldTypeKeyElement(accountId, fieldId).Value,
                     Name = GetFieldNameElement(accountId, fieldId).Value,
                     Value = GetFieldValueElement(accountId, fieldId).Value
@@ -207,26 +151,7 @@ namespace PassFruit.DataStore.XmlDataStore {
             ));
             return fieldDtos;
         }
-
-        public override IEnumerable<IProviderDto> GetProviderDtos() {
-            return GetProvidersElement().Elements()
-                .Select(childElement => childElement.Name.LocalName)
-                .Select(GetProviderDto);
-        }
-
-        private IProviderDto GetProviderDto(string providerKey) {
-            var providerElement = GetProviderElement(providerKey);
-            var providerDto = new ProviderDto {
-                HasEmail = Convert.ToBoolean(GetOrCreateElement("hasEmail", providerElement).Value),
-                HasPassword = Convert.ToBoolean(GetOrCreateElement("hasPassword", providerElement).Value),
-                HasUserName = Convert.ToBoolean(GetOrCreateElement("hasUserName", providerElement).Value),
-                Key = providerKey,
-                Name = GetOrCreateElement("name", providerElement).Value,
-                Url = GetOrCreateElement("url", providerElement).Value
-            };
-            return providerDto;
-        }
-
+    
         private bool AccountElementIsDeleted(Guid accountId) {
             return GetAccountDeletedElement(accountId).Value == bool.TrueString;
         }
@@ -252,22 +177,6 @@ namespace PassFruit.DataStore.XmlDataStore {
 
         private XElement GetPasswordsElement() {
             return GetOrCreateElement("passwords", GetPassfruitElement());
-        }
-
-        private XElement GetAccountPasswordsElement(Guid accountId) {
-            return GetOrCreateElement(AccountIdPrefix + accountId, GetPasswordsElement());
-        }
-
-        private XElement GetPasswordElement(Guid accountId, Guid passwordId) {
-            return GetOrCreateElement(PasswordIdPrefix + passwordId, GetAccountPasswordsElement(accountId));
-        }
-
-        private XElement GetPasswordNameElement(Guid accountId, Guid passwordId) {
-            return GetOrCreateElement("name", GetPasswordElement(accountId, passwordId));
-        }
-
-        private XElement GetPasswordValueElement(Guid accountId, Guid passwordId) {
-            return GetOrCreateElement("password", GetPasswordElement(accountId, passwordId));
         }
 
         private XAttribute GetLastChangedUtcAttribute(XElement element) {
