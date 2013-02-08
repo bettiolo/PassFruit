@@ -19,6 +19,8 @@ namespace PassFruit.DataStore {
 
         void DeleteAccountDto(Guid accountId);
 
+        void DeleteAllAccountDtos();
+
     }
 
 }

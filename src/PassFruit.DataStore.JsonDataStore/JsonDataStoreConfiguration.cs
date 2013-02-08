@@ -7,20 +7,16 @@ namespace PassFruit.DataStore.JsonDataStore
 {
     public class JsonDataStoreConfiguration : IDataStoreConfiguration
     {
-        private readonly Action _save;
+        private readonly Action<string> _persist;
 
-        public JsonDataStoreConfiguration(string jsonAccountsString, Action save)
+        public JsonDataStoreConfiguration(Action<string> persist)
         {
-            _save = save;
-            JsonAccountsString = jsonAccountsString;
+            _persist = persist;
         }
 
-        public string JsonAccountsString { get; private set; }
-
-        public void Update(string jsonAccountsString)
+        public void Persist(string json)
         {
-            JsonAccountsString = jsonAccountsString;
-            _save();
+            _persist(json);
         }
     }
 }

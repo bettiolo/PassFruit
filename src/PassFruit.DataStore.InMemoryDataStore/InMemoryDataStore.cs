@@ -31,7 +31,7 @@ namespace PassFruit.DataStore.InMemoryDataStore {
             return _accountDtos[accountId];
         }
 
-        public override void SaveAccountDto(AccountDto accountDto) {
+        protected override void SaveSpecificAccountDto(AccountDto accountDto) {
             if (_accountDtos.ContainsKey(accountDto.Id)
                 && _accountDtos[accountDto.Id] != null
                 && _accountDtos[accountDto.Id].Equals(accountDto)) {

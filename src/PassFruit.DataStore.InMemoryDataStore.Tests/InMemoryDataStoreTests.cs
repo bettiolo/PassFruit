@@ -9,22 +9,15 @@ namespace PassFruit.DataStore.InMemoryDataStore.Tests {
     [TestFixture]
     public class InMemoryDataStoreTests : DataStoreTestsBase {
 
-        private readonly InMemoryDataStoreConfiguration _configuration = 
-            new InMemoryDataStoreConfiguration();
-
-        protected override IDataStore GetDataStoreWithFakeData() {
-            var inMemoryDataStore = _configuration.Instance;
+        protected override IDataStore CreateDataStoreWithFakeData() {
+            var inMemoryDataStore = new InMemoryDataStore();
             var fakeDataGenerator = new FakeDataGenerator();
-            var deletedIds = inMemoryDataStore.GetAllAccountIds().ToArray();
-            foreach (var accountId in deletedIds) {
-                inMemoryDataStore.DeleteAccountDto(accountId);
-            }
             fakeDataGenerator.GenerateFakeData(inMemoryDataStore);
             return inMemoryDataStore;
         }
 
-        protected override IDataStore GetDataStore() {
-            return _configuration.Instance;
+        protected override IDataStore CreateEmptyDataStore() {
+            return new InMemoryDataStore();
         }
     }
 

@@ -11,31 +11,29 @@ namespace PassFruit.DataStore.Tests.JsonDataStore
     public class JsonDataStoreTests : DataStoreTestsBase
     {
 
-        private readonly JsonDataStoreConfiguration _configuration;
-
-        public JsonDataStoreTests()
+        protected override IDataStore CreateDataStoreWithFakeData()
         {
-            var fileName = Path.GetTempFileName();
-            if (File.Exists(fileName))
-            {
-                File.Delete(fileName);
-            }
-            Debug.Print("Using text file for json persistence: " + fileName);
-            _configuration = new JsonDataStoreConfiguration("", 
-                () => File.WriteAllText(fileName, _configuration.JsonAccountsString));
-        }
-
-        protected override IDataStore GetDataStoreWithFakeData()
-        {
-            var xmlDataStore = new DataStore.JsonDataStore.JsonDataStore(_configuration);
+            var jsonDataStore = CreateEmptyDataStore();
             var fakeDataGenerator = new FakeDataGenerator();
-            fakeDataGenerator.GenerateFakeData(xmlDataStore);
-            return xmlDataStore;
+            fakeDataGenerator.GenerateFakeData(jsonDataStore);
+            return jsonDataStore;
         }
 
-        protected override IDataStore GetDataStore()
+        protected override IDataStore CreateEmptyDataStore()
         {
-            return new DataStore.JsonDataStore.JsonDataStore(_configuration);
+            var tempFileName = Path.GetTempFileName();
+            if (File.Exists(tempFileName))
+            {
+                File.Delete(tempFileName);
+            }
+            Debug.Print("Using text file for json persistence: " + tempFileName);
+            var configuration = new JsonDataStoreConfiguration(json => SaveDataStore(tempFileName, json));
+            return new DataStore.JsonDataStore.JsonDataStore(configuration);
+        }
+
+        private void SaveDataStore(string fileName, string json)
+        {
+            File.WriteAllText(fileName, json);
         }
 
     }

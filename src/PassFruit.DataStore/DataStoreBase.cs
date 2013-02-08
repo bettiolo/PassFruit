@@ -20,11 +20,29 @@ namespace PassFruit.DataStore {
 
         public abstract AccountDto GetAccountDto(Guid accountId);
 
-        public abstract void SaveAccountDto(AccountDto accountDto);
+        public void SaveAccountDto(AccountDto accountDto)
+        {
+            if (accountDto.IsNew)
+            {
+                accountDto.Id = Guid.NewGuid();
+            }
+            SaveSpecificAccountDto(accountDto);
+        }
+
+        protected abstract void SaveSpecificAccountDto(AccountDto accountDto);
 
         public void DeleteAccountDto(Guid accountId) {
-            var deletedAccountDto = new AccountDto {Id = accountId, IsDeleted = true };
+            var deletedAccountDto = new AccountDto { Id = accountId, IsDeleted = true };
             SaveAccountDto(deletedAccountDto);
+        }
+
+        public void DeleteAllAccountDtos()
+        {
+            var allAccountIds = GetAllAccountIds();
+            foreach (var accountId in allAccountIds)
+            {
+                DeleteAccountDto(accountId);
+            }
         }
 
         private bool IsAccountDtoMatchedByStatus(AccountDtoStatus accountDtoStatus, bool isDeleted) {

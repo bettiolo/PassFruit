@@ -85,7 +85,7 @@ namespace PassFruit.DataStore.XmlDataStore {
             };
         }
 
-        public override void SaveAccountDto(AccountDto accountDto) {
+        protected override void SaveSpecificAccountDto(AccountDto accountDto) {
             var originalAccountDto = GetAccountDto(accountDto.Id);
             if (originalAccountDto.Equals(accountDto)) {
                 return;

@@ -10,27 +10,24 @@ namespace PassFruit.DataStore.XmlDataStore.Tests {
     [TestFixture]
     public class XmlDataStoreTests : DataStoreTestsBase {
 
-        private readonly XmlDataStoreConfiguration _configuration;
-
-        public XmlDataStoreTests() {
-            var xDocFileName = Path.GetTempFileName();
-            Func<XDocument> getXDoc = () => File.Exists(xDocFileName) ? XDocument.Load(xDocFileName) : new XDocument();
-            Action<XDocument> saveXDoc = xdoc => xdoc.Save(xDocFileName);
-            if (File.Exists(xDocFileName)) {
-                File.Delete(xDocFileName);
-            }
-            _configuration = new XmlDataStoreConfiguration(getXDoc, saveXDoc);
-        }
-
-        protected override IDataStore GetDataStoreWithFakeData() {
-            var xmlDataStore = new XmlDataStore(_configuration);
+        protected override IDataStore CreateDataStoreWithFakeData()
+        {
+            var xmlDataStore = CreateEmptyDataStore();
             var fakeDataGenerator = new FakeDataGenerator();
             fakeDataGenerator.GenerateFakeData(xmlDataStore);
             return xmlDataStore;
         }
 
-        protected override IDataStore GetDataStore() {
-            return new XmlDataStore(_configuration);
+        protected override IDataStore CreateEmptyDataStore() {
+            var xDocFileName = Path.GetTempFileName();
+            Func<XDocument> getXDoc = () => File.Exists(xDocFileName) ? XDocument.Load(xDocFileName) : new XDocument();
+            Action<XDocument> saveXDoc = xdoc => xdoc.Save(xDocFileName);
+            if (File.Exists(xDocFileName))
+            {
+                File.Delete(xDocFileName);
+            }
+            var configuration = new XmlDataStoreConfiguration(getXDoc, saveXDoc);
+            return new XmlDataStore(configuration);
         }
 
     }

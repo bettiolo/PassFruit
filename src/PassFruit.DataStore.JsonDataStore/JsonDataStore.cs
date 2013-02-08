@@ -9,7 +9,8 @@ namespace PassFruit.DataStore.JsonDataStore
     public class JsonDataStore : DataStoreBase
     {
         private readonly JsonDataStoreConfiguration _configuration;
-        private readonly object _locker = new object();
+
+        private string _serializedJsonAccounts = "";
 
         public JsonDataStore(JsonDataStoreConfiguration configuration)
         {
@@ -28,9 +29,10 @@ namespace PassFruit.DataStore.JsonDataStore
 
         private JsonAccounts GetJsonAccounts()
         {
-            lock (_locker)
+            lock (this)
             {
-                return JsonConvert.DeserializeObject<JsonAccounts>(_configuration.JsonAccountsString);
+                var jsonAccounts = JsonConvert.DeserializeObject<JsonAccounts>(_serializedJsonAccounts);
+                return jsonAccounts ?? new JsonAccounts();
             }
         }
 
@@ -49,21 +51,14 @@ namespace PassFruit.DataStore.JsonDataStore
             return null;
         }
 
-        public override void SaveAccountDto(AccountDto accountDto)
+        protected override void SaveSpecificAccountDto(AccountDto accountDto)
         {
             var jsonAccounts = GetJsonAccounts();
-            if (jsonAccounts == null)
-            {
-                jsonAccounts = new JsonAccounts();
-            }
-            if (jsonAccounts.Accounts == null)
-            {
-                jsonAccounts.Accounts = new Dictionary<Guid, string>();
-            }
             jsonAccounts.Accounts[accountDto.Id] = JsonConvert.SerializeObject(accountDto);
-            lock (_locker)
+            lock (this)
             {
-                _configuration.Update(JsonConvert.SerializeObject(jsonAccounts));
+                _serializedJsonAccounts = JsonConvert.SerializeObject(jsonAccounts);
+                _configuration.Persist(_serializedJsonAccounts);
             }
         }
 

@@ -11,23 +11,22 @@ namespace PassFruit.DataStore.Tests {
     [TestFixture]
     public abstract class DataStoreTestsBase {
 
-        protected abstract IDataStore GetDataStore();
+        protected abstract IDataStore CreateEmptyDataStore();
 
-        protected abstract IDataStore GetDataStoreWithFakeData();
+        protected abstract IDataStore CreateDataStoreWithFakeData();
 
-        private void TestWithDataStore(Action<IDataStore> test) {
-            test(GetDataStore());
+        private void TestWithEmptyDataStore(Action<IDataStore> test) {
+            test(CreateEmptyDataStore());
         }
 
         private void TestWithPrepopulatedDataStore(Action<IDataStore> test) {
-            GetDataStoreWithFakeData();
-            test(GetDataStore());
+            test(CreateDataStoreWithFakeData());
         }
 
-        private void TestWithBothDataStores(Action<IDataStore> test) {
-            test(GetDataStoreWithFakeData());
-            test(GetDataStore());
-        }
+        //private void TestWithBothDataStores(Action<IDataStore> test) {
+        //    test(GetDataStoreWithFakeData());
+        //    test(GetDataStore());
+        //}
 
         private void TestAccountAndPassword(IDataStore dataStore, AccountDto accountDto) {
             dataStore.GetAllAccountIds().Should().Contain(id => id.Equals(accountDto.Id));
@@ -56,37 +55,44 @@ namespace PassFruit.DataStore.Tests {
             IDataStore originalDataStore = null;
 
             // When
-            TestWithDataStore(dataStore => {
+            TestWithEmptyDataStore(dataStore => {
                 dataStore.SaveAccountDto(facebookAccount);
                 originalDataStore = dataStore;
             });
             
             // Then
-            Action<IDataStore> readDataStore = dataStore => {
-                dataStore.GetAllAccountIds().Should().HaveCount(1);
-                dataStore.GetAccountDtos().Should().HaveCount(1);
-                TestAccountAndPassword(dataStore, facebookAccount);
-            };
-            readDataStore(originalDataStore);
-            TestWithDataStore(readDataStore);
+            originalDataStore.GetAllAccountIds().Should().HaveCount(1);
+            originalDataStore.GetAccountDtos().Should().HaveCount(1);
+            TestAccountAndPassword(originalDataStore, facebookAccount);
         }
 
         [Test]
         public void WhenAddingMultipeAccounts_TheyShouldBeAdded() {
 
             // Given
-            var accountDtos = new List<AccountDto>();
-            
-            // When
-            TestWithPrepopulatedDataStore(dataStore => accountDtos.AddRange(dataStore.GetAccountDtos()));
+            var facebookAccount = FakeData.FakeDataGenerator.GetFacebookAccount();
+            var facebookPassword = FakeData.FakeDataGenerator.GetFacebookPassword();
+            facebookAccount.Fields.Add(facebookPassword);
 
-            // Then
-            TestWithDataStore(dataStore => {
-                foreach (var accountDto in accountDtos) {
-                    TestAccountAndPassword(dataStore, accountDto);
-                }
+            var twitterAccount = FakeData.FakeDataGenerator.GetTwitterAccount();
+            var twitterPassword = FakeData.FakeDataGenerator.GetTwitterPassword();
+            facebookAccount.Fields.Add(twitterPassword);
+
+            IDataStore originalDataStore = null;
+
+            // When
+            TestWithEmptyDataStore(dataStore =>
+            {
+                dataStore.SaveAccountDto(facebookAccount);
+                dataStore.SaveAccountDto(twitterAccount);
+                originalDataStore = dataStore;
             });
 
+            // Then
+            originalDataStore.GetAccountDtos().Should().HaveCount(2);
+            TestAccountAndPassword(originalDataStore, facebookAccount);
+            TestAccountAndPassword(originalDataStore, twitterAccount);
+   
         }
 
         [Test]
@@ -97,17 +103,17 @@ namespace PassFruit.DataStore.Tests {
             AccountDto twitterAccount = null;
 
             // When
-            Action<IDataStore> deleteAccount = dataStore => {
+            TestWithPrepopulatedDataStore(dataStore => {
                 originalDataStore = dataStore;
                 twitterAccount =
                     dataStore.GetAccountDtos().First(account => 
                         account.ProviderKey == FakeData.FakeDataGenerator.TwitterProviderKey);
                 dataStore.DeleteAccountDto(twitterAccount.Id);
-            };
+            });
 
             // Then
-            TestWithPrepopulatedDataStore(deleteAccount);
             originalDataStore.GetAccountDtos().Should().NotContain(account => account.Id == twitterAccount.Id);
+            originalDataStore.GetAccountDtos().Should().NotContain(account => account.ProviderKey == FakeData.FakeDataGenerator.TwitterProviderKey);
         }
 
         [Test]
@@ -120,7 +126,8 @@ namespace PassFruit.DataStore.Tests {
             FieldDto changedPasswordDto = FakeData.FakeDataGenerator.GetFacebookPassword();
 
             // When
-            Action<IDataStore> deletePassword = dataStore => {
+            TestWithPrepopulatedDataStore(dataStore =>
+            {
                 originalDataStore = dataStore;
                 twitterAccount =
                     dataStore.GetAccountDtos().First(account =>
@@ -129,10 +136,9 @@ namespace PassFruit.DataStore.Tests {
                 twitterAccount.Fields.Remove(originalPasswordDto);
                 twitterAccount.Fields.Add(changedPasswordDto);
                 originalDataStore.SaveAccountDto(twitterAccount);
-            };
+            });
 
             // Then
-            TestWithPrepopulatedDataStore(deletePassword);
             originalDataStore.GetAccountDto(twitterAccount.Id).Fields.Should().NotContain(originalPasswordDto);
             originalDataStore.GetAccountDto(twitterAccount.Id).Fields.Should().Contain(changedPasswordDto);
         }

@@ -7,10 +7,19 @@ namespace PassFruit.DataStore {
 
     public class AccountDto {
 
-        public AccountDto() {
+        public AccountDto()
+        {
             Fields = new List<FieldDto>();
             Tags = new List<TagDto>();
             Notes = "";
+            Id = Guid.Empty; // default for new accounts
+            ProviderKey = "";
+        }
+
+        public AccountDto(Guid id)
+            : this()
+        {
+            Id = id;
         }
 
         public Guid Id { get; set; }
@@ -26,6 +35,11 @@ namespace PassFruit.DataStore {
         public DateTime LastChangedUtc { get; set; }
 
         public string Notes { get; set; }
+
+        public bool IsNew   
+        {
+            get { return Id == Guid.Empty; }
+        }
 
         public bool Equals(AccountDto otherAccountDto) {
             if (ReferenceEquals(null, otherAccountDto)) return false;
