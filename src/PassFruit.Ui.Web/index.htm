@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>PassFruit Ui Test</title>
+	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/pbkdf2.js"></script>
+	<!-- Consider http://code.google.com/p/slowaes/ -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js "></script>
+</head>
+<body>
+
+	<script>
+	    $(function () {
+	        // TestDecryptFromNet();
+	        Test();
+	    });
+
+	    function Test() {
+	        var secretPassword = 'Test password';
+	        // var secretMessage = CryptoJS.enc.Utf8.parse('Test of a secret message');
+	        var secretMessage = 'Test of a secret message';
+
+	        var salt = CryptoJS.lib.WordArray.random(192 / 8);
+	        var key = generateKey(CryptoJS.enc.Utf8.parse(secretPassword), salt);
+	        var initializationVector = CryptoJS.lib.WordArray.random(128 / 8);
+
+            var ciphertext = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(secretMessage), key,
+                {
+                    iv: initializationVector
+                    // algorithm: CryptoJS.algo.AES,
+                    // mode: CryptoJS.mode.CBC,
+                    // padding: CryptoJS.pad.PKCS7,
+                    // blockSize: 128 / 32
+                });
+            var decryptedSecretMessage = CryptoJS.AES.decrypt(ciphertext, key, { iv: initializationVector });
+
+	        printResults(ciphertext, initializationVector.toString(CryptoJS.enc.Base64), salt.toString(CryptoJS.enc.Base64), secretPassword.toString(CryptoJS.enc.Utf8), key.toString(CryptoJS.enc.Base64), decryptedSecretMessage.toString(CryptoJS.enc.Utf8));
+	    }
+
+	    function TestDecryptFromNet() {
+	        var secretPassword = 	   'Test password';
+	        var ciphertext =           'Buwwn66Vz+jXt2u9R3ZGSuuPpKYltm68X2uN0A0Lccs=';
+	        var salt =                 'dlKox+7Fws/uo2S0YJ6S6goxXnZ4HHZS';
+	        var initializationVector = 'JAlU5q+H9f5rOzfmasNB/g==';
+
+	        var key = generateKey(CryptoJS.enc.Utf8.parse(secretPassword), CryptoJS.enc.Base64.parse(salt));
+	        // var key = CryptoJS.enc.Base64.parse('2R/X6yP1nJTv0SmWS9KwBEHLs7tZnpeeP6HmDvBdGG8=');
+
+	        var cipherParams = CryptoJS.lib.CipherParams.create({
+	            ciphertext: CryptoJS.enc.Base64.parse(ciphertext),
+	            algorithm: CryptoJS.algo.AES,
+	            mode: CryptoJS.mode.CBC,
+	            padding: CryptoJS.pad.PKCS7,
+	            blockSize: 128 / 32
+	            // formatter: CryptoJS.format.OpenSSL
+	        });
+
+	        // var decryptedSecretMessage = CryptoJS.AES.decrypt(cipherParams, CryptoJS.enc.Base64.parse(key), { iv: CryptoJS.enc.Base64.parse(initializationVector) });
+
+	        var decryptedSecretMessage = CryptoJS.AES.decrypt(ciphertext, key, {
+	            iv: CryptoJS.enc.Base64.parse(initializationVector),
+	            mode: CryptoJS.mode.CBC,
+	            padding: CryptoJS.pad.Pkcs7
+	        });
+
+	        printResults(ciphertext, initializationVector, salt, secretPassword.toString(CryptoJS.enc.Utf8), key.toString(CryptoJS.enc.Base64), decryptedSecretMessage.toString(CryptoJS.enc.Utf8));
+
+	    }
+
+	    function printResults(ciphertext, initializationVector, salt, secretPassword, key, secretMessage) {
+	        $('#encrypted').text(ciphertext);
+	        $('#iv').text(initializationVector);
+	        $('#salt').text(salt);
+	        $('#passphrase').text(secretPassword);
+	        $('#key').text(key);
+	        $('#message').text(secretMessage);
+	    }
+
+	    function generateKey(password, salt) {
+	        return CryptoJS.PBKDF2(password, salt, { keySize: 256 / 32, iterations: 1337 });
+	    }
+
+	</script>
+    <p>Public encrypted data: <span id="encrypted"> - </span></p>
+    <p>Public initialization vector: <span id="iv"> - </span></p>
+    <p>Public salt: <span id="salt"> - </span></p>
+    <p> --- </p>
+    <p>Secret key: <span id="key"> - </span></p>
+    <p>Secret passphrase: <span id="passphrase"> - </span></p>
+    <p>Secret message: <span id="message"> - </span></p>
+</body>
+</html>

@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PassFruit.Contracts;
-using PassFruit.DataStore;
+using PassFruit.Datastore;
 
 namespace PassFruit {
 
     public class Accounts : IAccounts {
 
-        private readonly IDataStore _dataStore;
+        private readonly IDatastore _dataStore;
 
         private readonly List<IAccount> _accounts = new List<IAccount>();
 
@@ -17,7 +17,7 @@ namespace PassFruit {
 
         private readonly FieldTypes _fieldTypes;
 
-        public Accounts(IDataStore dataStore) {
+        public Accounts(IDatastore dataStore) {
             _dataStore = dataStore;
             _providers = new Providers();
             _fieldTypes = new FieldTypes();

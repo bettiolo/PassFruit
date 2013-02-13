@@ -1,25 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.InMemoryDataStore", "PassFruit.DataStore.InMemoryDataStore\PassFruit.DataStore.InMemoryDataStore.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.InMemoryDatastore", "PassFruit.Datastore.InMemoryDatastore\PassFruit.Datastore.InMemoryDatastore.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.XmlDataStore.Tests", "PassFruit.DataStore.XmlDataStore.Tests\PassFruit.DataStore.XmlDataStore.Tests.csproj", "{94587E6F-E2F6-4394-AB7C-F4037B726425}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.XmlDatastore.Tests", "PassFruit.Datastore.XmlDatastore.Tests\PassFruit.Datastore.XmlDatastore.Tests.csproj", "{94587E6F-E2F6-4394-AB7C-F4037B726425}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.DataStore", "PassFruit.DataStore", "{4EDDD905-B35C-4955-8933-39B7AC0909BB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Datastore", "PassFruit.Datastore", "{4EDDD905-B35C-4955-8933-39B7AC0909BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.DataStore.Tests", "PassFruit.DataStore.Tests", "{64D25632-6F41-4908-8C08-ED9EFC62648C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Datastore.Tests", "PassFruit.Datastore.Tests", "{64D25632-6F41-4908-8C08-ED9EFC62648C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.InMemoryDataStore.Tests", "PassFruit.DataStore.InMemoryDataStore.Tests\PassFruit.DataStore.InMemoryDataStore.Tests.csproj", "{BACCC516-255A-466D-8988-5281345F9BFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.InMemoryDatastore.Tests", "PassFruit.Datastore.InMemoryDatastore.Tests\PassFruit.Datastore.InMemoryDatastore.Tests.csproj", "{BACCC516-255A-466D-8988-5281345F9BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Tests.FakeData", "PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj", "{6140384A-8A30-4916-BAC5-6AD1E0FC5049}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Tests.FakeData", "PassFruit.Datastore.Tests.FakeData\PassFruit.Datastore.Tests.FakeData.csproj", "{6140384A-8A30-4916-BAC5-6AD1E0FC5049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Tests", "PassFruit.DataStore.Tests\PassFruit.DataStore.Tests.csproj", "{CBC6B226-8231-4F44-946A-9A4BA83BFD29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Tests", "PassFruit.Datastore.Tests\PassFruit.Datastore.Tests.csproj", "{CBC6B226-8231-4F44-946A-9A4BA83BFD29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.XmlDataStore", "PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.XmlDatastore", "PassFruit.Datastore.XmlDatastore\PassFruit.Datastore.XmlDatastore.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore", "PassFruit.DataStore\PassFruit.DataStore.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore", "PassFruit.Datastore\PassFruit.Datastore.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Contracts", "PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj", "{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Contracts", "PassFruit.Datastore.Contracts\PassFruit.Datastore.Contracts.csproj", "{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

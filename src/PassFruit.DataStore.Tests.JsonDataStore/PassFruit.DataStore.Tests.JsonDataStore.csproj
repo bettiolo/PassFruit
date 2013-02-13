@@ -7,8 +7,8 @@
     <ProjectGuid>{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PassFruit.DataStore.Tests.JsonDataStore</RootNamespace>
-    <AssemblyName>PassFruit.DataStore.Tests.JsonDataStore</AssemblyName>
+    <RootNamespace>PassFruit.Datastore.Tests.JsonDatastore</RootNamespace>
+    <AssemblyName>PassFruit.Datastore.Tests.JsonDatastore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -48,26 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JsonDataStoreTests.cs" />
+    <Compile Include="JsonDatastoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PassFruit.DataStore.JsonDataStore\PassFruit.DataStore.JsonDataStore.csproj">
-      <Project>{e31cac23-d4c2-4c66-8804-7fe9c7ffd91c}</Project>
-      <Name>PassFruit.DataStore.JsonDataStore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj">
-      <Project>{6140384a-8a30-4916-bac5-6ad1e0fc5049}</Project>
-      <Name>PassFruit.DataStore.Tests.FakeData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Tests\PassFruit.DataStore.Tests.csproj">
-      <Project>{C5CCBB66-33A1-4DB8-8B57-BCBF72562E9E}</Project>
-      <Name>PassFruit.DataStore.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
-      <Project>{380647f7-1443-4fff-9101-30aff1822140}</Project>
-      <Name>PassFruit.DataStore %28PassFruit.DataStore\PassFruit.DataStore%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace PassFruit.DataStore.XmlDataStore {
+namespace PassFruit.Datastore.XmlDatastore {
     
-    public class XmlDataStoreConfiguration : IDataStoreConfiguration {
+    public class XmlDatastoreConfiguration : IDatastoreConfiguration {
 
-        public XmlDataStoreConfiguration(Func<XDocument> getXDoc, Action<XDocument> saveXdoc) {
+        public XmlDatastoreConfiguration(Func<XDocument> getXDoc, Action<XDocument> saveXdoc) {
             GetXDoc = getXDoc;
             SaveXdoc = saveXdoc;
         }

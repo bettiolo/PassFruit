@@ -5,7 +5,7 @@ using System.Text;
 using PassFruit;
 using PassFruit.Contracts;
 
-namespace Passfruit.Ui.ConsoleApp {
+namespace PassFruit.Ui.ConsoleApp {
 
     internal class PasswordSection {
 

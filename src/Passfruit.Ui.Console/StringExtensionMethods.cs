@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
-using Passfruit.Ui.ConsoleApp;
+using PassFruit.Ui.ConsoleApp;
 
 namespace System {
 

@@ -11,10 +11,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using PassFruit.Contracts;
-using PassFruit.DataStore;
-using PassFruit.DataStore.Contracts;
-using PassFruit.DataStore.InMemoryDataStore;
-using PassFruit.DataStore.XmlDataStore;
+using PassFruit.Datastore;
+using PassFruit.Datastore.Contracts;
+using PassFruit.Datastore.InMemoryDatastore;
+using PassFruit.Datastore.XmlDatastore;
 using PassFruit.Ui.Wp.Controls;
 
 namespace PassFruit.Ui.Wp {
@@ -25,28 +25,28 @@ namespace PassFruit.Ui.Wp {
             TiltEffect.TiltableItems.Add(typeof(SettingsItem));
         }
 
-        public DataStores GetDataStores() {
-            var dataStores = new DataStores();
-            var xmlDataStoreConfiguration = new XmlDataStoreConfiguration(null, null);
-            var xmlDataStore = new XmlDataStore(xmlDataStoreConfiguration);
-            dataStores.AddDataStore(xmlDataStore);
+        public Datastores GetDatastores() {
+            var dataStores = new Datastores();
+            var xmlDatastoreConfiguration = new XmlDatastoreConfiguration(null, null);
+            var xmlDatastore = new XmlDatastore(xmlDatastoreConfiguration);
+            dataStores.AddDatastore(xmlDatastore);
 
-            var inMemoryDatasToreConfiguration = new InMemoryDataStoreConfiguration();
-            var inMemoryDataStore = new InMemoryDataStore();
-            dataStores.AddDataStore(inMemoryDataStore);
+            var inMemoryDatasToreConfiguration = new InMemoryDatastoreConfiguration();
+            var inMemoryDatastore = new InMemoryDatastore();
+            dataStores.AddDatastore(inMemoryDatastore);
 
-            dataStores.SelectDataStore(inMemoryDataStore);
+            dataStores.SelectDatastore(inMemoryDatastore);
             return dataStores;
         }
 
-        public static IDataStore GetDataStore() {
-            IDataStore dataStore;
+        public static IDatastore GetDatastore() {
+            IDatastore dataStore;
             var app = Application.Current as App;
             if (app != null) {
-                dataStore = app.DataStores.GetSelectedDataStore();
+                dataStore = app.Datastores.GetSelectedDatastore();
             } else {
                 var init = new Init();
-                dataStore = init.GetDataStores().GetSelectedDataStore();
+                dataStore = init.GetDatastores().GetSelectedDatastore();
             }
             return dataStore;
         }

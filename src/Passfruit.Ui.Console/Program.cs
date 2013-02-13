@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Passfruit.Ui.ConsoleApp {
+namespace PassFruit.Ui.ConsoleApp {
 
     class Program {
 

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace PassFruit.DataStore.JsonDataStore
+namespace PassFruit.Datastore.JsonDatastore
 {
-    public class JsonDataStore : DataStoreBase
+    public class JsonDatastore : DatastoreBase
     {
-        private readonly JsonDataStoreConfiguration _configuration;
+        private readonly JsonDatastoreConfiguration _configuration;
 
         private string _serializedJsonAccounts = "";
 
-        public JsonDataStore(JsonDataStoreConfiguration configuration)
+        public JsonDatastore(JsonDatastoreConfiguration configuration)
         {
             _configuration = configuration;
         }

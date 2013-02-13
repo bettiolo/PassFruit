@@ -1,23 +1,23 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using PassFruit.DataStore.Tests;
-using PassFruit.DataStore.Tests.FakeData;
+using PassFruit.Datastore.Tests;
+using PassFruit.Datastore.Tests.FakeData;
 using System.Linq;
 
-namespace PassFruit.DataStore.InMemoryDataStore.Tests {
+namespace PassFruit.Datastore.InMemoryDatastore.Tests {
 
     [TestFixture]
-    public class InMemoryDataStoreTests : DataStoreTestsBase {
+    public class InMemoryDatastoreTests : DatastoreTestsBase {
 
-        protected override IDataStore CreateDataStoreWithFakeData() {
-            var inMemoryDataStore = new InMemoryDataStore();
+        protected override IDatastore CreateDatastoreWithFakeData() {
+            var inMemoryDatastore = new InMemoryDatastore();
             var fakeDataGenerator = new FakeDataGenerator();
-            fakeDataGenerator.GenerateFakeData(inMemoryDataStore);
-            return inMemoryDataStore;
+            fakeDataGenerator.GenerateFakeData(inMemoryDatastore);
+            return inMemoryDatastore;
         }
 
-        protected override IDataStore CreateEmptyDataStore() {
-            return new InMemoryDataStore();
+        protected override IDatastore CreateEmptyDatastore() {
+            return new InMemoryDatastore();
         }
     }
 

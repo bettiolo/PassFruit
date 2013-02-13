@@ -16,7 +16,7 @@
         
         <local:AppBootstrapper x:Key="bootstrapper" />
 
-        <sys:String x:Key="ApplicationTitle">PASSFRUIT</sys:String>
+        <sys:String x:Key="ApplicationTitle">PassFruit</sys:String>
 
     </Application.Resources>
 

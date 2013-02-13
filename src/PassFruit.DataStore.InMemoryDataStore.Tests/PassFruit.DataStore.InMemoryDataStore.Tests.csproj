@@ -8,8 +8,8 @@
     <ProjectGuid>{BACCC516-255A-466D-8988-5281345F9BFB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PassFruit.DataStore.InMemoryDataStore.Tests</RootNamespace>
-    <AssemblyName>PassFruit.DataStore.InMemoryDataStore.Tests</AssemblyName>
+    <RootNamespace>PassFruit.Datastore.InMemoryDatastore.Tests</RootNamespace>
+    <AssemblyName>PassFruit.Datastore.InMemoryDatastore.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -71,27 +71,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InMemoryDataStoreTests.cs" />
+    <Compile Include="InMemoryDatastoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PassFruit.DataStore.InMemoryDataStore\PassFruit.DataStore.InMemoryDataStore.csproj">
-      <Project>{ef5c1406-cd43-46c7-a5c3-dbc74770585f}</Project>
-      <Name>PassFruit.DataStore.InMemoryDataStore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj">
+    <ProjectReference Include="..\PassFruit.Datastore.Tests.FakeData\PassFruit.Datastore.Tests.FakeData.csproj">
       <Project>{6140384a-8a30-4916-bac5-6ad1e0fc5049}</Project>
-      <Name>PassFruit.DataStore.Tests.FakeData</Name>
+      <Name>PassFruit.Datastore.Tests.FakeData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Tests\PassFruit.DataStore.Tests.csproj">
+    <ProjectReference Include="..\PassFruit.Datastore.Tests\PassFruit.Datastore.Tests.csproj">
       <Project>{c5ccbb66-33a1-4db8-8b57-bcbf72562e9e}</Project>
-      <Name>PassFruit.DataStore.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
-      <Project>{380647f7-1443-4fff-9101-30aff1822140}</Project>
-      <Name>PassFruit.DataStore %28PassFruit.DataStore\PassFruit.DataStore%29</Name>
+      <Name>PassFruit.Datastore.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

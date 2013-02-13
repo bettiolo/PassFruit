@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-namespace PassFruit.DataStore {
+namespace PassFruit.Datastore {
 
     public class AccountDto {
 

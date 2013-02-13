@@ -36,7 +36,7 @@
                                 Margin="0,96,0,0">
                         <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}"
                                    Foreground="{StaticResource PhoneAccentBrush}"
-                                   Text="passfruit"
+                                   Text="PassFruit"
                                    TextWrapping="Wrap" />
                         <TextBlock Style="{StaticResource PhoneTextLargeStyle}"
                                    Text="secure password manager"

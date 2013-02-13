@@ -7,27 +7,27 @@ using System.Text;
 using System.Xml.Linq;
 using PassFruit;
 using PassFruit.Contracts;
-using PassFruit.DataStore;
-using PassFruit.DataStore.Tests.FakeData;
-using PassFruit.DataStore.XmlDataStore;
+using PassFruit.Datastore;
+using PassFruit.Datastore.Tests.FakeData;
+using PassFruit.Datastore.XmlDatastore;
 
-namespace Passfruit.Ui.ConsoleApp {
+namespace PassFruit.Ui.ConsoleApp {
     
     public class Main {
 
-        private readonly XmlDataStore _dataStore;
+        private readonly XmlDatastore _dataStore;
 
         public Main() {
-            // const string xmlFileName = @"passfruit.xml";
+            // const string xmlFileName = @"PassFruit.xml";
             var xmlFilePath = Path.GetTempFileName();
             File.Delete(xmlFilePath);
             var fileExists = File.Exists(xmlFilePath);
 
-            var xmlDataStoreConfiguration = new XmlDataStoreConfiguration(
+            var xmlDatastoreConfiguration = new XmlDatastoreConfiguration(
                 () => fileExists ? XDocument.Load(xmlFilePath) : new XDocument(),
                 xDocument => xDocument.Save(xmlFilePath)
             );
-            _dataStore = new XmlDataStore(xmlDataStoreConfiguration);
+            _dataStore = new XmlDatastore(xmlDatastoreConfiguration);
 
             if (!fileExists) {
                 var fakeDataGenerator = new FakeDataGenerator();
@@ -37,7 +37,7 @@ namespace Passfruit.Ui.ConsoleApp {
         }
 
         public void Run() {
-            "Passfruit".Message();
+            "PassFruit".Message();
 
             //do {
             //    var confirm =

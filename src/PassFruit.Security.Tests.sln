@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Tests", "PassFruit.Tests", "{64D25632-6F41-4908-8C08-ED9EFC62648C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Security", "PassFruit.Security", "{B3B9B55B-B3AC-4A85-917C-928413542A0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Security.Cryptography", "PassFruit.Security.Cryptography\PassFruit.Security.Cryptography.csproj", "{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Security.Cryptography.Net45", "PassFruit.Security.Cryptography.Net45\PassFruit.Security.Cryptography.Net45.csproj", "{F5E60881-811E-40A4-BFC6-D3AF51932F19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Security.Cryptography.Net45.Tests", "PassFruit.Security.Cryptography.Net45.Tests\PassFruit.Security.Cryptography.Net45.Tests.csproj", "{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F} = {B3B9B55B-B3AC-4A85-917C-928413542A0C}
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19} = {B3B9B55B-B3AC-4A85-917C-928413542A0C}
+	EndGlobalSection
+EndGlobal

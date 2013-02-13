@@ -1,25 +1,25 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using NUnit.Framework;
-using PassFruit.DataStore.JsonDataStore;
-using PassFruit.DataStore.Tests.FakeData;
+using PassFruit.Datastore.JsonDatastore;
+using PassFruit.Datastore.Tests.FakeData;
 
-namespace PassFruit.DataStore.Tests.JsonDataStore
+namespace PassFruit.Datastore.Tests.JsonDatastore
 {
 
     [TestFixture]
-    public class JsonDataStoreTests : DataStoreTestsBase
+    public class JsonDatastoreTests : DatastoreTestsBase
     {
 
-        protected override IDataStore CreateDataStoreWithFakeData()
+        protected override IDatastore CreateDatastoreWithFakeData()
         {
-            var jsonDataStore = CreateEmptyDataStore();
+            var jsonDatastore = CreateEmptyDatastore();
             var fakeDataGenerator = new FakeDataGenerator();
-            fakeDataGenerator.GenerateFakeData(jsonDataStore);
-            return jsonDataStore;
+            fakeDataGenerator.GenerateFakeData(jsonDatastore);
+            return jsonDatastore;
         }
 
-        protected override IDataStore CreateEmptyDataStore()
+        protected override IDatastore CreateEmptyDatastore()
         {
             var tempFileName = Path.GetTempFileName();
             if (File.Exists(tempFileName))
@@ -27,11 +27,11 @@ namespace PassFruit.DataStore.Tests.JsonDataStore
                 File.Delete(tempFileName);
             }
             Debug.Print("Using text file for json persistence: " + tempFileName);
-            var configuration = new JsonDataStoreConfiguration(json => SaveDataStore(tempFileName, json));
-            return new DataStore.JsonDataStore.JsonDataStore(configuration);
+            var configuration = new JsonDatastoreConfiguration(json => SaveDatastore(tempFileName, json));
+            return new Datastore.JsonDatastore.JsonDatastore(configuration);
         }
 
-        private void SaveDataStore(string fileName, string json)
+        private void SaveDatastore(string fileName, string json)
         {
             File.WriteAllText(fileName, json);
         }

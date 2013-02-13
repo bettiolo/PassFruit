@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using PassFruit.Contracts;
-using PassFruit.DataStore.Contracts;
+using PassFruit.Datastore.Contracts;
 using PassFruit.Ui.Wp.Views.Controls;
 
 namespace PassFruit.Ui.Wp.Views {
@@ -20,11 +20,11 @@ namespace PassFruit.Ui.Wp.Views {
 
         private readonly INavigationService _navigationService;
 
-        private IDataStore _dataStore;
+        private IDatastore _dataStore;
 
         public AccountProviderSelectPageViewModel(INavigationService navigationService) {
             _navigationService = navigationService;
-            _dataStore = Init.GetDataStore();
+            _dataStore = Init.GetDatastore();
             AccountProviders = new ObservableCollection<AccountProviderViewModel>();
             foreach (var provider in new Providers()) {
                 AccountProviders.Add(new AccountProviderViewModel(provider));

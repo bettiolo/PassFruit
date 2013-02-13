@@ -4,13 +4,13 @@ using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace PassFruit.DataStore.XmlDataStore {
+namespace PassFruit.Datastore.XmlDatastore {
 
-    public class XmlDataStore : DataStoreBase {
+    public class XmlDatastore : DatastoreBase {
 
-        private readonly XmlDataStoreConfiguration _configuration;
+        private readonly XmlDatastoreConfiguration _configuration;
 
-        /*  <passfruit>
+        /*  <PassFruit>
          *      <accounts>
          *          <id-0000-0000-0000-0000 lastChanged="01/02/2003">
          *              ENCRYPTED START
@@ -47,10 +47,10 @@ namespace PassFruit.DataStore.XmlDataStore {
          *      <providers>
          *          
          *      </providers>
-         *  </passfruit>    
+         *  </PassFruit>    
          */
 
-        public XmlDataStore(XmlDataStoreConfiguration configuration) {
+        public XmlDatastore(XmlDatastoreConfiguration configuration) {
             _configuration = configuration;
             LoadXDocument();
         }
@@ -171,12 +171,12 @@ namespace PassFruit.DataStore.XmlDataStore {
             _xDoc = _configuration.GetXDoc();
         }
 
-        private XElement GetPassfruitElement() {
-            return GetOrCreateElement("passfruit", _xDoc);
+        private XElement GetPassFruitElement() {
+            return GetOrCreateElement("PassFruit", _xDoc);
         }
 
         private XElement GetPasswordsElement() {
-            return GetOrCreateElement("passwords", GetPassfruitElement());
+            return GetOrCreateElement("passwords", GetPassFruitElement());
         }
 
         private XAttribute GetLastChangedUtcAttribute(XElement element) {
@@ -184,7 +184,7 @@ namespace PassFruit.DataStore.XmlDataStore {
         }
 
         private XElement GetAccountsElement() {
-            return GetOrCreateElement("accounts", GetPassfruitElement());
+            return GetOrCreateElement("accounts", GetPassFruitElement());
         }
 
         private XElement GetAccountElement(Guid accountId) {
@@ -232,7 +232,7 @@ namespace PassFruit.DataStore.XmlDataStore {
         }
 
         private XElement GetProvidersElement() {
-            return GetOrCreateElement("providers", GetPassfruitElement());
+            return GetOrCreateElement("providers", GetPassFruitElement());
         }
 
         private XElement GetProviderElement(string providerKey) {

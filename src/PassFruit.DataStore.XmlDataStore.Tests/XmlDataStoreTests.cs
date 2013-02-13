@@ -2,23 +2,23 @@
 using System.IO;
 using System.Xml.Linq;
 using NUnit.Framework;
-using PassFruit.DataStore.Tests;
-using PassFruit.DataStore.Tests.FakeData;
+using PassFruit.Datastore.Tests;
+using PassFruit.Datastore.Tests.FakeData;
 
-namespace PassFruit.DataStore.XmlDataStore.Tests {
+namespace PassFruit.Datastore.XmlDatastore.Tests {
 
     [TestFixture]
-    public class XmlDataStoreTests : DataStoreTestsBase {
+    public class XmlDatastoreTests : DatastoreTestsBase {
 
-        protected override IDataStore CreateDataStoreWithFakeData()
+        protected override IDatastore CreateDatastoreWithFakeData()
         {
-            var xmlDataStore = CreateEmptyDataStore();
+            var xmlDatastore = CreateEmptyDatastore();
             var fakeDataGenerator = new FakeDataGenerator();
-            fakeDataGenerator.GenerateFakeData(xmlDataStore);
-            return xmlDataStore;
+            fakeDataGenerator.GenerateFakeData(xmlDatastore);
+            return xmlDatastore;
         }
 
-        protected override IDataStore CreateEmptyDataStore() {
+        protected override IDatastore CreateEmptyDatastore() {
             var xDocFileName = Path.GetTempFileName();
             Func<XDocument> getXDoc = () => File.Exists(xDocFileName) ? XDocument.Load(xDocFileName) : new XDocument();
             Action<XDocument> saveXDoc = xdoc => xdoc.Save(xDocFileName);
@@ -26,8 +26,8 @@ namespace PassFruit.DataStore.XmlDataStore.Tests {
             {
                 File.Delete(xDocFileName);
             }
-            var configuration = new XmlDataStoreConfiguration(getXDoc, saveXDoc);
-            return new XmlDataStore(configuration);
+            var configuration = new XmlDatastoreConfiguration(getXDoc, saveXDoc);
+            return new XmlDatastore(configuration);
         }
 
     }

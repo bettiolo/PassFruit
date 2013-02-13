@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PassFruit.Contracts;
 
-namespace PassFruit.DataStore {
+namespace PassFruit.Datastore {
 
-    public abstract class DataStoreBase : IDataStore {
+    public abstract class DatastoreBase : IDatastore {
 
         public abstract string Name { get; }
 
@@ -13,7 +14,7 @@ namespace PassFruit.DataStore {
 
         public abstract IEnumerable<Guid> GetAllAccountIds();
 
-        public IEnumerable<AccountDto> GetAccountDtos(AccountDtoStatus accountStatus = AccountDtoStatus.Active) {
+        public IEnumerable<AccountDto> GetAccountDtos(AccountStatus accountStatus = AccountStatus.Active) {
             return GetAllAccountIds().Select(GetAccountDto).Where(accountDto => 
                 IsAccountDtoMatchedByStatus(accountStatus, accountDto.IsDeleted));
         }
@@ -45,16 +46,16 @@ namespace PassFruit.DataStore {
             }
         }
 
-        private bool IsAccountDtoMatchedByStatus(AccountDtoStatus accountDtoStatus, bool isDeleted) {
-            switch (accountDtoStatus) {
-                case AccountDtoStatus.All:
+        private bool IsAccountDtoMatchedByStatus(AccountStatus accountStatus, bool isDeleted) {
+            switch (accountStatus) {
+                case AccountStatus.Any:
                     return true;
-                case AccountDtoStatus.Active:
+                case AccountStatus.Active:
                     return !isDeleted;
-                case AccountDtoStatus.Deleted:
+                case AccountStatus.Deleted:
                     return isDeleted;
                 default:
-                    throw new NotSupportedException("The account status filter specified is not supported: " + accountDtoStatus);
+                    throw new NotSupportedException("The account status filter specified is not supported: " + accountStatus);
             }
         }
 

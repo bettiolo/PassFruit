@@ -45,7 +45,7 @@ namespace PassFruit.Ui.Wp.Views {
         //}
 
         private void PopulateTags() {
-            var dataStore = Init.GetDataStore();
+            var dataStore = Init.GetDatastore();
             _tags = new ObservableCollection<TagViewModel>();
             var tagViewModels = new Accounts(dataStore).GetAllTags().Select(accountTag => new TagViewModel(accountTag));
             foreach (var tagViewModel in tagViewModels) {

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using PassFruit;
 using PassFruit.Contracts;
-using PassFruit.DataStore.Contracts;
+using PassFruit.Datastore.Contracts;
 
-namespace Passfruit.Ui.ConsoleApp {
+namespace PassFruit.Ui.ConsoleApp {
 
     internal class AccountSection {
 
         private readonly Accounts _accounts;
 
-        public AccountSection(IDataStore dataStore) {
+        public AccountSection(IDatastore dataStore) {
             _accounts = new Accounts(dataStore);
         }
 

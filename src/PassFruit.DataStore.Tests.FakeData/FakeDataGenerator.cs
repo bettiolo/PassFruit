@@ -1,7 +1,7 @@
 ﻿using System;
-using PassFruit.DataStore;
+using PassFruit.Datastore;
 
-namespace PassFruit.DataStore.Tests.FakeData
+namespace PassFruit.Datastore.Tests.FakeData
 {
 
     public class FakeDataGenerator
@@ -26,7 +26,7 @@ namespace PassFruit.DataStore.Tests.FakeData
         public const string Note1 = @"Example test note 1";
         public const string Note2 = @"Example test note 2 blah blah blah\nBlah blah blah\nLorem ipsun dolor sit amet";
 
-        public void GenerateFakeData(IDataStore dataStore)
+        public void GenerateFakeData(IDatastore dataStore)
         {
 
             var facebookAccount = GetFacebookAccount();

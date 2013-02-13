@@ -6,8 +6,8 @@
     <ProjectGuid>{6140384A-8A30-4916-BAC5-6AD1E0FC5049}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PassFruit.DataStore.Tests.FakeData</RootNamespace>
-    <AssemblyName>PassFruit.DataStore.Tests.FakeData</AssemblyName>
+    <RootNamespace>PassFruit.Datastore.Tests.FakeData</RootNamespace>
+    <AssemblyName>PassFruit.Datastore.Tests.FakeData</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile96</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -42,12 +42,6 @@
   <ItemGroup>
     <Compile Include="FakeDataGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
-      <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
-      <Name>PassFruit.DataStore %28PassFruit.DataStore\PassFruit.DataStore%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

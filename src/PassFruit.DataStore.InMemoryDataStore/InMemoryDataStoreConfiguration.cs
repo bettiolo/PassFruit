@@ -1,10 +1,10 @@
-namespace PassFruit.DataStore.InMemoryDataStore {
+namespace PassFruit.Datastore.InMemoryDatastore {
 
-    public class InMemoryDataStoreConfiguration : IDataStoreConfiguration {
+    public class InMemoryDatastoreConfiguration : IDatastoreConfiguration {
 
-        // public readonly InMemoryDataStore Instance = new InMemoryDataStore();
+        // public readonly InMemoryDatastore Instance = new InMemoryDatastore();
 
-        //public InMemoryDataStoreConfiguration(string serializedFilePath) {
+        //public InMemoryDatastoreConfiguration(string serializedFilePath) {
         //    _serializedFilePath = serializedFilePath;
         //}
 

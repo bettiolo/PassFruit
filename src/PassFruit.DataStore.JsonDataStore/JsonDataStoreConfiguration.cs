@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PassFruit.DataStore.JsonDataStore
+namespace PassFruit.Datastore.JsonDatastore
 {
-    public class JsonDataStoreConfiguration : IDataStoreConfiguration
+    public class JsonDatastoreConfiguration : IDatastoreConfiguration
     {
         private readonly Action<string> _persist;
 
-        public JsonDataStoreConfiguration(Action<string> persist)
+        public JsonDatastoreConfiguration(Action<string> persist)
         {
             _persist = persist;
         }

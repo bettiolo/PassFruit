@@ -34,7 +34,7 @@ namespace PassFruit.Ui.Wp.Views {
 
         public void LoadAccount() {
             //_passwordLoaded = false;
-            var dataStore = Init.GetDataStore();
+            var dataStore = Init.GetDatastore();
             _account = new Accounts(dataStore).GetById(_accountId);
             NotifyOfPropertyChange(() => AccountName);
             NotifyOfPropertyChange(() => Title);
@@ -87,7 +87,7 @@ namespace PassFruit.Ui.Wp.Views {
         //}
 
         public string Title {
-            get { return "PASSFRUIT | " + AccountName; }
+            get { return "PassFruit | " + AccountName; }
         }
 
         public string AccountName {

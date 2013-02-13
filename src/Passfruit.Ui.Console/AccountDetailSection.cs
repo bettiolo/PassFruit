@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using PassFruit.Contracts;
 
-namespace Passfruit.Ui.ConsoleApp {
+namespace PassFruit.Ui.ConsoleApp {
 
     internal class AccountDetailSection {
 

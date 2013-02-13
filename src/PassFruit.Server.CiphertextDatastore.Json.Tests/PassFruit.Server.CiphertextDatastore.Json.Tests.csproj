@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{634AB094-5AB6-491E-96F3-89E6007F8921}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PassFruit.Server.CiphertextDatastore.Json.Tests</RootNamespace>
+    <AssemblyName>PassFruit.Server.CiphertextDatastore.Json.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JsonCiphertextDatastoreTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PassFruit.Server.CiphertextDatastore.Json\PassFruit.Server.CiphertextDatastore.Json.csproj">
+      <Project>{6a111840-72fd-45a7-94f6-e221c3d6dede}</Project>
+      <Name>PassFruit.Server.CiphertextDatastore.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Server.CiphertextDatastore.Tests\PassFruit.Server.CiphertextDatastore.Tests.csproj">
+      <Project>{8684029a-4b3c-4f89-81bf-9bc9316dd5fc}</Project>
+      <Name>PassFruit.Server.CiphertextDatastore.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Server.CiphertextDatastore\PassFruit.Server.CiphertextDatastore.csproj">
+      <Project>{D8B5F176-3444-40E8-883C-BC88B4DA9068}</Project>
+      <Name>PassFruit.Server.CiphertextDatastore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PassFruit.Server.FakeDataGenerator\PassFruit.Server.FakeDataGenerator.csproj">
+      <Project>{E809415C-5B6C-410D-BF03-5C6831303848}</Project>
+      <Name>PassFruit.Server.FakeDataGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

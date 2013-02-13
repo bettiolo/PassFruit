@@ -8,8 +8,8 @@
     <ProjectGuid>{CAB3F184-A2AE-407C-AA53-804795DDBC0B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Passfruit.Ui.ConsoleApp</RootNamespace>
-    <AssemblyName>Passfruit.Ui.ConsoleApp</AssemblyName>
+    <RootNamespace>PassFruit.Ui.ConsoleApp</RootNamespace>
+    <AssemblyName>PassFruit.Ui.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -60,21 +60,21 @@
       <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
       <Name>PassFruit.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj">
+    <ProjectReference Include="..\PassFruit.Datastore.Contracts\PassFruit.Datastore.Contracts.csproj">
       <Project>{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}</Project>
-      <Name>PassFruit.DataStore.Contracts</Name>
+      <Name>PassFruit.Datastore.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj">
+    <ProjectReference Include="..\PassFruit.Datastore.Tests.FakeData\PassFruit.Datastore.Tests.FakeData.csproj">
       <Project>{6140384A-8A30-4916-BAC5-6AD1E0FC5049}</Project>
-      <Name>PassFruit.DataStore.Tests.FakeData</Name>
+      <Name>PassFruit.Datastore.Tests.FakeData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj">
+    <ProjectReference Include="..\PassFruit.Datastore.XmlDatastore\PassFruit.Datastore.XmlDatastore.csproj">
       <Project>{5DACB670-3923-49D9-815F-ECEE33835DC8}</Project>
-      <Name>PassFruit.DataStore.XmlDataStore</Name>
+      <Name>PassFruit.Datastore.XmlDatastore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.DataStore\PassFruit.DataStore.csproj">
+    <ProjectReference Include="..\PassFruit.Datastore\PassFruit.Datastore.csproj">
       <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
-      <Name>PassFruit.DataStore</Name>
+      <Name>PassFruit.Datastore</Name>
     </ProjectReference>
     <ProjectReference Include="..\PassFruit\PassFruit.csproj">
       <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>

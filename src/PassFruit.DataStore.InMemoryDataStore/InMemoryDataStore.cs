@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PassFruit.DataStore.InMemoryDataStore {
+namespace PassFruit.Datastore.InMemoryDatastore {
 
-    public class InMemoryDataStore : DataStoreBase {
+    public class InMemoryDatastore : DatastoreBase {
 
-        //private readonly InMemoryDataStoreConfiguration _configuration;
+        //private readonly InMemoryDatastoreConfiguration _configuration;
 
-        //public InMemoryDataStore(InMemoryDataStoreConfiguration configuration) {
+        //public InMemoryDatastore(InMemoryDatastoreConfiguration configuration) {
         //    _configuration = configuration;
         //}
 
@@ -16,11 +16,11 @@ namespace PassFruit.DataStore.InMemoryDataStore {
             new Dictionary<Guid, AccountDto>();
 
         public override string Name {
-            get { return "In Memory DataStore"; }
+            get { return "In Memory Datastore"; }
         }
 
         public override string Description {
-            get { return "In Memory DataStore, the data is serialized"; }
+            get { return "In Memory Datastore, the data is serialized"; }
         }
 
         public override IEnumerable<Guid> GetAllAccountIds() {

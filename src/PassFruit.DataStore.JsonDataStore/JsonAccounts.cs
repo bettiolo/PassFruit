@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PassFruit.DataStore.JsonDataStore
+namespace PassFruit.Datastore.JsonDatastore
 {
     public class JsonAccounts
     {

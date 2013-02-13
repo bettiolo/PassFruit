@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using PassFruit.Contracts;
 
-namespace PassFruit.DataStore {
+namespace PassFruit.Datastore {
 
-    public interface IDataStore {
+    public interface IDatastore {
 
         string Name { get; }
 
@@ -11,7 +12,7 @@ namespace PassFruit.DataStore {
 
         IEnumerable<Guid> GetAllAccountIds();
 
-        IEnumerable<AccountDto> GetAccountDtos(AccountDtoStatus accountStatus = AccountDtoStatus.Active);
+        IEnumerable<AccountDto> GetAccountDtos(AccountStatus accountStatus = AccountStatus.Active);
 
         AccountDto GetAccountDto(Guid accountId);
 

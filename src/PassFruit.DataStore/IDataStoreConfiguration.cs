@@ -1,6 +1,6 @@
-﻿namespace PassFruit.DataStore {
+﻿namespace PassFruit.Datastore {
     
-    public interface IDataStoreConfiguration {
+    public interface IDatastoreConfiguration {
 
     }
 

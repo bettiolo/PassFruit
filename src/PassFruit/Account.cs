@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using PassFruit.Contracts;
-using PassFruit.DataStore;
+using PassFruit.Datastore;
 
 namespace PassFruit {
 

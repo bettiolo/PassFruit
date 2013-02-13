@@ -9,29 +9,47 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "PassFruit\Pass
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Tests", "PassFruit.Tests", "{64D25632-6F41-4908-8C08-ED9EFC62648C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.InMemoryDataStore.Tests", "PassFruit.DataStore.InMemoryDataStore.Tests\PassFruit.DataStore.InMemoryDataStore.Tests.csproj", "{BACCC516-255A-466D-8988-5281345F9BFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.InMemoryDatastore.Tests", "PassFruit.Datastore.InMemoryDatastore.Tests\PassFruit.Datastore.InMemoryDatastore.Tests.csproj", "{BACCC516-255A-466D-8988-5281345F9BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.XmlDataStore.Tests", "PassFruit.DataStore.XmlDataStore.Tests\PassFruit.DataStore.XmlDataStore.Tests.csproj", "{94587E6F-E2F6-4394-AB7C-F4037B726425}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.XmlDatastore.Tests", "PassFruit.Datastore.XmlDatastore.Tests\PassFruit.Datastore.XmlDatastore.Tests.csproj", "{94587E6F-E2F6-4394-AB7C-F4037B726425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Tests", "PassFruit.DataStore.Tests\PassFruit.DataStore.Tests.csproj", "{C5CCBB66-33A1-4DB8-8B57-BCBF72562E9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Tests", "PassFruit.Datastore.Tests\PassFruit.Datastore.Tests.csproj", "{C5CCBB66-33A1-4DB8-8B57-BCBF72562E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Tests.FakeData", "PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj", "{6140384A-8A30-4916-BAC5-6AD1E0FC5049}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Tests.FakeData", "PassFruit.Datastore.Tests.FakeData\PassFruit.Datastore.Tests.FakeData.csproj", "{6140384A-8A30-4916-BAC5-6AD1E0FC5049}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Tests", "PassFruit.Tests\PassFruit.Tests.csproj", "{405AF9CA-F2D6-4577-818E-B92059557ED5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.DataStore", "PassFruit.DataStore", "{512B9241-C516-463C-B0D4-7FB57A96A27F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Datastore", "PassFruit.Datastore", "{512B9241-C516-463C-B0D4-7FB57A96A27F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore", "PassFruit.DataStore\PassFruit.DataStore.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore", "PassFruit.Datastore\PassFruit.Datastore.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.InMemoryDataStore", "PassFruit.DataStore.InMemoryDataStore\PassFruit.DataStore.InMemoryDataStore.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.InMemoryDatastore", "PassFruit.Datastore.InMemoryDatastore\PassFruit.Datastore.InMemoryDatastore.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.XmlDataStore", "PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.XmlDatastore", "PassFruit.Datastore.XmlDatastore\PassFruit.Datastore.XmlDatastore.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Fields", "PassFruit.Fields\PassFruit.Fields.csproj", "{A9199DE5-B1D2-4298-AA2C-D40F6390E034}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.JsonDataStore", "PassFruit.DataStore.JsonDataStore\PassFruit.DataStore.JsonDataStore.csproj", "{E31CAC23-D4C2-4C66-8804-7FE9C7FFD91C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.JsonDatastore", "PassFruit.Datastore.JsonDatastore\PassFruit.Datastore.JsonDatastore.csproj", "{E31CAC23-D4C2-4C66-8804-7FE9C7FFD91C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Tests.JsonDataStore", "PassFruit.DataStore.Tests.JsonDataStore\PassFruit.DataStore.Tests.JsonDataStore.csproj", "{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Tests.JsonDatastore", "PassFruit.Datastore.Tests.JsonDatastore\PassFruit.Datastore.Tests.JsonDatastore.csproj", "{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Security", "PassFruit.Security", "{B3B9B55B-B3AC-4A85-917C-928413542A0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Security.Cryptography", "PassFruit.Security.Cryptography\PassFruit.Security.Cryptography.csproj", "{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Security.Cryptography.Net45", "PassFruit.Security.Cryptography.Net45\PassFruit.Security.Cryptography.Net45.csproj", "{F5E60881-811E-40A4-BFC6-D3AF51932F19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Security.Cryptography.Net45.Tests", "PassFruit.Security.Cryptography.Net45.Tests\PassFruit.Security.Cryptography.Net45.Tests.csproj", "{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Server", "PassFruit.Server", "{81F49B88-8EDD-471B-8A19-2DEE2862E740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Server.CiphertextDataStore", "PassFruit.Server.CiphertextDatastore\PassFruit.Server.CiphertextDatastore.csproj", "{D8B5F176-3444-40E8-883C-BC88B4DA9068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Server.CiphertextDatastore.Json", "PassFruit.Server.CiphertextDatastore.Json\PassFruit.Server.CiphertextDatastore.Json.csproj", "{6A111840-72FD-45A7-94F6-E221C3D6DEDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Server.CiphertextDatastore.Json.Tests", "PassFruit.Server.CiphertextDatastore.Json.Tests\PassFruit.Server.CiphertextDatastore.Json.Tests.csproj", "{634AB094-5AB6-491E-96F3-89E6007F8921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Server.CiphertextDatastore.Tests", "PassFruit.Server.CiphertextDatastore.Tests\PassFruit.Server.CiphertextDatastore.Tests.csproj", "{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +141,48 @@ Global
 		{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5}.Release|x86.ActiveCfg = Release|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385}.Release|x86.ActiveCfg = Release|Any CPU
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068}.Release|x86.ActiveCfg = Release|Any CPU
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE}.Release|x86.ActiveCfg = Release|Any CPU
+		{634AB094-5AB6-491E-96F3-89E6007F8921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{634AB094-5AB6-491E-96F3-89E6007F8921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{634AB094-5AB6-491E-96F3-89E6007F8921}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{634AB094-5AB6-491E-96F3-89E6007F8921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{634AB094-5AB6-491E-96F3-89E6007F8921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{634AB094-5AB6-491E-96F3-89E6007F8921}.Release|x86.ActiveCfg = Release|Any CPU
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,9 +197,16 @@ Global
 		{6140384A-8A30-4916-BAC5-6AD1E0FC5049} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
 		{405AF9CA-F2D6-4577-818E-B92059557ED5} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
 		{41C72CFE-7F5D-43BF-A17E-9076E9A24FF5} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
+		{BE0A4B6E-9C6E-49E7-9D68-4AFC881A4385} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
+		{634AB094-5AB6-491E-96F3-89E6007F8921} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
+		{8684029A-4B3C-4F89-81BF-9BC9316DD5FC} = {64D25632-6F41-4908-8C08-ED9EFC62648C}
 		{380647F7-1443-4FFF-9101-30AFF1822140} = {512B9241-C516-463C-B0D4-7FB57A96A27F}
 		{EF5C1406-CD43-46C7-A5C3-DBC74770585F} = {512B9241-C516-463C-B0D4-7FB57A96A27F}
 		{5DACB670-3923-49D9-815F-ECEE33835DC8} = {512B9241-C516-463C-B0D4-7FB57A96A27F}
 		{E31CAC23-D4C2-4C66-8804-7FE9C7FFD91C} = {512B9241-C516-463C-B0D4-7FB57A96A27F}
+		{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F} = {B3B9B55B-B3AC-4A85-917C-928413542A0C}
+		{F5E60881-811E-40A4-BFC6-D3AF51932F19} = {B3B9B55B-B3AC-4A85-917C-928413542A0C}
+		{D8B5F176-3444-40E8-883C-BC88B4DA9068} = {81F49B88-8EDD-471B-8A19-2DEE2862E740}
+		{6A111840-72FD-45A7-94F6-E221C3D6DEDE} = {81F49B88-8EDD-471B-8A19-2DEE2862E740}
 	EndGlobalSection
 EndGlobal

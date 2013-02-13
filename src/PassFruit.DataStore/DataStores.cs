@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 
-namespace PassFruit.DataStore {
+namespace PassFruit.Datastore {
     
-    public class DataStores {
+    public class Datastores {
 
-        private readonly IList<IDataStore> _dataStores = new List<IDataStore>();
+        private readonly IList<IDatastore> _dataStores = new List<IDatastore>();
 
-        private IDataStore _currentDataStore;
+        private IDatastore _currentDatastore;
 
-        public void AddDataStore(IDataStore dataStore) {
+        public void AddDatastore(IDatastore dataStore) {
             _dataStores.Add(dataStore);
         }
 
-        public IEnumerable<IDataStore> GetAvailableDataStores() {
+        public IEnumerable<IDatastore> GetAvailableDatastores() {
             return _dataStores;
         }
 
-        public void SelectDataStore(IDataStore dataStore) {
-            _currentDataStore = dataStore;
+        public void SelectDatastore(IDatastore dataStore) {
+            _currentDatastore = dataStore;
         }
 
-        public IDataStore GetSelectedDataStore() {
-            return _currentDataStore;
+        public IDatastore GetSelectedDatastore() {
+            return _currentDatastore;
         }
 
     }

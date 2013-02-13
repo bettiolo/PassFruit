@@ -7,8 +7,8 @@ using System.Windows;
 using Caliburn.Micro;
 using IsolatedStorageExtensions;
 using PassFruit.Contracts;
-using PassFruit.DataStore.Contracts;
-using PassFruit.DataStore.Tests.FakeData;
+using PassFruit.Datastore.Contracts;
+using PassFruit.Datastore.Tests.FakeData;
 using PassFruit.Ui.Wp.Views;
 using PassFruit.Ui.Wp.Views.Controls;
 
@@ -16,7 +16,7 @@ namespace PassFruit.Ui.Wp {
 
     public class MainPageViewModel : Screen {
 
-        private readonly IDataStore _dataStore;
+        private readonly IDatastore _dataStore;
 
         INavigationService _navigationService;
 
@@ -31,19 +31,19 @@ namespace PassFruit.Ui.Wp {
             Accounts = new ObservableCollection<AccountViewModel>();
             _navigationService = navigationService;
 
-            var selectedDataStore = IsolatedStorageHelper.GetApplicationSetting("dataStore") as IDataStore;
-            if (selectedDataStore == null) {
+            var selectedDatastore = IsolatedStorageHelper.GetApplicationSetting("dataStore") as IDatastore;
+            if (selectedDatastore == null) {
                 var app = Application.Current as App;
                 if (app != null) {
-                    _dataStore = app.DataStores.GetSelectedDataStore();
+                    _dataStore = app.Datastores.GetSelectedDatastore();
                 } else {
                     var init = new Init();
-                    _dataStore = init.GetDataStores().GetSelectedDataStore();
+                    _dataStore = init.GetDatastores().GetSelectedDatastore();
                 }
                 var fakeData = new FakeDataGenerator();
                 fakeData.GenerateFakeData(_dataStore);
             } else {
-                _dataStore = selectedDataStore;
+                _dataStore = selectedDatastore;
             }
 
             _accounts = new Accounts(_dataStore);

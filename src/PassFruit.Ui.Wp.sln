@@ -5,23 +5,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Ui.Wp", "PassFrui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Contracts", "PassFruit.Contracts\PassFruit.Contracts.csproj", "{3971F9F7-3A79-401D-93F6-5B50A10D15C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore", "PassFruit.DataStore\PassFruit.DataStore.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore", "PassFruit.Datastore\PassFruit.Datastore.csproj", "{380647F7-1443-4FFF-9101-30AFF1822140}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit", "PassFruit\PassFruit.csproj", "{02D15B96-AD18-466A-88D7-454652E8347A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Tests.FakeData", "PassFruit.DataStore.Tests.FakeData\PassFruit.DataStore.Tests.FakeData.csproj", "{6140384A-8A30-4916-BAC5-6AD1E0FC5049}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Tests.FakeData", "PassFruit.Datastore.Tests.FakeData\PassFruit.Datastore.Tests.FakeData.csproj", "{6140384A-8A30-4916-BAC5-6AD1E0FC5049}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit", "PassFruit", "{21A962BC-294D-414A-B282-15D66991C744}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.DataStore", "PassFruit.DataStore", "{F6507449-9A38-470A-AC25-0819BDCA2C51}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Datastore", "PassFruit.Datastore", "{F6507449-9A38-470A-AC25-0819BDCA2C51}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PassFruit.Ui", "PassFruit.Ui", "{3F05F23B-D2C9-4EB9-97FE-B182461094F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.XmlDataStore", "PassFruit.DataStore.XmlDataStore\PassFruit.DataStore.XmlDataStore.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.XmlDatastore", "PassFruit.Datastore.XmlDatastore\PassFruit.Datastore.XmlDatastore.csproj", "{5DACB670-3923-49D9-815F-ECEE33835DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.Contracts", "PassFruit.DataStore.Contracts\PassFruit.DataStore.Contracts.csproj", "{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.Contracts", "PassFruit.Datastore.Contracts\PassFruit.Datastore.Contracts.csproj", "{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.DataStore.InMemoryDataStore", "PassFruit.DataStore.InMemoryDataStore\PassFruit.DataStore.InMemoryDataStore.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFruit.Datastore.InMemoryDatastore", "PassFruit.Datastore.InMemoryDatastore\PassFruit.Datastore.InMemoryDatastore.csproj", "{EF5C1406-CD43-46C7-A5C3-DBC74770585F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
