@@ -42,7 +42,7 @@ namespace PassFruit.Server.CiphertextDatastore
         
         public void Delete(Guid accountId)
         {
-            var deletedCipheredAccount = new CipheredAccountDto { Id = accountId, Deleted = true };
+            var deletedCipheredAccount = new CipheredAccountDto(accountId, true);
             Save(deletedCipheredAccount);
         }
 

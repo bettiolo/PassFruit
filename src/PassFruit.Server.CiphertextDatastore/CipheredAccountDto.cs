@@ -9,14 +9,18 @@ namespace PassFruit.Server.CiphertextDatastore
         public CipheredAccountDto()
         {
             Id = Guid.Empty;
+            Ciphertext = new byte[0];
+            InitializationVector = new byte[0];
+            Salt= new byte[0];
         }
 
-        internal CipheredAccountDto(Guid id): this()
+        internal CipheredAccountDto(Guid id, bool isDeleted = false): this()
         {
             Id = id;
+            Deleted = isDeleted;
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }  // Setter should be private but Deserialization needs it public
 
         public byte[] Ciphertext { get; set; }
 
@@ -24,7 +28,7 @@ namespace PassFruit.Server.CiphertextDatastore
 
         public byte[] Salt { get; set; }
 
-        public bool Deleted { get; set; }
+        public bool Deleted { get; set; }  // Setter should be private but Deserialization needs it public
 
         public bool IsNew()
         {

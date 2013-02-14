@@ -202,6 +202,37 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
                                .Should()
                                .BeLessThan(ciphertextDatastore.GetAll(CipheredAccountStatus.Any).Count());
         }
+        [Test]
+        public void WhenUpdatingAnAccount_ItShouldBeUpdated()
+        {
+
+            // Given
+            var ciphertextDatastore = CreateReloadedPopulatedWithFakeData();
+            var fakeCipheredAccountDto1 = ciphertextDatastore.GetAll().First();
+            var originalCount = ciphertextDatastore.GetAll().Count();
+
+            var updatedCipheredAccountDto = new CipheredAccountDto();
+
+            // When
+            updatedCipheredAccountDto.Id = fakeCipheredAccountDto1.Id;
+            updatedCipheredAccountDto.Ciphertext = Convert.FromBase64String("rdLQpiBIHfXhZTdZMso8CDrj0KOY9Z+KFsgRjscuSoE=");
+            updatedCipheredAccountDto.InitializationVector = Convert.FromBase64String("fAnP53b7vCuC2aabHQZvuA==");
+            updatedCipheredAccountDto.Salt = Convert.FromBase64String("wu6rj5K00UFiakRwhzlbrHGD3AyK5bzW");
+
+            ciphertextDatastore.Save(updatedCipheredAccountDto);
+
+            // Then
+            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
+                               .Should().Contain(account => account.Id == updatedCipheredAccountDto.Id);
+
+            ciphertextDatastore.GetAllIds()
+                               .Should().HaveCount(originalCount);
+
+            VerifyThatStoredDataMatches(ciphertextDatastore, updatedCipheredAccountDto);
+
+        }
+
+
 
     }
 
