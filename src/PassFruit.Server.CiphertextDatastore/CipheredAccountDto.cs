@@ -70,6 +70,5 @@ namespace PassFruit.Server.CiphertextDatastore
             }
         }
 
-
     }
 }
