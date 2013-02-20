@@ -23,7 +23,7 @@ namespace PassFruit.Server.CiphertextDatastore
 
         public abstract CipheredAccountDto Get(Guid accountId);
 
-        protected abstract void InternalSave(CipheredAccountDto cipheredAccountDto);
+        internal protected abstract void InternalSave(CipheredAccountDto cipheredAccountDto);
 
         public IEnumerable<CipheredAccountDto> GetAll(CipheredAccountStatus cipheredAccountStatus = CipheredAccountStatus.Active)
         {

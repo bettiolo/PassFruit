@@ -12,9 +12,11 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
     {
         protected override CiphertextDatastoreBase CreateEmpty()
         {
-            var mockedCiphertextDatastore = new Mock<CiphertextDatastoreBase>(Guid.NewGuid());
-            //var cipheredAccountDtos = new List<CipheredAccountDto>();
-            // mockedCiphertextDatastore.Setup(cds => cds.Get())
+            var mockedCiphertextDatastore = new Mock<CiphertextDatastoreBase>(MockBehavior.Strict, Guid.NewGuid()) { CallBase = true };
+            var cipheredAccountDtos = new Dictionary<Guid, CipheredAccountDto>();
+            mockedCiphertextDatastore
+                .Setup(cds => cds.InternalSave(It.Is<CipheredAccountDto>(
+                    cipheredAccountDto => cipheredAccountDtos[cipheredAccountDto.Id] = cipheredAccountDto)));
             return mockedCiphertextDatastore.Object;
         }
 
