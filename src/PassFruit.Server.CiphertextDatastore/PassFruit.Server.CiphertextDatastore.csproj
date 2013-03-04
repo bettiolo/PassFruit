@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CipheredAccountStatus.cs" />
-    <Compile Include="CipheredAccountDto.cs" />
+    <Compile Include="CiphertextStatus.cs" />
+    <Compile Include="CiphertextDto.cs" />
     <Compile Include="CiphertextDatastoreBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

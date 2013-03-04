@@ -28,14 +28,14 @@ namespace PassFruit.Server.CiphertextDatastore.Json.Tests
 
         protected override CiphertextDatastoreBase CreatePopulatedWithFakeData()
         {
-            var jsonCipheredDatastore = CreateEmpty();
-            CipheredAccountFakeDataGenerator.Populate(jsonCipheredDatastore);
-            return jsonCipheredDatastore;
+            var jsonCiphertextDatastore = CreateEmpty();
+            CiphertextFakeDataGenerator.Populate(jsonCiphertextDatastore);
+            return jsonCiphertextDatastore;
         }
 
         protected override CiphertextDatastoreBase CreateReloadedPopulatedWithFakeData()
         {
-            var originalPopulatedCipheredDatastore = CreatePopulatedWithFakeData(); // we ignore the original instance
+            var originalPopulatedCiphertextDatastore = CreatePopulatedWithFakeData(); // we ignore the original instance
             return CreateDatastoreFromTempFile();
         }
 

@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace PassFruit.Server.CiphertextDatastore
 {
-    public class CipheredAccountDto
+    public class CiphertextDto
     {
 
-        public CipheredAccountDto()
+        public CiphertextDto()
         {
             Id = Guid.Empty;
             Ciphertext = new byte[0];
@@ -14,7 +14,7 @@ namespace PassFruit.Server.CiphertextDatastore
             Salt= new byte[0];
         }
 
-        internal CipheredAccountDto(Guid id, bool isDeleted = false): this()
+        internal CiphertextDto(Guid id, bool isDeleted = false): this()
         {
             Id = id;
             Deleted = isDeleted;
@@ -37,10 +37,10 @@ namespace PassFruit.Server.CiphertextDatastore
 
         public override string ToString()
         {
-            return Id.ToString() + " - Ciphered";
+            return Id.ToString() + " - Ciphertext";
         }
 
-        protected bool Equals(CipheredAccountDto other)
+        protected bool Equals(CiphertextDto other)
         {
             return Id.Equals(other.Id) 
                 && Ciphertext.SequenceEqual(other.Ciphertext) 
@@ -54,7 +54,7 @@ namespace PassFruit.Server.CiphertextDatastore
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((CipheredAccountDto)obj);
+            return Equals((CiphertextDto)obj);
         }
 
         public override int GetHashCode()

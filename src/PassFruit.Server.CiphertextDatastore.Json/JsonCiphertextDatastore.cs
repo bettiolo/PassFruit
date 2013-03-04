@@ -11,12 +11,12 @@ namespace PassFruit.Server.CiphertextDatastore.Json
     {
 
         private readonly Action<string> _persist;
-        private readonly JsonCipheredAccounts _jsonCipheredAccounts;
+        private readonly JsonCiphertexts _jsonCiphertexts;
 
         public JsonCiphertextDatastore(Guid userId, Func<string> load, Action<string> persist) : base(userId)
         {
-            _jsonCipheredAccounts = JsonConvert.DeserializeObject<JsonCipheredAccounts>(load()) 
-                ?? new JsonCipheredAccounts();
+            _jsonCiphertexts = JsonConvert.DeserializeObject<JsonCiphertexts>(load()) 
+                ?? new JsonCiphertexts();
             _persist = persist;
         }
 
@@ -32,22 +32,22 @@ namespace PassFruit.Server.CiphertextDatastore.Json
 
         public override IEnumerable<Guid> GetAllIds()
         {
-            return _jsonCipheredAccounts.CipheredAccounts.Keys;
+            return _jsonCiphertexts.Ciphertexts.Keys;
         }
 
-        public override CipheredAccountDto Get(Guid accountId)
+        public override CiphertextDto Get(Guid accountId)
         {
-            return _jsonCipheredAccounts.CipheredAccounts.ContainsKey(accountId) 
-                ? JsonConvert.DeserializeObject<CipheredAccountDto>(_jsonCipheredAccounts.CipheredAccounts[accountId]) 
+            return _jsonCiphertexts.Ciphertexts.ContainsKey(accountId) 
+                ? JsonConvert.DeserializeObject<CiphertextDto>(_jsonCiphertexts.Ciphertexts[accountId]) 
                 : null;
         }
 
-        protected override void InternalSave(CipheredAccountDto cipheredAccountDto)
+        protected override void InternalSave(CiphertextDto ciphertextDto)
         {
-            _jsonCipheredAccounts.CipheredAccounts[cipheredAccountDto.Id] = JsonConvert.SerializeObject(cipheredAccountDto);
+            _jsonCiphertexts.Ciphertexts[ciphertextDto.Id] = JsonConvert.SerializeObject(ciphertextDto);
             lock (this)
             {
-                _persist(JsonConvert.SerializeObject(_jsonCipheredAccounts));
+                _persist(JsonConvert.SerializeObject(_jsonCiphertexts));
             }
         }
 

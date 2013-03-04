@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="JsonCipheredAccounts.cs" />
+    <Compile Include="JsonCiphertexts.cs" />
     <Compile Include="JsonCiphertextDatastore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -21,29 +21,29 @@ namespace PassFruit.Server.CiphertextDatastore
 
         public abstract IEnumerable<Guid> GetAllIds();
 
-        public abstract CipheredAccountDto Get(Guid accountId);
+        public abstract CiphertextDto Get(Guid accountId);
 
-        internal protected abstract void InternalSave(CipheredAccountDto cipheredAccountDto);
+        internal protected abstract void InternalSave(CiphertextDto ciphertextDto);
 
-        public IEnumerable<CipheredAccountDto> GetAll(CipheredAccountStatus cipheredAccountStatus = CipheredAccountStatus.Active)
+        public IEnumerable<CiphertextDto> GetAll(CiphertextStatus ciphertextStatus = CiphertextStatus.Active)
         {
-            return GetAllIds().Select(Get).Where(cipheredAccountDto =>
-                IsMatchedByStatus(cipheredAccountStatus, cipheredAccountDto.Deleted));
+            return GetAllIds().Select(Get).Where(ciphertextDto =>
+                IsMatchedByStatus(ciphertextStatus, ciphertextDto.Deleted));
         }
 
-        public void Save(CipheredAccountDto cipheredAccountDto)
+        public void Save(CiphertextDto ciphertextDto)
         {
-            if (cipheredAccountDto.IsNew())
+            if (ciphertextDto.IsNew())
             {
-                cipheredAccountDto.Id = Guid.NewGuid();
+                ciphertextDto.Id = Guid.NewGuid();
             }
-            InternalSave(cipheredAccountDto);
+            InternalSave(ciphertextDto);
         }
         
         public void Delete(Guid accountId)
         {
-            var deletedCipheredAccount = new CipheredAccountDto(accountId, true);
-            Save(deletedCipheredAccount);
+            var deletedCiphertextDto = new CiphertextDto(accountId, true);
+            Save(deletedCiphertextDto);
         }
 
         public void DeleteAll()
@@ -55,18 +55,18 @@ namespace PassFruit.Server.CiphertextDatastore
             }
         }
 
-        private static bool IsMatchedByStatus(CipheredAccountStatus cipheredAccountStatus, bool isDeleted)
+        private static bool IsMatchedByStatus(CiphertextStatus ciphertextStatus, bool isDeleted)
         {
-            switch (cipheredAccountStatus)
+            switch (ciphertextStatus)
             {
-                case CipheredAccountStatus.Any:
+                case CiphertextStatus.Any:
                     return true;
-                case CipheredAccountStatus.Active:
+                case CiphertextStatus.Active:
                     return !isDeleted;
-                case CipheredAccountStatus.Deleted:
+                case CiphertextStatus.Deleted:
                     return isDeleted;
                 default:
-                    throw new NotSupportedException("The account status filter specified is not supported: " + cipheredAccountStatus);
+                    throw new NotSupportedException("The account status filter specified is not supported: " + ciphertextStatus);
             }
         }
 

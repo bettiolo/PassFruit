@@ -18,57 +18,57 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
         protected abstract CiphertextDatastoreBase CreateReloadedPopulatedWithFakeData();
 
         private void VerifyThatStoredDataMatches(CiphertextDatastoreBase ciphertextDatastore,
-                                                             CipheredAccountDto cipheredAccountDto)
+                                                             CiphertextDto CiphertextDto)
         {
-            var accountId = cipheredAccountDto.Id;
+            var accountId = CiphertextDto.Id;
             ciphertextDatastore.GetAllIds()
                                .Should().Contain(id => id.Equals(accountId));
 
             ciphertextDatastore.GetAll()
-                               .Should().Contain(datastoreCipheredAccountDto => accountId == datastoreCipheredAccountDto.Id);
+                               .Should().Contain(datastoreCiphertextDto => accountId == datastoreCiphertextDto.Id);
 
-            ciphertextDatastore.Get(accountId).Equals(cipheredAccountDto)
+            ciphertextDatastore.Get(accountId).Equals(CiphertextDto)
                                .Should().BeTrue();
 
             ciphertextDatastore.Get(accountId).Deleted
-                               .Should().Be(cipheredAccountDto.Deleted);
+                               .Should().Be(CiphertextDto.Deleted);
 
             ciphertextDatastore.Get(accountId).Id
-                               .Should().Be(cipheredAccountDto.Id);
+                               .Should().Be(CiphertextDto.Id);
 
             ciphertextDatastore.Get(accountId).Ciphertext
-                               .Should().Equal(cipheredAccountDto.Ciphertext);
+                               .Should().Equal(CiphertextDto.Ciphertext);
 
             ciphertextDatastore.Get(accountId).InitializationVector
-                               .Should().Equal(cipheredAccountDto.InitializationVector);
+                               .Should().Equal(CiphertextDto.InitializationVector);
 
             ciphertextDatastore.Get(accountId).Salt
-                               .Should().Equal(cipheredAccountDto.Salt);
+                               .Should().Equal(CiphertextDto.Salt);
         }
 
         private void WhenAddingASingleAccountToADataStore_ItShouldBeAdded(CiphertextDatastoreBase ciphertextDatastore, int expectedCount)
         {
 
             // Given
-            var fakeCipheredAccount = CipheredAccountFakeDataGenerator.GetFakeCipheredAccountDtoNotYetAdded();
+            var fakeCiphertextDto = CiphertextFakeDataGenerator.GetFakeCiphertextDtoNotYetAdded();
 
             // When
-            ciphertextDatastore.Save(fakeCipheredAccount);
+            ciphertextDatastore.Save(fakeCiphertextDto);
 
             // Then
             ciphertextDatastore.GetAllIds()
                                .Should().HaveCount(expectedCount);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Any)
+            ciphertextDatastore.GetAll(CiphertextStatus.Any)
                                .Should().HaveCount(expectedCount);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
+            ciphertextDatastore.GetAll(CiphertextStatus.Active)
                                .Should().HaveCount(expectedCount);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Deleted)
+            ciphertextDatastore.GetAll(CiphertextStatus.Deleted)
                                .Should().HaveCount(0);
 
-            VerifyThatStoredDataMatches(ciphertextDatastore, fakeCipheredAccount);
+            VerifyThatStoredDataMatches(ciphertextDatastore, fakeCiphertextDto);
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
         {
             WhenAddingASingleAccountToADataStore_ItShouldBeAdded(
                 CreatePopulatedWithFakeData(),
-                CipheredAccountFakeDataGenerator.PopulatedAccounts.Length + 1);
+                CiphertextFakeDataGenerator.PopulatedAccounts.Length + 1);
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
         {
             WhenAddingASingleAccountToADataStore_ItShouldBeAdded(
                 CreateReloadedPopulatedWithFakeData(),
-                CipheredAccountFakeDataGenerator.PopulatedAccounts.Length + 1);
+                CiphertextFakeDataGenerator.PopulatedAccounts.Length + 1);
         }
 
         [Test]
@@ -100,32 +100,32 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
         {
 
             // Given
-            var fakeCipheredAccountDto1 = CipheredAccountFakeDataGenerator.GetFakeCipheredAccountDto1();
-            var fakeCipheredAccountDto2 = CipheredAccountFakeDataGenerator.GetFakeCipheredAccountDto2();
-            var fakeCipheredAccountDtoNotYetAdded =
-                CipheredAccountFakeDataGenerator.GetFakeCipheredAccountDtoNotYetAdded();
+            var fakeCiphertextDto1 = CiphertextFakeDataGenerator.GetFakeCiphertextDto1();
+            var fakeCiphertextDto2 = CiphertextFakeDataGenerator.GetFakeCiphertextDto2();
+            var fakeCiphertextDtoNotYetAdded =
+                CiphertextFakeDataGenerator.GetFakeCiphertextDtoNotYetAdded();
 
             var ciphertextDatastore = CreateEmpty();
 
             // When
-            ciphertextDatastore.Save(fakeCipheredAccountDto1);
-            ciphertextDatastore.Save(fakeCipheredAccountDto2);
+            ciphertextDatastore.Save(fakeCiphertextDto1);
+            ciphertextDatastore.Save(fakeCiphertextDto2);
 
             // Then
-            fakeCipheredAccountDtoNotYetAdded.Id
+            fakeCiphertextDtoNotYetAdded.Id
                    .Should().BeEmpty();
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Any)
+            ciphertextDatastore.GetAll(CiphertextStatus.Any)
                                .Should().HaveCount(2);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Deleted)
+            ciphertextDatastore.GetAll(CiphertextStatus.Deleted)
                                .Should().HaveCount(0);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
+            ciphertextDatastore.GetAll(CiphertextStatus.Active)
                                .Should().HaveCount(2);
 
-            VerifyThatStoredDataMatches(ciphertextDatastore, fakeCipheredAccountDto1);
-            VerifyThatStoredDataMatches(ciphertextDatastore, fakeCipheredAccountDto2);
+            VerifyThatStoredDataMatches(ciphertextDatastore, fakeCiphertextDto1);
+            VerifyThatStoredDataMatches(ciphertextDatastore, fakeCiphertextDto2);
         }
 
         [Test]
@@ -133,43 +133,43 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
         {
 
             // Given
-            var fakeCipheredAccountDto1 = CipheredAccountFakeDataGenerator.GetFakeCipheredAccountDto1();
+            var fakeCiphertextDto1 = CiphertextFakeDataGenerator.GetFakeCiphertextDto1();
 
             var ciphertextDatastore = CreateEmpty();
 
             // When
-            ciphertextDatastore.Save(fakeCipheredAccountDto1);
-            ciphertextDatastore.Delete(fakeCipheredAccountDto1.Id);
+            ciphertextDatastore.Save(fakeCiphertextDto1);
+            ciphertextDatastore.Delete(fakeCiphertextDto1.Id);
 
             // Then
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
-                               .Should().NotContain(account => account.Id == fakeCipheredAccountDto1.Id);
+            ciphertextDatastore.GetAll(CiphertextStatus.Active)
+                               .Should().NotContain(account => account.Id == fakeCiphertextDto1.Id);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Deleted)
-                               .Should().Contain(account => account.Id == fakeCipheredAccountDto1.Id);
+            ciphertextDatastore.GetAll(CiphertextStatus.Deleted)
+                               .Should().Contain(account => account.Id == fakeCiphertextDto1.Id);
 
             ciphertextDatastore.GetAllIds()
                                .Should().HaveCount(1); // Because AllIds return also deleted ones
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active).Count()
-                               .Should().BeLessThan(ciphertextDatastore.GetAll(CipheredAccountStatus.Any).Count());
+            ciphertextDatastore.GetAll(CiphertextStatus.Active).Count()
+                               .Should().BeLessThan(ciphertextDatastore.GetAll(CiphertextStatus.Any).Count());
 
-            ciphertextDatastore.Get(fakeCipheredAccountDto1.Id).Id
+            ciphertextDatastore.Get(fakeCiphertextDto1.Id).Id
                                .Should().NotBeEmpty();
 
-            ciphertextDatastore.Get(fakeCipheredAccountDto1.Id).Ciphertext
+            ciphertextDatastore.Get(fakeCiphertextDto1.Id).Ciphertext
                                .Should().BeEmpty();
 
-            ciphertextDatastore.Get(fakeCipheredAccountDto1.Id).Deleted
+            ciphertextDatastore.Get(fakeCiphertextDto1.Id).Deleted
                                .Should().BeTrue();
 
-            ciphertextDatastore.Get(fakeCipheredAccountDto1.Id).InitializationVector
+            ciphertextDatastore.Get(fakeCiphertextDto1.Id).InitializationVector
                                .Should().BeEmpty();
 
-            ciphertextDatastore.Get(fakeCipheredAccountDto1.Id).Salt
+            ciphertextDatastore.Get(fakeCiphertextDto1.Id).Salt
                                .Should().BeEmpty();
 
-            ciphertextDatastore.Get(fakeCipheredAccountDto1.Id).IsNew()
+            ciphertextDatastore.Get(fakeCiphertextDto1.Id).IsNew()
                                .Should().BeFalse();
 
         }
@@ -180,27 +180,27 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
 
             // Given
             var ciphertextDatastore = CreatePopulatedWithFakeData();
-            var fakeCipheredAccountDto1 = ciphertextDatastore.GetAll().First();
+            var fakeCiphertextDto1 = ciphertextDatastore.GetAll().First();
 
             // When
-            ciphertextDatastore.Delete(fakeCipheredAccountDto1.Id);
+            ciphertextDatastore.Delete(fakeCiphertextDto1.Id);
 
             // Then
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
-                               .Should().NotContain(account => account.Id == fakeCipheredAccountDto1.Id);
+            ciphertextDatastore.GetAll(CiphertextStatus.Active)
+                               .Should().NotContain(account => account.Id == fakeCiphertextDto1.Id);
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Deleted)
-                               .Should().Contain(account => account.Id == fakeCipheredAccountDto1.Id);
+            ciphertextDatastore.GetAll(CiphertextStatus.Deleted)
+                               .Should().Contain(account => account.Id == fakeCiphertextDto1.Id);
 
             ciphertextDatastore.GetAllIds()
-                               .Should().HaveCount(CipheredAccountFakeDataGenerator.PopulatedAccounts.Count(),
+                               .Should().HaveCount(CiphertextFakeDataGenerator.PopulatedAccounts.Count(),
                                "Because GetAllIds returns also deleted items"); 
                                 
 
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
+            ciphertextDatastore.GetAll(CiphertextStatus.Active)
                                .Count()
                                .Should()
-                               .BeLessThan(ciphertextDatastore.GetAll(CipheredAccountStatus.Any).Count());
+                               .BeLessThan(ciphertextDatastore.GetAll(CiphertextStatus.Any).Count());
         }
         [Test]
         public void WhenUpdatingAnAccount_ItShouldBeUpdated()
@@ -208,27 +208,27 @@ namespace PassFruit.Server.CiphertextDatastore.Tests
 
             // Given
             var ciphertextDatastore = CreateReloadedPopulatedWithFakeData();
-            var fakeCipheredAccountDto1 = ciphertextDatastore.GetAll().First();
+            var fakeCiphertextDto1 = ciphertextDatastore.GetAll().First();
             var originalCount = ciphertextDatastore.GetAll().Count();
 
-            var updatedCipheredAccountDto = new CipheredAccountDto();
+            var updatedCiphertextDto = new CiphertextDto();
 
             // When
-            updatedCipheredAccountDto.Id = fakeCipheredAccountDto1.Id;
-            updatedCipheredAccountDto.Ciphertext = Convert.FromBase64String("rdLQpiBIHfXhZTdZMso8CDrj0KOY9Z+KFsgRjscuSoE=");
-            updatedCipheredAccountDto.InitializationVector = Convert.FromBase64String("fAnP53b7vCuC2aabHQZvuA==");
-            updatedCipheredAccountDto.Salt = Convert.FromBase64String("wu6rj5K00UFiakRwhzlbrHGD3AyK5bzW");
+            updatedCiphertextDto.Id = fakeCiphertextDto1.Id;
+            updatedCiphertextDto.Ciphertext = Convert.FromBase64String("rdLQpiBIHfXhZTdZMso8CDrj0KOY9Z+KFsgRjscuSoE=");
+            updatedCiphertextDto.InitializationVector = Convert.FromBase64String("fAnP53b7vCuC2aabHQZvuA==");
+            updatedCiphertextDto.Salt = Convert.FromBase64String("wu6rj5K00UFiakRwhzlbrHGD3AyK5bzW");
 
-            ciphertextDatastore.Save(updatedCipheredAccountDto);
+            ciphertextDatastore.Save(updatedCiphertextDto);
 
             // Then
-            ciphertextDatastore.GetAll(CipheredAccountStatus.Active)
-                               .Should().Contain(account => account.Id == updatedCipheredAccountDto.Id);
+            ciphertextDatastore.GetAll(CiphertextStatus.Active)
+                               .Should().Contain(account => account.Id == updatedCiphertextDto.Id);
 
             ciphertextDatastore.GetAllIds()
                                .Should().HaveCount(originalCount);
 
-            VerifyThatStoredDataMatches(ciphertextDatastore, updatedCipheredAccountDto);
+            VerifyThatStoredDataMatches(ciphertextDatastore, updatedCiphertextDto);
 
         }
 

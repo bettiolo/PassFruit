@@ -1,6 +1,6 @@
 ﻿namespace PassFruit.Server.CiphertextDatastore {
     
-    public enum CipheredAccountStatus {
+    public enum CiphertextStatus {
         Any,
         Active,
         Deleted
