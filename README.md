@@ -3,7 +3,7 @@ PassFruit
 
 *Open source secure cloud password manager.*
 
-* * *
+
 
 Security
 --------
@@ -20,7 +20,7 @@ If using a cloud password storage service you can enable double security that co
 
 All the code is opensource, you can check by yourself the implementation.
 
-* * *
+
 
 Password storage services
 -------------------------
@@ -37,7 +37,7 @@ You can have your encrypted password persisted using the following services:
 
 You need your own account to persist the data in the cloud.
 
-* * *
+
 
 Client password access
 ----------------------
@@ -51,7 +51,7 @@ This is the selection of available clients
 - [Mac OS X (Cocoa)](https://trello.com/c/7chNcCXr)
 - [iOS (Cocoa Touch)](https://trello.com/c/iLvncg3Z)
 
-* * *
+
 
 Discussion
 ----
@@ -65,26 +65,26 @@ Discuss things in real-time.
 [Ohloh Project Statistics](https://www.ohloh.net/p/passfruit)
 View statistics about the project
 
-* * *
+
 
 Author
 ------
 
 [Marco Bettiolo](http://bettiolo.it) ([@bettiolo](https://twitter.com/bettiolo))
 
-* * *
+
 
 Credits
 -------
 
 I'd appreciate it to mention the use of this code somewhere if you use it in an app. On a website, in an about page, in the app itself, whatever. Or let me know by email or through github. It's nice to know where one's code is used.
 
-* * *
+
 
 License
 -------
 
-PassFruit | Copyright (C) 2012, Marco Bettiolo
+PassFruit | Copyright (C) 2013, Marco Bettiolo
 * * *
 PassFruit by Marco Bettiolo is licensed under a 
 [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-nc-sa/3.0/).
