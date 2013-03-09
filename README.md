@@ -54,7 +54,7 @@ This is the selection of available clients
 
 
 Discussion
-----
+----------
 
 [Trello PassFruit Board](https://trello.com/board/passfruit/4f1f1713ffa52a1e57084422) 
 Add ideas, or claim an idea and start working on it!
@@ -65,6 +65,9 @@ Discuss things in real-time.
 [Ohloh Project Statistics](https://www.ohloh.net/p/passfruit)
 View statistics about the project
 
+Wiki
+----
+[More about PassFruit in the Wiki](https://github.com/bettiolo/PassFruit/wiki)
 
 
 Author
