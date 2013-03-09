@@ -83,6 +83,10 @@ Credits
 I'd appreciate it to mention the use of this code somewhere if you use it in an app. On a website, in an about page, in the app itself, whatever. Or let me know by email or through github. It's nice to know where one's code is used.
 
 
+High-level diagram
+------------------
+![alt text](docs/PassFruit-diagram.png "PassFruit diagram")
+
 
 License
 -------
@@ -91,10 +95,3 @@ PassFruit | Copyright (C) 2013, Marco Bettiolo
 * * *
 PassFruit by Marco Bettiolo is licensed under a 
 [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-nc-sa/3.0/).
-
-
-
-High-level diagram
--------
-![alt text](docs/PassFruit-diagram.png "PassFruit diagram")
-
