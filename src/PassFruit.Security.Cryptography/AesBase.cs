@@ -7,6 +7,7 @@ namespace PassFruit.Security.Cryptography
 {
     public abstract class AesBase
     {
+
         public const int InitializationVectorSizeInBits = BlockSizeInBits;
         public const int BlockSizeInBits = 128;
         public const int SaltSizeInBits = 192;

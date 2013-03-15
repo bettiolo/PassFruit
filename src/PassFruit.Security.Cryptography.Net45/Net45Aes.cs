@@ -11,16 +11,6 @@ namespace PassFruit.Security.Cryptography.Net45
 
         public Net45Aes() : base(new Net45RandomNumberGenerator()) { }
 
-        public InitializationVector GenerateRandomInitializationVector()
-        {
-            return new InitializationVector(RandomNumberGenerator.Get(BlockSizeInBits));
-        }
-
-        public Salt GenerateRandomSalt()
-        {
-            return new Salt(RandomNumberGenerator);
-        }
-
         private AesCryptoServiceProvider CreateAes(Key secretKey, InitializationVector initializationVector)
         {
             return new AesCryptoServiceProvider
@@ -62,5 +52,4 @@ namespace PassFruit.Security.Cryptography.Net45
         }
 
     }
-
 }

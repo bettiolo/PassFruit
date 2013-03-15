@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PassFruit.Security.Cryptography.Net45.Tests
 {
-
     public class EncryptionTests : AesTestsBase
     {
+
         protected override RandomNumberGeneratorBase CreateRandomNumberGenerator()
         {
             return new Net45RandomNumberGenerator();
@@ -23,5 +23,6 @@ namespace PassFruit.Security.Cryptography.Net45.Tests
         {
             return new Net45Aes();
         }
+
     }
 }
