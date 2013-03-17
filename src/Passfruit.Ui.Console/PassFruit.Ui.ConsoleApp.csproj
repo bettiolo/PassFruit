@@ -56,29 +56,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PassFruit.Contracts\PassFruit.Contracts.csproj">
-      <Project>{3971F9F7-3A79-401D-93F6-5B50A10D15C2}</Project>
-      <Name>PassFruit.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PassFruit.Datastore.Contracts\PassFruit.Datastore.Contracts.csproj">
       <Project>{328B1FC3-5ED3-4C46-8E87-D0380F519E7A}</Project>
       <Name>PassFruit.Datastore.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.Datastore.Tests.FakeData\PassFruit.Datastore.Tests.FakeData.csproj">
-      <Project>{6140384A-8A30-4916-BAC5-6AD1E0FC5049}</Project>
-      <Name>PassFruit.Datastore.Tests.FakeData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.Datastore.XmlDatastore\PassFruit.Datastore.XmlDatastore.csproj">
-      <Project>{5DACB670-3923-49D9-815F-ECEE33835DC8}</Project>
-      <Name>PassFruit.Datastore.XmlDatastore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit.Datastore\PassFruit.Datastore.csproj">
-      <Project>{380647F7-1443-4FFF-9101-30AFF1822140}</Project>
-      <Name>PassFruit.Datastore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PassFruit\PassFruit.csproj">
-      <Project>{02D15B96-AD18-466A-88D7-454652E8347A}</Project>
-      <Name>PassFruit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
