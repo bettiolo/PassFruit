@@ -49,6 +49,7 @@
     <Compile Include="DeletedAccount.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Field.cs" />
+    <Compile Include="Fields\PasswordField.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="FieldTypeKey.cs" />
     <Compile Include="FieldTypes.cs" />
