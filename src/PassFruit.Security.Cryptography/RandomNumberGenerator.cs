@@ -5,10 +5,10 @@ using System.Text;
 
 namespace PassFruit.Security.Cryptography
 {
-    public abstract class RandomNumberGeneratorBase
+    public abstract class RandomNumberGenerator
     {
 
-        public abstract byte[] Get(int sizeInBits);
+        public abstract byte[] Generate(int sizeInBits);
 
     }
 }

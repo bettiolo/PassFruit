@@ -8,21 +8,13 @@ namespace PassFruit.Security.Cryptography
     public class InitializationVector
     {
 
-        public InitializationVector(byte[] value)
+        internal InitializationVector(byte[] value)
         {
+            if (value.Length != Aes.BlockSizeInBits/8)
+            {
+                throw new ArgumentOutOfRangeException("value", "The size of the initialization vector must be: " + Aes.BlockSizeInBits + " bits");
+            }
             Value = value;
-        }
-
-        public InitializationVector(string base64Value)
-            : this(Convert.FromBase64String(base64Value))
-        {
-            
-        }
-
-        public InitializationVector(RandomNumberGeneratorBase randomNumberGenerator)
-            : this(randomNumberGenerator.Get(AesBase.InitializationVectorSizeInBits))
-        {
-
         }
 
         public byte[] Value { get; private set; }

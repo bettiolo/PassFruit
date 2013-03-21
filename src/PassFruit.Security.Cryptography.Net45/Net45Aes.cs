@@ -6,10 +6,10 @@ using System.Security.Cryptography;
 
 namespace PassFruit.Security.Cryptography.Net45
 {
-    public class Net45Aes : AesBase
+    public class Net45Aes : Aes
     {
 
-        public Net45Aes() : base(new Net45RandomNumberGenerator()) { }
+        public Net45Aes() : base(new Net45RandomNumberGenerator(), new Net45Pbkdf2()) { }
 
         private AesCryptoServiceProvider CreateAes(Key secretKey, InitializationVector initializationVector)
         {
@@ -24,7 +24,7 @@ namespace PassFruit.Security.Cryptography.Net45
             };
         }
 
-        public override Ciphertext Encrypt(string secretMessage, Key secretKey, InitializationVector initializationVector)
+        protected override byte[] Encrypt(string secretMessage, Key secretKey, InitializationVector initializationVector)
         {
             using (var aes = CreateAes(secretKey, initializationVector))
             using (var encryptor = aes.CreateEncryptor())
@@ -35,15 +35,15 @@ namespace PassFruit.Security.Cryptography.Net45
                 {
                     streamWriter.Write(secretMessage);
                 }
-                return new Ciphertext(memoryStream.ToArray());
+                return memoryStream.ToArray();
             }
         }
 
-        public override string Decrypt(Ciphertext ciphertext, Key secretKey, InitializationVector initializationVector)
+        protected override string Decrypt(byte[] ciphertext, Key secretKey, InitializationVector initializationVector)
         {
             using (var aes = CreateAes(secretKey, initializationVector))
             using (var decryptor = aes.CreateDecryptor())
-            using (var memoryStream = new MemoryStream(ciphertext.Value))
+            using (var memoryStream = new MemoryStream(ciphertext))
             using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
             using (var streamReader = new StreamReader(cryptoStream))
             {

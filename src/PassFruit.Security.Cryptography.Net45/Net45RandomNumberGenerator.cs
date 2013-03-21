@@ -6,12 +6,12 @@ using System.Text;
 
 namespace PassFruit.Security.Cryptography.Net45
 {
-    public class Net45RandomNumberGenerator : RandomNumberGeneratorBase
+    public class Net45RandomNumberGenerator : RandomNumberGenerator
     {
 
-        public override byte[] Get(int sizeInBits)
+        public override byte[] Generate(int sizeInBits)
         {
-            using (var randomNumberGenerator = RandomNumberGenerator.Create())
+            using (var randomNumberGenerator = System.Security.Cryptography.RandomNumberGenerator.Create())
             {
                 var randomBytes = new byte[sizeInBits / 8];
                 randomNumberGenerator.GetBytes(randomBytes);

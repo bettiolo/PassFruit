@@ -8,18 +8,22 @@ namespace PassFruit.Security.Cryptography
     public class Key
     {
 
-        public Key(byte[] value)
+        internal Key(byte[] value, Salt salt, int iterations)
         {
+            if (value.Length != Aes.KeySizeInBits / 8)
+            {
+                throw new ArgumentOutOfRangeException("value", "The size of the key must be: " + Aes.KeySizeInBits + " bits");
+            }
             Value = value;
-        }
-
-        public Key(string base64Value)
-            : this(Convert.FromBase64String(base64Value))
-        {
-            
+            Salt = salt;
+            Iterations = iterations;
         }
 
         public byte[] Value { get; private set; }
+
+        public Salt Salt { get; private set; }
+
+        public int Iterations { get; private set; }
 
     }
 }

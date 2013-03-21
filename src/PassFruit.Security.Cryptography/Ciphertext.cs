@@ -8,23 +8,18 @@ namespace PassFruit.Security.Cryptography
     public class Ciphertext
     {
 
-        public Ciphertext(byte[] value)
+        internal Ciphertext(byte[] value, Salt salt, InitializationVector initializationVector)
         {
             Value = value;
-        }
-
-        public Ciphertext(string base64value)
-            : this(Convert.FromBase64String(base64value))
-        {
-            
+            Salt = salt;
+            InitializationVector = initializationVector;
         }
 
         public byte[] Value { get; private set; }
 
-        public string ToBase64()
-        {
-            return Convert.ToBase64String(Value);
-        }
+        public Salt Salt { get; private set; }
+
+        public InitializationVector InitializationVector { get; private set; }
     
     }
 }

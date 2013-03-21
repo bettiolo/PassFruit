@@ -6,15 +6,14 @@ using System.Text;
 
 namespace PassFruit.Security.Cryptography.Net45
 {
-    public class Net45KeyGenerator : KeyGeneratorBase
+    public class Net45Pbkdf2 : Pbkdf2
     {
 
-        public override Key Generate(byte[] password, Salt salt, int iterations)
+        protected override byte[] DeriveBytes(byte[] password, Salt salt, int iterations)
         {
             using (var keyGenerator = new Rfc2898DeriveBytes(password, salt.Value, iterations))
             {
-                var keyBytes = keyGenerator.GetBytes(AesBase.KeySizeInBits / 8);
-                return new Key(keyBytes);
+                return keyGenerator.GetBytes(Aes.KeySizeInBits / 8);
             }
         }
 
