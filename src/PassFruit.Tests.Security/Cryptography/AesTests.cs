@@ -46,7 +46,7 @@ namespace PassFruit.Tests.Security.Cryptography
         }
 
         [Test]
-        public void WhenDecryptingACiphertext_TheSecretShouldMatch()
+        public void WhenDecryptingACiphertextGeneratedFromJs_TheSecretShouldMatch()
         {
 
             // Given
@@ -87,29 +87,28 @@ namespace PassFruit.Tests.Security.Cryptography
         }
 
         [Test]
-        public void WhenEncryptingWithDifferentKeys_TheCiphertextShouldDiffer()
+        public void WhenEncryptingWithDifferentKeys_TheSaltAndKeyAndCiphertextShouldDiffer()
         {
 
             // Given
             var aes = CreateAes();
-            var manyIterations = 2000;
-            var fewIterations = 1000;
 
             // When
-            var keyManyIterations = aes.DeriveNewMasterKey(KnownPassword, manyIterations);
-            var ciphertextManyIterations = aes.EncryptMaster(KnownSecret, keyManyIterations);
-            var secretManyIterations = aes.DecryptMaster(ciphertextManyIterations, keyManyIterations);
-            var keyFewIterations = aes.DeriveNewMasterKey(KnownPassword, fewIterations);
-            var ciphertextFewIterations = aes.EncryptMaster(KnownSecret, keyFewIterations);
-            var secretFewIterations = aes.DecryptMaster(ciphertextFewIterations, keyFewIterations);
+            var firstKey = aes.DeriveNewMasterKey(KnownPassword, KnownIterations);
+            var firstCiphertext = aes.EncryptMaster(KnownSecret, firstKey);
+            var firstSecret = aes.DecryptMaster(firstCiphertext, firstKey);
+            var secondKey = aes.DeriveNewMasterKey(KnownPassword, KnownIterations);
+            var secondCiphertext = aes.EncryptMaster(KnownSecret, secondKey);
+            var secondSecret = aes.DecryptMaster(secondCiphertext, secondKey);
 
             // Then
-            keyManyIterations.Iterations.Should().Be(manyIterations);
-            keyFewIterations.Iterations.Should().Be(fewIterations);
-            ciphertextManyIterations.Value.Should().NotBeEquivalentTo(ciphertextFewIterations.Value);
-            secretManyIterations.Should().Be(KnownSecret);
-            secretFewIterations.Should().Be(KnownSecret);
-            secretFewIterations.Should().Be(secretManyIterations);
+            firstKey.Iterations.Should().Be(KnownIterations);
+            secondKey.Iterations.Should().Be(KnownIterations);
+            firstKey.Value.Should().NotBeEquivalentTo(secondKey.Value);
+            firstKey.Salt.Value.Should().NotBeEquivalentTo(secondKey.Salt.Value);
+            firstCiphertext.Value.Should().NotBeEquivalentTo(secondCiphertext.Value);
+            firstSecret.Should().Be(KnownSecret);
+            secondSecret.Should().Be(KnownSecret);
         }
 
     }
