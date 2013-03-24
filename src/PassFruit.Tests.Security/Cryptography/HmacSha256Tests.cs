@@ -13,8 +13,8 @@ namespace PassFruit.Tests.Security.Cryptography
     public abstract class HmacSha256Tests
     {
 
-        private byte[] KnownPassword = Encoding.UTF8.GetBytes("Secret Password");
-        private byte[] KnownMessage = Encoding.UTF8.GetBytes("Message");
+        private static readonly byte[] KnownPassword = Encoding.UTF8.GetBytes("Secret Password");
+        private static readonly byte[] KnownMessage = Encoding.UTF8.GetBytes("Message");
 
         protected abstract HmacSha256 CreateHmacSha256();
 

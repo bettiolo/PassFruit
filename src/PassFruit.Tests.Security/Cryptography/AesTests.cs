@@ -12,12 +12,11 @@ namespace PassFruit.Tests.Security.Cryptography
 
         private const string KnownPassword = "Secret Password";
         private const string KnownMessage = "Message";
-        
         private const int KnownIterations = 1337;
-        private byte[] KnownSalt = Convert.FromBase64String("R++DuFZS+JvBaN9Rv9nNK49u9s6AflNxCY/u6R4/3KE=");
-        private byte[] KnownKey = Convert.FromBase64String("7EiKmzn3Yl6Q5WzKunu7HM5jg6/yMhQfrKpgRncXz6c=");
-        private byte[] KnownInitializationVector = Convert.FromBase64String("cIgJOngkt2azZrFmSufqYw==");
-        private byte[] KnownCiphertext = Convert.FromBase64String("8WlIeXCofXfhtRRghoVUog==");
+        private static readonly byte[] KnownSalt = Convert.FromBase64String("R++DuFZS+JvBaN9Rv9nNK49u9s6AflNxCY/u6R4/3KE=");
+        private static readonly byte[] KnownKey = Convert.FromBase64String("7EiKmzn3Yl6Q5WzKunu7HM5jg6/yMhQfrKpgRncXz6c=");
+        private static readonly byte[] KnownInitializationVector = Convert.FromBase64String("cIgJOngkt2azZrFmSufqYw==");
+        private static readonly byte[] KnownCiphertext = Convert.FromBase64String("8WlIeXCofXfhtRRghoVUog==");
 
         protected abstract Aes CreateAes();
         protected abstract Pbkdf2 CreatePbkdf2();

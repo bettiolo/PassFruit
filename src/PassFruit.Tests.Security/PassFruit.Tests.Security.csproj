@@ -60,6 +60,8 @@
     <Compile Include="Cryptography\Net45\Net45Pbkdf2Tests.cs" />
     <Compile Include="Cryptography\Pbkdf2Tests.cs" />
     <Compile Include="Cryptography\RandomNumberGeneratorTests.cs" />
+    <Compile Include="EncryptorTests.cs" />
+    <Compile Include="Net45\Net45EncryptorTests.cs" />
     <Compile Include="Net45\Net45AuthorizationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

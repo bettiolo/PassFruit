@@ -17,13 +17,14 @@ namespace PassFruit.Tests.Security
         private const string KnownPassword = "Secret Password";
         private const int KnownIterations = 1337;
 
-        private AuthorizationDto KnownAuthorizationDto = new AuthorizationDto
+        public static readonly AuthorizationDto KnownAuthorization = new AuthorizationDto
         {
             Iterations = KnownIterations,
             Salt = Convert.FromBase64String("itYhNYNwDwGT3LBeKsS7Ql4fEKN0oiml1QUokr9952Y="),
             InitializationVector = Convert.FromBase64String("Lavvbjg/ALBMA823uCxTxA=="),
             Hmac = Convert.FromBase64String("lOaje8/j/zVfCS+WDxajn07pzAC2rv+6Hp1zocZtO9s=")
         };
+        private static readonly byte[] KnownSalt = KnownAuthorization.Salt;
 
         protected abstract Authorizer CreateAuthorizer();
 
@@ -32,10 +33,9 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
-            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var key = authorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var key = authorizer.ComputeKey(KnownPassword, KnownSalt, KnownIterations);
             var authorization = authorizer.CreateAuthorization(key, KnownIterations);
 
             // Then
@@ -53,10 +53,9 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
-            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var key = authorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var key = authorizer.ComputeKey(KnownPassword, KnownSalt, KnownIterations);
             var firstHmac =  authorizer.CreateAuthorization(key, KnownIterations).Hmac;
             var secondHmac = authorizer.CreateAuthorization(key, KnownIterations).Hmac;
             
@@ -70,10 +69,9 @@ namespace PassFruit.Tests.Security
             // Given
             var firstAuthorizer = CreateAuthorizer();
             var secondAuthorizer = CreateAuthorizer();
-            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var key = firstAuthorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var key = firstAuthorizer.ComputeKey(KnownPassword, KnownSalt, KnownIterations);
             var authorization = firstAuthorizer.CreateAuthorization(key, KnownIterations);
             var authorized = secondAuthorizer.Authorize(key, authorization);
 
@@ -86,11 +84,10 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
-            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var key = authorizer.ComputeKey(KnownPassword, salt, KnownIterations);
-            var authorized = authorizer.Authorize(key, KnownAuthorizationDto);
+            var key = authorizer.ComputeKey(KnownPassword, KnownSalt, KnownIterations);
+            var authorized = authorizer.Authorize(key, KnownAuthorization);
 
             // Then
             authorized.Should().BeTrue();
@@ -101,11 +98,11 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
-            var salt = KnownAuthorizationDto.Salt;
+            var salt = KnownAuthorization.Salt;
 
             // When
             var key = authorizer.ComputeKey("Different Password", salt, KnownIterations);
-            var authorized = authorizer.Authorize(key, KnownAuthorizationDto);
+            var authorized = authorizer.Authorize(key, KnownAuthorization);
 
             // Then
             authorized.Should().BeFalse();
