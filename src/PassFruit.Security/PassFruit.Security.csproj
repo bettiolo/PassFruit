@@ -42,6 +42,10 @@
     <Compile Include="Cryptography\HmacSha256.cs" />
     <Compile Include="Cryptography\Pbkdf2.cs" />
     <Compile Include="Cryptography\RandomNumberGenerator.cs" />
+    <Compile Include="EncryptedDataDto.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Encryptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

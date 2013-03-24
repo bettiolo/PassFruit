@@ -32,9 +32,11 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
+            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var authorization = authorizer.CreateAuthorization(KnownPassword, KnownIterations);
+            var key = authorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var authorization = authorizer.CreateAuthorization(key, KnownIterations);
 
             // Then
             authorization.Iterations.Should().Be(KnownIterations);
@@ -46,38 +48,18 @@ namespace PassFruit.Tests.Security
             authorization.Hmac.Should().NotBeEmpty();
         }
 
-        private byte[] CreateAuthorizationHmac(Authorizer authorizer, string password)
-        {
-
-            return authorizer.CreateAuthorizationHmac(password, KnownAuthorizationDto.Salt,
-                                                                KnownAuthorizationDto.Iterations,
-                                                                KnownAuthorizationDto.InitializationVector);
-        }
-
         [Test]
-        public void WhenCreatingTheSameHmacTwice_TheSameHashShouldBeGenerated()
+        public void WhenCreatingTheSameHmacTwice_ADifferentHashShouldBeGeneratedBecauseOfTheInitializationVector()
         {
             // Given
             var authorizer = CreateAuthorizer();
+            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var firstHmac = CreateAuthorizationHmac(authorizer, KnownPassword);
-            var secondHmac = CreateAuthorizationHmac(authorizer, KnownPassword);
+            var key = authorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var firstHmac =  authorizer.CreateAuthorization(key, KnownIterations).Hmac;
+            var secondHmac = authorizer.CreateAuthorization(key, KnownIterations).Hmac;
             
-            // Then
-            firstHmac.Should().BeEquivalentTo(secondHmac);
-        }
-
-        [Test]
-        public void WhenTwoHmacsWithDifferentPassword_TheHashShouldBeDifferent()
-        {
-            // Given
-            var authorizer = CreateAuthorizer();
-
-            // When
-            var firstHmac = CreateAuthorizationHmac(authorizer, KnownPassword);
-            var secondHmac = CreateAuthorizationHmac(authorizer, "Different Password");
-
             // Then
             firstHmac.Should().NotBeEquivalentTo(secondHmac);
         }
@@ -88,10 +70,12 @@ namespace PassFruit.Tests.Security
             // Given
             var firstAuthorizer = CreateAuthorizer();
             var secondAuthorizer = CreateAuthorizer();
+            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var authorization = firstAuthorizer.CreateAuthorization(KnownPassword, KnownIterations);
-            var authorized = secondAuthorizer.Authorize(KnownPassword, authorization);
+            var key = firstAuthorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var authorization = firstAuthorizer.CreateAuthorization(key, KnownIterations);
+            var authorized = secondAuthorizer.Authorize(key, authorization);
 
             // Then
             authorized.Should().BeTrue();
@@ -102,9 +86,11 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
-   
+            var salt = KnownAuthorizationDto.Salt;
+
             // When
-            var authorized = authorizer.Authorize(KnownPassword, KnownAuthorizationDto);
+            var key = authorizer.ComputeKey(KnownPassword, salt, KnownIterations);
+            var authorized = authorizer.Authorize(key, KnownAuthorizationDto);
 
             // Then
             authorized.Should().BeTrue();
@@ -115,9 +101,11 @@ namespace PassFruit.Tests.Security
         {
             // Given
             var authorizer = CreateAuthorizer();
+            var salt = KnownAuthorizationDto.Salt;
 
             // When
-            var authorized = authorizer.Authorize("Bad Password", KnownAuthorizationDto);
+            var key = authorizer.ComputeKey("Different Password", salt, KnownIterations);
+            var authorized = authorizer.Authorize(key, KnownAuthorizationDto);
 
             // Then
             authorized.Should().BeFalse();
