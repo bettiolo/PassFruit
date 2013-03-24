@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F3EC07B-5832-4E70-A64A-6BFA892A3C8F}</ProjectGuid>
+    <ProjectGuid>{3740B5BE-462B-4BA8-A63C-2F92B0CC1E8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PassFruit.Security.Cryptography</RootNamespace>
-    <AssemblyName>PassFruit.Security.Cryptography</AssemblyName>
+    <RootNamespace>PassFruit.Security</RootNamespace>
+    <AssemblyName>PassFruit.Security</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile104</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -33,14 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Aes.cs" />
-    <Compile Include="Ciphertext.cs" />
-    <Compile Include="InitializationVector.cs" />
-    <Compile Include="Key.cs" />
-    <Compile Include="Pbkdf2.cs" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthorizationDto.cs" />
+    <Compile Include="Authorizer.cs" />
+    <Compile Include="Cryptography\Aes.cs" />
+    <Compile Include="Cryptography\HmacSha256.cs" />
+    <Compile Include="Cryptography\Pbkdf2.cs" />
+    <Compile Include="Cryptography\RandomNumberGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomNumberGenerator.cs" />
-    <Compile Include="Salt.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

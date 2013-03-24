@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using PassFruit.Security.Cryptography;
@@ -9,106 +10,132 @@ namespace PassFruit.Tests.Security.Cryptography
     public abstract class AesTests
     {
 
-        private const string KnownSecret = "Test of a secret message";
-        private const string KnownPassword = "Test password";
-
-        private const string KnownSalt = "FzE68Eo3tmhJ//occ6O0LfJslzxZB+0/";
-        private const string KnownKey = "5YvZaYs6AKDTNDWJECpQRm7TfdmfuAhD/4KlZXV/CZI=";
+        private const string KnownPassword = "Secret Password";
+        private const string KnownMessage = "Message";
+        
         private const int KnownIterations = 1337;
-        private const string KnownInitializationVector = "M1UwDNen+sAgDyApDeaqKg==";
-        private const string KnownCiphertext = "mMKDU0Dw5Wyirtij4hezCoAHHUoUJelJaEJCEeitExI=";
+        private byte[] KnownSalt = Convert.FromBase64String("R++DuFZS+JvBaN9Rv9nNK49u9s6AflNxCY/u6R4/3KE=");
+        private byte[] KnownKey = Convert.FromBase64String("7EiKmzn3Yl6Q5WzKunu7HM5jg6/yMhQfrKpgRncXz6c=");
+        private byte[] KnownInitializationVector = Convert.FromBase64String("cIgJOngkt2azZrFmSufqYw==");
+        private byte[] KnownCiphertext = Convert.FromBase64String("8WlIeXCofXfhtRRghoVUog==");
 
         protected abstract Aes CreateAes();
+        protected abstract Pbkdf2 CreatePbkdf2();
         
         [Test]
         public void WhenEncryptingASecret_TheDecryptedShouldMatch()
         {
-            
             // Given
             var aes = CreateAes();
+            var pbkdf2 = CreatePbkdf2();
+            var salt = pbkdf2.GenerateSalt();
+            var initializationVector = aes.GenerateInitializationVector();
 
-            // When      
-            var masterKey = aes.DeriveNewMasterKey(KnownPassword, KnownIterations);
-            var dataCiphertext = aes.EncryptData(KnownSecret, masterKey);
-            var secret = aes.DecryptData(dataCiphertext, masterKey);
+            // When            
+            var key = pbkdf2.Compute(KnownPassword, salt, KnownIterations);
+            var ciphertext = aes.Encrypt(KnownMessage, key, initializationVector);
+            var message = aes.Decrypt(ciphertext, key, initializationVector);
 
             // Then
-            masterKey.Iterations.Should().Be(KnownIterations);
-            masterKey.Salt.Value.Length.Should().Be(Aes.SaltSizeInBits / 8);
-            masterKey.Value.Length.Should().Be(Aes.KeySizeInBits / 8);
-            dataCiphertext.Salt.Value.Length.Should().Be(Aes.SaltSizeInBits / 8);
-            dataCiphertext.Salt.Value.Should().NotBeEquivalentTo(masterKey.Salt.Value);
-            dataCiphertext.InitializationVector.Value.Length.Should().Be(Aes.BlockSizeInBits / 8);
-            Convert.ToBase64String(dataCiphertext.Value).Should().NotBe(KnownSecret);
-            Convert.ToBase64String(dataCiphertext.Value).Length.Should().BeGreaterThan(KnownSecret.Length);
-            secret.Should().Be(KnownSecret);
-
+            salt.Length.Should().Be(Pbkdf2.SaltSizeInBits / 8);
+            key.Length.Should().Be(Aes.KeySizeInBits / 8);
+            initializationVector.Length.Should().Be(Aes.BlockSizeInBits / 8);
+            ciphertext.Should().NotBeEquivalentTo(Encoding.UTF8.GetBytes(KnownMessage));
+            ciphertext.Length.Should().BeGreaterThan(KnownMessage.Length);
+            message.Should().Be(KnownMessage);
         }
 
         [Test]
-        public void WhenDecryptingACiphertextGeneratedFromJs_TheSecretShouldMatch()
+        public void WhenDecryptingACiphertextWithTheCorrectPassword_TheSecretShouldMatch()
+        {
+            // Given
+            var aes = CreateAes();
+            var pbkdf2 = CreatePbkdf2();
+
+            // When
+            var key = pbkdf2.Compute(KnownPassword, KnownSalt, KnownIterations);
+            var message = aes.Decrypt(KnownCiphertext, key, KnownInitializationVector);
+
+            // Then
+            key.Should().BeEquivalentTo(KnownKey);
+            message.Should().Be(KnownMessage);
+        }
+
+        [Test]
+        public void WhenEncryptingWithDifferentSalts_TheCiphertextShouldDiffer()
         {
 
             // Given
             var aes = CreateAes();
+            var pbkdf2 = CreatePbkdf2();
+            var firstSalt = pbkdf2.GenerateSalt();
+            var secondSalt = pbkdf2.GenerateSalt();
+            var initializationVector = aes.GenerateInitializationVector();
 
             // When
-            var masterKey = aes.DeriveMasterKey(KnownPassword, KnownSalt, KnownIterations);
-            var decryptedSecret = aes.DecryptMaster(KnownCiphertext, masterKey, KnownInitializationVector);
+            var firstKey = pbkdf2.Compute(KnownPassword, firstSalt, KnownIterations);
+            var firstCiphertext = aes.Encrypt(KnownMessage, firstKey, initializationVector);
+            var firstMessage = aes.Decrypt(firstCiphertext, firstKey, initializationVector);
+            var secondKey = pbkdf2.Compute(KnownPassword, secondSalt, KnownIterations);
+            var secondCiphertext = aes.Encrypt(KnownMessage, secondKey, initializationVector);
+            var secondMessage = aes.Decrypt(secondCiphertext, secondKey, initializationVector);
 
             // Then
-            masterKey.Salt.Value.Length.Should().Be(Aes.SaltSizeInBits / 8);
-            Convert.ToBase64String(masterKey.Salt.Value).Should().Be(KnownSalt);
-            masterKey.Iterations.Should().Be(KnownIterations);
-            masterKey.Value.Length.Should().Be(Aes.KeySizeInBits / 8);
-            Convert.ToBase64String(masterKey.Value).Should().Be(KnownKey);
-            decryptedSecret.Should().Be(KnownSecret);
-
+            firstKey.Should().NotBeEquivalentTo(secondKey);
+            firstCiphertext.Should().NotBeEquivalentTo(secondCiphertext);
+            firstMessage.Should().BeEquivalentTo(secondMessage);
+            firstMessage.Should().Be(KnownMessage);
+            secondMessage.Should().Be(KnownMessage);
         }
 
         [Test]
-        public void WhenGeneratingAKeyWithDifferentIterations_TheKeysShouldDiffer()
+        public void WhenEncryptingWithDifferentPasswords_TheCiphertextShouldDiffer()
         {
-
             // Given
             var aes = CreateAes();
-            var manyIterations = 2000;
-            var fewIterations = 1000;
+            var pbkdf2 = CreatePbkdf2();
+            var salt = pbkdf2.GenerateSalt();
+            var initializationVector = aes.GenerateInitializationVector();
 
             // When
-            var keyManyIterations = aes.DeriveNewMasterKey(KnownPassword, manyIterations);
-            var keySingleIteration = aes.DeriveNewMasterKey(KnownPassword, fewIterations);
+            var firstKey = pbkdf2.Compute(KnownPassword, salt, KnownIterations);
+            var firstCiphertext = aes.Encrypt(KnownMessage, firstKey, initializationVector);
+            var firstMessage = aes.Decrypt(firstCiphertext, firstKey, initializationVector);
+            var secondKey = pbkdf2.Compute("Different Password", salt, KnownIterations);
+            var secondCiphertext = aes.Encrypt(KnownMessage, secondKey, initializationVector);
+            var secondMessage = aes.Decrypt(secondCiphertext, secondKey, initializationVector);
 
             // Then
-            keyManyIterations.Value.Length.Should().Be(Aes.KeySizeInBits / 8);
-            keySingleIteration.Value.Length.Should().Be(Aes.KeySizeInBits / 8);
-            keySingleIteration.Value.Should().NotBeEquivalentTo(keyManyIterations.Value);
-
+            firstKey.Should().NotBeEquivalentTo(secondKey);
+            firstCiphertext.Should().NotBeEquivalentTo(secondCiphertext);
+            firstMessage.Should().BeEquivalentTo(secondMessage);
+            firstMessage.Should().Be(KnownMessage);
+            secondMessage.Should().Be(KnownMessage);
         }
 
         [Test]
-        public void WhenEncryptingWithDifferentKeys_TheSaltAndKeyAndCiphertextShouldDiffer()
+        public void WhenEncryptingWithDifferentInitializationVectors_TheCiphertextShouldDiffer()
         {
-
             // Given
             var aes = CreateAes();
+            var pbkdf2 = CreatePbkdf2();
+            var salt = pbkdf2.GenerateSalt();
+            var firstInitializationVector = aes.GenerateInitializationVector();
+            var secondInitializationVector = aes.GenerateInitializationVector();
 
             // When
-            var firstKey = aes.DeriveNewMasterKey(KnownPassword, KnownIterations);
-            var firstCiphertext = aes.EncryptMaster(KnownSecret, firstKey);
-            var firstSecret = aes.DecryptMaster(firstCiphertext, firstKey);
-            var secondKey = aes.DeriveNewMasterKey(KnownPassword, KnownIterations);
-            var secondCiphertext = aes.EncryptMaster(KnownSecret, secondKey);
-            var secondSecret = aes.DecryptMaster(secondCiphertext, secondKey);
+            var key = pbkdf2.Compute(KnownPassword, salt, KnownIterations);
+            var firstCiphertext = aes.Encrypt(KnownMessage, key, firstInitializationVector);
+            var firstMessage = aes.Decrypt(firstCiphertext, key, firstInitializationVector);
+            var secondCiphertext = aes.Encrypt(KnownMessage, key, secondInitializationVector);
+            var secondMessage = aes.Decrypt(secondCiphertext, key, secondInitializationVector);
 
             // Then
-            firstKey.Iterations.Should().Be(KnownIterations);
-            secondKey.Iterations.Should().Be(KnownIterations);
-            firstKey.Value.Should().NotBeEquivalentTo(secondKey.Value);
-            firstKey.Salt.Value.Should().NotBeEquivalentTo(secondKey.Salt.Value);
-            firstCiphertext.Value.Should().NotBeEquivalentTo(secondCiphertext.Value);
-            firstSecret.Should().Be(KnownSecret);
-            secondSecret.Should().Be(KnownSecret);
+            firstInitializationVector.Should().NotBeEquivalentTo(secondInitializationVector);
+            firstCiphertext.Should().NotBeEquivalentTo(secondCiphertext);
+            firstMessage.Should().BeEquivalentTo(secondMessage);
+            firstMessage.Should().Be(KnownMessage);
+            secondMessage.Should().Be(KnownMessage);
         }
 
     }

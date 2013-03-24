@@ -36,14 +36,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Net45Aes.cs" />
+    <Compile Include="Net45HmacSha256.cs" />
     <Compile Include="Net45Pbkdf2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Net45RandomNumberGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PassFruit.Security.Cryptography\PassFruit.Security.Cryptography.csproj">
-      <Project>{9f3ec07b-5832-4e70-a64a-6bfa892a3c8f}</Project>
-      <Name>PassFruit.Security.Cryptography</Name>
+    <ProjectReference Include="..\PassFruit.Security\PassFruit.Security.csproj">
+      <Project>{3740b5be-462b-4ba8-a63c-2f92b0cc1e8c}</Project>
+      <Name>PassFruit.Security %28PassFruit.Security\PassFruit.Security%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

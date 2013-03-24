@@ -47,8 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cryptography\AesTests.cs" />
-    <Compile Include="Cryptography\Net45AesTests.cs" />
+    <Compile Include="AuthorizationTests.cs" />
+    <Compile Include="Cryptography\AesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cryptography\HmacSha256Tests.cs" />
+    <Compile Include="Cryptography\Net45\Net45RandomNumberGeneratorTests.cs" />
+    <Compile Include="Cryptography\Net45\Net45AesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cryptography\Net45\Net45HmacSha256Tests.cs" />
+    <Compile Include="Cryptography\Net45\Net45Pbkdf2Tests.cs" />
+    <Compile Include="Cryptography\Pbkdf2Tests.cs" />
+    <Compile Include="Cryptography\RandomNumberGeneratorTests.cs" />
+    <Compile Include="Net45\Net45AuthorizationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,11 +71,12 @@
       <Project>{f5e60881-811e-40a4-bfc6-d3af51932f19}</Project>
       <Name>PassFruit.Security.Cryptography.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PassFruit.Security.Cryptography\PassFruit.Security.Cryptography.csproj">
-      <Project>{9f3ec07b-5832-4e70-a64a-6bfa892a3c8f}</Project>
-      <Name>PassFruit.Security.Cryptography</Name>
+    <ProjectReference Include="..\PassFruit.Security\PassFruit.Security.csproj">
+      <Project>{3740B5BE-462B-4BA8-A63C-2F92B0CC1E8C}</Project>
+      <Name>PassFruit.Security %28PassFruit.Security\PassFruit.Security%29</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

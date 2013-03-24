@@ -9,9 +9,9 @@ namespace PassFruit.Security.Cryptography.Net45
     public class Net45Aes : Aes
     {
 
-        public Net45Aes() : base(new Net45RandomNumberGenerator(), new Net45Pbkdf2()) { }
+        public Net45Aes() : base(new Net45RandomNumberGenerator()) { }
 
-        private AesCryptoServiceProvider CreateAes(Key secretKey, InitializationVector initializationVector)
+        private AesCryptoServiceProvider CreateAes(byte[] secretKey, byte[] initializationVector)
         {
             return new AesCryptoServiceProvider
             {
@@ -19,28 +19,34 @@ namespace PassFruit.Security.Cryptography.Net45
                 BlockSize = BlockSizeInBits,
                 Mode = CipherMode.CBC,
                 Padding = PaddingMode.PKCS7,
-                Key = secretKey.Value,
-                IV = initializationVector.Value
+                Key = secretKey,
+                IV = initializationVector
             };
         }
 
-        protected override byte[] Encrypt(string secretMessage, Key secretKey, InitializationVector initializationVector)
+        public override byte[] Encrypt(string message, byte[] key, byte[] initializationVector)
         {
-            using (var aes = CreateAes(secretKey, initializationVector))
+            // ToDo: Check input
+            using (var aes = CreateAes(key, initializationVector))
             using (var encryptor = aes.CreateEncryptor())
             using (var memoryStream = new MemoryStream())
             {
                 using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
                 using (var streamWriter = new StreamWriter(cryptoStream))
                 {
-                    streamWriter.Write(secretMessage);
+                    streamWriter.Write(message);
                 }
                 return memoryStream.ToArray();
             }
         }
 
-        protected override string Decrypt(byte[] ciphertext, Key secretKey, InitializationVector initializationVector)
+        public override string Decrypt(byte[] ciphertext, byte[] secretKey, byte[] initializationVector)
         {
+            // ToDo: Check input
+            //if (!CheckInput(ciphertext, secretKey.Value, initializationVector.Value))
+            //{
+            //    return null;
+            //}
             using (var aes = CreateAes(secretKey, initializationVector))
             using (var decryptor = aes.CreateDecryptor())
             using (var memoryStream = new MemoryStream(ciphertext))

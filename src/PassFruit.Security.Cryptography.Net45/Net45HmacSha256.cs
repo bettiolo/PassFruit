@@ -6,25 +6,23 @@ using System.Text;
 
 namespace PassFruit.Security.Cryptography.Net45
 {
-
-    public class Net45Pbkdf2 : Pbkdf2
+    public class Net45HmacSha256 : HmacSha256
     {
 
-        public Net45Pbkdf2() 
+        public Net45HmacSha256()
             : base(new Net45RandomNumberGenerator())
         {
-
+            
         }
 
-        public override byte[] Compute(byte[] password, byte[] salt, int iterations)
+        public override byte[] Compute(byte[] message, byte[] key)
         {
             // ToDo: Check input
-            using (var keyGenerator = new Rfc2898DeriveBytes(password, salt, iterations))
+            using (var hmacsha256 = new HMACSHA256(key))
             {
-                return keyGenerator.GetBytes(Aes.KeySizeInBits / 8);
+                return hmacsha256.ComputeHash(message);
             }
         }
 
     }
-
 }
