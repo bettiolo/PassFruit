@@ -80,7 +80,7 @@ namespace PassFruit.Tests.Security
         }
 
         [Test]
-        public void WhenAuthorizingTheCorrectPassword_ShouldBeAuthorized()
+        public void WhenAuthorizingTheCorrectPassword_ItShouldBeAuthorized()
         {
             // Given
             var authorizer = CreateAuthorizer();
@@ -94,7 +94,7 @@ namespace PassFruit.Tests.Security
         }
 
         [Test]
-        public void WhenAuthorizingTheWrongPassword_ShouldNotBeAuthorized()
+        public void WhenAuthorizingTheWrongPassword_ItShouldNotBeAuthorized()
         {
             // Given
             var authorizer = CreateAuthorizer();
