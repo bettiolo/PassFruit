@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationTests.cs" />
+    <Compile Include="AuthorizerTests.cs" />
     <Compile Include="Cryptography\AesTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -62,7 +62,7 @@
     <Compile Include="Cryptography\RandomNumberGeneratorTests.cs" />
     <Compile Include="EncryptorTests.cs" />
     <Compile Include="Net45\Net45EncryptorTests.cs" />
-    <Compile Include="Net45\Net45AuthorizationTests.cs" />
+    <Compile Include="Net45\Net45AuthorizerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

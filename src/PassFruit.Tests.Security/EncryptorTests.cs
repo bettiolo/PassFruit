@@ -20,8 +20,8 @@ namespace PassFruit.Tests.Security
         private const string KnownMessage = "Message";
         private const int KnownDataIterations = 10;
 
-        private static readonly byte[] KnownMasterSalt = AuthorizationTests.KnownAuthorization.Salt;
-        private static readonly int KnownMasterIterations = AuthorizationTests.KnownAuthorization.Iterations;
+        private static readonly byte[] KnownMasterSalt = AuthorizerTests.KnownAuthorization.Salt;
+        private static readonly int KnownMasterIterations = AuthorizerTests.KnownAuthorization.Iterations;
         private static readonly EncryptedDataDto KnownEncryptedData = new EncryptedDataDto
         {
             Salt = Convert.FromBase64String("rHC/F6Ti0XJ2URX7wHyU9b6iJuO6jCqqM/EWnZlhbb4="),

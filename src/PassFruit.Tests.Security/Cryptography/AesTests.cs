@@ -137,5 +137,47 @@ namespace PassFruit.Tests.Security.Cryptography
             secondMessage.Should().Be(KnownMessage);
         }
 
+        [Test]
+        public void WhenEncryptingAnEmptyOrNullMessage_AnArgumentExceptionShouldBeThrown()
+        {
+            // Given
+            var aes = CreateAes();
+            var pbkdf2 = CreatePbkdf2();
+            var salt = pbkdf2.GenerateSalt();
+            var initilizationVector = aes.GenerateInitializationVector();
+
+            // When
+            var key = pbkdf2.Compute(KnownPassword, salt, KnownIterations);
+            Action emptyMessageEncryptAction = () => aes.Encrypt("", key, initilizationVector);
+            Action nullMessageEncryptAction = () => aes.Encrypt(null, key, initilizationVector);
+
+            // Then
+            emptyMessageEncryptAction.ShouldThrow<ArgumentException>();
+            nullMessageEncryptAction.ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void WhenDecryptingAnEmptyOrNullCyphertext_AnArgumentExceptionShouldBeThrown()
+        {
+            // Given
+            var aes = CreateAes();
+            var pbkdf2 = CreatePbkdf2();
+            var salt = pbkdf2.GenerateSalt();
+            var initilizationVector = aes.GenerateInitializationVector();
+
+            // When
+            var key = pbkdf2.Compute(KnownPassword, salt, KnownIterations);
+            Action emptyCiphertextEncryptAction = () => aes.Decrypt(new byte[0], key, initilizationVector);
+            Action nullCiphertextEncryptAction = () => aes.Decrypt(null, key, initilizationVector);
+
+            // Then
+            emptyCiphertextEncryptAction.ShouldThrow<ArgumentException>();
+            nullCiphertextEncryptAction.ShouldThrow<ArgumentException>();
+        }
+        
+        // ToDo: Test for invalid iv
+
+        // ToDo: Test for invalid key
+
     }
 }

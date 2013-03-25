@@ -3,7 +3,7 @@ using PassFruit.Security.Cryptography.Net45;
 
 namespace PassFruit.Tests.Security.Net45
 {
-    public class Net45AuthorizationTests : AuthorizationTests
+    public class Net45AuthorizerTests : AuthorizerTests
     {
 
         protected override Authorizer CreateAuthorizer()

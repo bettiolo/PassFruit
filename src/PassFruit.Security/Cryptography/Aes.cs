@@ -18,34 +18,45 @@ namespace PassFruit.Security.Cryptography
             _randomNumberGenerator = randomNumberGenerator;
         }
 
-        public abstract byte[] Encrypt(string message, byte[] key, byte[] initializationVector);
+        public byte[] Encrypt(string message, byte[] key, byte[] initializationVector)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new ArgumentException("An empty message should not be encrypted", "message");
+            }
+            CheckInput(key, initializationVector);
+            return PlatformSpecificEncrypt(message, key, initializationVector);
+        }
 
-        public abstract string Decrypt(byte[] ciphertext, byte[] secretKey, byte[] initializationVector);
+        protected abstract byte[] PlatformSpecificEncrypt(string message, byte[] key, byte[] initializationVector);
+
+        public string Decrypt(byte[] ciphertext, byte[] key, byte[] initializationVector)
+        {
+            if (ciphertext == null || ciphertext.Length == 0)
+            {
+                throw new ArgumentException("Cannot decrypt an empty ciphertext", "ciphertext");
+            }
+            CheckInput(key, initializationVector);
+            return PlatformSpecificDecrypt(ciphertext, key, initializationVector);
+        }
+
+        protected abstract string PlatformSpecificDecrypt(byte[] ciphertext, byte[] key, byte[] initializationVector);
 
         public byte[] GenerateInitializationVector()
         {
             return _randomNumberGenerator.Generate(BlockSizeInBits);
         }
 
-        protected bool CheckInput(byte[] ciphertext, byte[] key, byte[] initializationVector)
+        private void CheckInput(byte[] key, byte[] initializationVector)
         {
-
-            if (ciphertext == null || key == null || initializationVector == null)
+            if (key == null || key.Length != KeySizeInBits / 8 )
             {
-                return false;
+                throw new ArgumentException("Cannot use an empty or invalid key", "key");
             }
-
-            if (key.Length != KeySizeInBits / 8)
+            if (initializationVector == null || initializationVector.Length != BlockSizeInBits / 8)
             {
-                return false;
+                throw new ArgumentException("Cannot use an empty or invalid initialization vectory", "initializationVector");
             }
-
-            if (initializationVector.Length != BlockSizeInBits / 8)
-            {
-                return false;
-            }
-
-            return true;
         }
 
     }

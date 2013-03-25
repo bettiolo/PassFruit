@@ -56,5 +56,9 @@ namespace PassFruit.Tests.Security.Cryptography
             differentMessageHash.Should().NotBeEquivalentTo(differentPasswordHash);
         }
 
+        // ToDo: Test for invalid message
+
+        // ToDo: Test for invalid password
+
     }
 }

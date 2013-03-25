@@ -58,6 +58,8 @@ namespace PassFruit.Tests.Security.Cryptography
             // Then
             longRandomNumber.Length.Should().BeGreaterThan(shortRandomNumber.Length);
         }
-        
+
+        // ToDo: Test for invalid number of bits
+
     }
 }

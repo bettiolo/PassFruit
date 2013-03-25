@@ -11,7 +11,7 @@ using PassFruit.Security.Cryptography;
 namespace PassFruit.Tests.Security
 {
     [TestFixture]
-    public abstract class AuthorizationTests
+    public abstract class AuthorizerTests
     {
 
         private const string KnownPassword = "Secret Password";

@@ -24,9 +24,8 @@ namespace PassFruit.Security.Cryptography.Net45
             };
         }
 
-        public override byte[] Encrypt(string message, byte[] key, byte[] initializationVector)
+        protected override byte[] PlatformSpecificEncrypt(string message, byte[] key, byte[] initializationVector)
         {
-            // ToDo: Check input
             using (var aes = CreateAes(key, initializationVector))
             using (var encryptor = aes.CreateEncryptor())
             using (var memoryStream = new MemoryStream())
@@ -40,14 +39,9 @@ namespace PassFruit.Security.Cryptography.Net45
             }
         }
 
-        public override string Decrypt(byte[] ciphertext, byte[] secretKey, byte[] initializationVector)
+        protected override string PlatformSpecificDecrypt(byte[] ciphertext, byte[] key, byte[] initializationVector)
         {
-            // ToDo: Check input
-            //if (!CheckInput(ciphertext, secretKey.Value, initializationVector.Value))
-            //{
-            //    return null;
-            //}
-            using (var aes = CreateAes(secretKey, initializationVector))
+            using (var aes = CreateAes(key, initializationVector))
             using (var decryptor = aes.CreateDecryptor())
             using (var memoryStream = new MemoryStream(ciphertext))
             using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))

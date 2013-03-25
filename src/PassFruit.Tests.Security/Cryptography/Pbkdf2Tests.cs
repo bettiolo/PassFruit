@@ -84,5 +84,9 @@ namespace PassFruit.Tests.Security.Cryptography
             firstKey.Should().NotBeEquivalentTo(secondKey);
         }
 
+        // ToDo: Test for invalid salt
+
+        // ToDo: Test for invalid number of iterations
+
     }
 }
