@@ -33,7 +33,7 @@ The list is ordered by development priority, vote please to change the order:
 - [Mac OS X (Cocoa)](https://trello.com/c/7chNcCXr)
 - [Windows Phone 8](https://trello.com/c/FC1sdfXH)
 - [Windows Phone (7.5)](https://trello.com/c/0a5Qc5Oi)
-- [Windows Desktop (WPF)](https://trello.com/c/1lZZ3HGM)
+- [Windows Desktop (WPF)](https://trello.com/c/6cdtXXMZ)
 - [iOS (Cocoa Touch)](https://trello.com/c/iLvncg3Z)
 - [Android](https://trello.com/c/M26yUbVf)
 - [Blackberry 10](https://trello.com/c/VwyUL5uO)
