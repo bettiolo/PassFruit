@@ -21,36 +21,47 @@ If using a cloud password storage service you can enable double security that co
 All the code is opensource, you can check by yourself the implementation.
 
 
+Client UI
+---------
 
-Password storage services
--------------------------
+This is the list of the clients that are going to be implemented. 
+The list is ordered by development priority, vote please to change the order:
 
-You can have your encrypted password persisted using the following services:
-
-- [Local encrypted XML file (Single device mode)](https://trello.com/c/ZwoEyIgn)
-- [Dropbox](https://trello.com/c/RPC56yxs)
-- [Windows SkyDrive](https://trello.com/c/Rqxb2V5t)
-- [CloudApp](https://trello.com/c/QiaOKOCn)
-- [Windows Azure (REST Service)](https://trello.com/c/ImI6ZkrI)
-- [AppHarbor (REST Service)](https://trello.com/c/JwbYlKC4)
-- [Heroku (REST Service)](https://trello.com/c/d0U08lII)
-
-You need your own account to persist the data in the cloud.
-
-
-
-Client password access
-----------------------
-
-This is the selection of available clients
-
-- [Windows (WPF)](https://trello.com/c/1lZZ3HGM)
-- [Web (HTML + JS + encrypted JSON)](https://trello.com/c/bzMgVngO)
-- [Windows Phone (Silverlight)](https://trello.com/c/0a5Qc5Oi)
-- [Android](https://trello.com/c/M26yUbVf)
+- [Console (Windows/Linux/Mac)](https://trello.com/c/GJtSMg6d)
+- [Web (HTML + JS)](https://trello.com/c/bzMgVngO)
+- [Windows 8 (Modern UI, Windows Store App)](https://trello.com/c/vlpdPyvV)
 - [Mac OS X (Cocoa)](https://trello.com/c/7chNcCXr)
+- [Windows Phone 8](https://trello.com/c/FC1sdfXH)
+- [Windows Phone (7.5)](https://trello.com/c/0a5Qc5Oi)
+- [Windows Desktop (WPF)](https://trello.com/c/1lZZ3HGM)
 - [iOS (Cocoa Touch)](https://trello.com/c/iLvncg3Z)
+- [Android](https://trello.com/c/M26yUbVf)
+- [Blackberry 10](https://trello.com/c/VwyUL5uO)
+- [Linux Desktop](https://trello.com/c/Sl4vF7Tc)
+- [Firefox OS](https://trello.com/c/twRmfqOl)
+- [Ubuntu Touch](https://trello.com/c/RUIlO09i)
 
+
+Password storage
+----------------
+
+The following back end technologies for storing the encrypted password will be implemented.
+The list is ordered by development priority, vote please to change the order:
+
+- [Json file](https://trello.com/c/nXGSmliT)
+- [InMemory](https://trello.com/c/AIW4nTAW)
+- [ProtoBuf file] (https://trello.com/c/RIQ7mheZ)
+- [Windows Azure](https://trello.com/c/ImI6ZkrI)
+- [AppHarbor](https://trello.com/c/JwbYlKC4)
+- [Dropbox](https://trello.com/c/RPC56yxs)
+- [MongoDB](https://trello.com/c/6kE6rdUK)
+- [SQLite](https://trello.com/c/DBu49HXE)
+- [SQL Server](https://trello.com/c/Gr5TaW4I)
+- [Amazon](https://trello.com/c/FeQyWNUI)
+- [SkyDrive](https://trello.com/c/Rqxb2V5t)
+- [XML file](https://trello.com/c/ZwoEyIgn)
+- [Heroku/Node](https://trello.com/c/d0U08lII)
+- [CloudApp](https://trello.com/c/QiaOKOCn)
 
 
 Discussion
