@@ -9,7 +9,7 @@ namespace PassFruit.Security.Cryptography.Net45
     public class Net45RandomNumberGenerator : RandomNumberGenerator
     {
 
-        public override byte[] Generate(int sizeInBits)
+        protected override byte[] PlatformSpecificGenerate(int sizeInBits)
         {
 
             using (var randomNumberGenerator = System.Security.Cryptography.RandomNumberGenerator.Create())

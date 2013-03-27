@@ -36,16 +36,16 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationDto.cs" />
-    <Compile Include="Authorizer.cs" />
+    <Compile Include="Authorization.cs" />
     <Compile Include="Cryptography\Aes.cs" />
     <Compile Include="Cryptography\HmacSha256.cs" />
     <Compile Include="Cryptography\Pbkdf2.cs" />
     <Compile Include="Cryptography\RandomNumberGenerator.cs" />
-    <Compile Include="EncryptedDataDto.cs">
+    <Compile Include="EncryptedData.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Encryptor.cs" />
+    <Compile Include="MasterKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

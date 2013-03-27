@@ -53,13 +53,28 @@ namespace PassFruit.Tests.Security.Cryptography
 
             // When
             var longRandomNumber = rng.Generate(1024);
-            var shortRandomNumber = rng.Generate(64);
+            var shortRandomNumber = rng.Generate(128);
 
             // Then
             longRandomNumber.Length.Should().BeGreaterThan(shortRandomNumber.Length);
         }
 
-        // ToDo: Test for invalid number of bits
+        [Test]
+        public void WheInvalidNumberOfBitsAreRequested_AnErrorShouldBeThrown()
+        {
+            // Given
+            var rng = CreateRandomNumberGenerator();
+
+            // When
+            Action generateNegativeBits = () => rng.Generate(-1);
+            Action generateZeroBits = () => rng.Generate(0);
+            Action generate127Bits = () => rng.Generate(127);
+
+            // Then
+            generateNegativeBits.ShouldThrow<ArgumentException>();
+            generateZeroBits.ShouldThrow<ArgumentException>();
+            generate127Bits.ShouldThrow<ArgumentException>();
+        }
 
     }
 }

@@ -84,9 +84,34 @@ namespace PassFruit.Tests.Security.Cryptography
             firstKey.Should().NotBeEquivalentTo(secondKey);
         }
 
-        // ToDo: Test for invalid salt
+        [Test]
+        public void WhenGeneratingAKeyWithAnInvalidSalt_AnErrorShouldBeThrown()
+        {
+            // Given
+            var pbkdf2 = CreatePbkdf2();
+            var salt = pbkdf2.GenerateSalt();
+            var shortSalt = new byte[32 / 8];
+            var notLongEnoughSalt = new byte[120 / 8];
+            var tooBigSalt = new byte[512 / 8];
+            var emptySalt = new byte[0];
+            Buffer.BlockCopy(salt, 0, shortSalt, 0, 32 / 8);
+            Buffer.BlockCopy(salt, 0, notLongEnoughSalt, 0, 120 / 8);
+            Buffer.BlockCopy(salt, 0, tooBigSalt, 0, salt.Length);
 
-        // ToDo: Test for invalid number of iterations
+            // When
+            Action keyFromShortSalt = () => pbkdf2.Compute(KnownPassword, shortSalt, KnownIterations);
+            Action keyFromNotLongEnoughSalt = () => pbkdf2.Compute(KnownPassword, notLongEnoughSalt, KnownIterations);
+            Action keyFromEmptySalt = () => pbkdf2.Compute(KnownPassword, emptySalt, KnownIterations);
+            Action keyFromNullSalt = () => pbkdf2.Compute(KnownPassword, null, KnownIterations);
+            Action keyFromTooBigSalt = () => pbkdf2.Compute(KnownPassword, tooBigSalt, KnownIterations);
+            
+            // Then
+            keyFromShortSalt.ShouldThrow<ArgumentException>();
+            keyFromNotLongEnoughSalt.ShouldThrow<ArgumentException>();
+            keyFromEmptySalt.ShouldThrow<ArgumentException>();
+            keyFromNullSalt.ShouldThrow<ArgumentException>();
+            keyFromTooBigSalt.ShouldThrow<ArgumentException>();
+        }
 
     }
 }

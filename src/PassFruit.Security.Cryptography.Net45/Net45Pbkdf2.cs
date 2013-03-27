@@ -16,9 +16,8 @@ namespace PassFruit.Security.Cryptography.Net45
 
         }
 
-        public override byte[] Compute(byte[] password, byte[] salt, int iterations)
+        protected override byte[] PlatformSpecificCompute(byte[] password, byte[] salt, int iterations)
         {
-            // ToDo: Check input
             using (var keyGenerator = new Rfc2898DeriveBytes(password, salt, iterations))
             {
                 return keyGenerator.GetBytes(Aes.KeySizeInBits / 8);

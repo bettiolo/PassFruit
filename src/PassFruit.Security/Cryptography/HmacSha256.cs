@@ -8,17 +8,14 @@ namespace PassFruit.Security.Cryptography
     public abstract class HmacSha256
     {
 
-        private readonly RandomNumberGenerator _randomNumberGenerator;
-
-        public const int KeySizeInBits = 512;
         public const int HmacSizeInBits = 256;
 
-        protected HmacSha256(RandomNumberGenerator randomNumberGenerator)
+        public byte[] Compute(byte[] message, byte[] key)
         {
-            _randomNumberGenerator = randomNumberGenerator;
+            return PlatformSpecificCompute(message, key);
         }
 
-        public abstract byte[] Compute(byte[] message, byte[] key);
+        protected abstract byte[] PlatformSpecificCompute(byte[] message, byte[] key);
 
     }
 }

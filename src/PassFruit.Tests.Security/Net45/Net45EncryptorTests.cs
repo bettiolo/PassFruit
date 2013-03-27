@@ -5,14 +5,16 @@ namespace PassFruit.Tests.Security.Net45
 {
     public class Net45EncryptorTests : EncryptorTests
     {
-        protected override Authorizer CreateAuthorizer()
+
+        protected override MasterKey ComputeMasterKey(string secretPassword, byte[] salt, int iterations)
         {
-            return new Authorizer(new Net45Pbkdf2(), new Net45Aes(), new Net45HmacSha256());
+            return new MasterKey(secretPassword, salt, iterations, new Net45Pbkdf2());
         }
 
         protected override Encryptor CreateEncryptor()
         {
             return new Encryptor(new Net45Pbkdf2(), new Net45Aes());
         }
+
     }
 }

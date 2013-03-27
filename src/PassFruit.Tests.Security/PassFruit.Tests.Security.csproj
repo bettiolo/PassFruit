@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizerTests.cs" />
+    <Compile Include="AuthorizationTests.cs" />
     <Compile Include="Cryptography\AesTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -61,8 +61,10 @@
     <Compile Include="Cryptography\Pbkdf2Tests.cs" />
     <Compile Include="Cryptography\RandomNumberGeneratorTests.cs" />
     <Compile Include="EncryptorTests.cs" />
+    <Compile Include="MasterKeyTests.cs" />
+    <Compile Include="Net45\Net45MasterKeyTests.cs" />
     <Compile Include="Net45\Net45EncryptorTests.cs" />
-    <Compile Include="Net45\Net45AuthorizerTests.cs" />
+    <Compile Include="Net45\Net45AuthorizationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

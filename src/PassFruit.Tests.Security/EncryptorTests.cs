@@ -13,32 +13,30 @@ namespace PassFruit.Tests.Security
     public abstract class EncryptorTests
     {
 
-        protected abstract Authorizer CreateAuthorizer();
-        protected abstract Encryptor CreateEncryptor();
-
         private const string KnownPassword = "Secret Password";
         private const string KnownMessage = "Message";
+        private const int KnownMasterIterations = 1337;
         private const int KnownDataIterations = 10;
 
-        private static readonly byte[] KnownMasterSalt = AuthorizerTests.KnownAuthorization.Salt;
-        private static readonly int KnownMasterIterations = AuthorizerTests.KnownAuthorization.Iterations;
-        private static readonly EncryptedDataDto KnownEncryptedData = new EncryptedDataDto
-        {
-            Salt = Convert.FromBase64String("rHC/F6Ti0XJ2URX7wHyU9b6iJuO6jCqqM/EWnZlhbb4="),
-            InitializationVector = Convert.FromBase64String("2bO/VA/xWARjbLGaiDuZ4g=="),
-            Iterations = KnownDataIterations,
-            Ciphertext = Convert.FromBase64String("ls13NxOa4Hla0IfhIX/x6w==")
-        };
+        private static readonly byte[] KnownMasterSalt = Convert.FromBase64String("itYhNYNwDwGT3LBeKsS7Ql4fEKN0oiml1QUokr9952Y=");
+        private static readonly byte[] KnownDataSalt = Convert.FromBase64String("rHC/F6Ti0XJ2URX7wHyU9b6iJuO6jCqqM/EWnZlhbb4=");
+        private static readonly byte[] KnownDataInitializationVector = Convert.FromBase64String("2bO/VA/xWARjbLGaiDuZ4g==");
+        private static readonly byte[] KnownCiphertext = Convert.FromBase64String("ls13NxOa4Hla0IfhIX/x6w==");
+
+        private static readonly EncryptedData KnownEncryptedData = 
+            new EncryptedData(KnownDataSalt, KnownDataInitializationVector, KnownDataIterations, KnownCiphertext);
+
+        protected abstract MasterKey ComputeMasterKey(string secretPassword, byte[] salt, int iterations);
+        protected abstract Encryptor CreateEncryptor();
 
         [Test]
         public void WhenEncryptingData_TheMessageShouldBeDecryptedCorrectly()
         {
             // Given
-            var authorizer = CreateAuthorizer();
+            var masterKey = ComputeMasterKey(KnownPassword, KnownMasterSalt, KnownMasterIterations).SecretKey;
             var encryptor = CreateEncryptor();
 
             // When
-            var masterKey = authorizer.ComputeKey(KnownPassword, KnownMasterSalt, KnownMasterIterations);
             var encryptedData = encryptor.EncryptData(KnownMessage, masterKey, KnownDataIterations);
             var message = encryptor.DecryptData(encryptedData, masterKey);
 
@@ -53,11 +51,10 @@ namespace PassFruit.Tests.Security
         public void WhenDecryptingData_TheMessageShouldBeDecryptedCorrectly()
         {
             // Given
-            var authorizer = CreateAuthorizer();
+            var masterKey = ComputeMasterKey(KnownPassword, KnownMasterSalt, KnownMasterIterations).SecretKey;
             var encryptor = CreateEncryptor();
 
             // When
-            var masterKey = authorizer.ComputeKey(KnownPassword, KnownMasterSalt, KnownMasterIterations);
             var message = encryptor.DecryptData(KnownEncryptedData, masterKey);
 
             // Then
@@ -68,11 +65,10 @@ namespace PassFruit.Tests.Security
         public void WhenEncryptingTheSameDataTwice_TheCiphertextShouldBeDifferentButTheMessageNot()
         {
             // Given
-            var authorizer = CreateAuthorizer();
+            var masterKey = ComputeMasterKey(KnownPassword, KnownMasterSalt, KnownMasterIterations).SecretKey;
             var encryptor = CreateEncryptor();
 
             // When
-            var masterKey = authorizer.ComputeKey(KnownPassword, KnownMasterSalt, KnownMasterIterations);
             var firstEncryptedData = encryptor.EncryptData(KnownMessage, masterKey, KnownDataIterations);
             var fistMessage = encryptor.DecryptData(firstEncryptedData, masterKey);
             var secondEncryptedData = encryptor.EncryptData(KnownMessage, masterKey, KnownDataIterations);
@@ -87,6 +83,8 @@ namespace PassFruit.Tests.Security
             fistMessage.Should().Be(KnownMessage);
             secondMessage.Should().Be(KnownMessage);
         }
+
+        // ToDo: Create a test with the wrong key or password
 
     }
 }

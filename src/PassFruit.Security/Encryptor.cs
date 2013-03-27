@@ -19,22 +19,16 @@ namespace PassFruit.Security
             _aes = aes;
         }
 
-        public EncryptedDataDto EncryptData(string message, byte[] masterKey, int dataKeyIterations)
+        public EncryptedData EncryptData(string message, byte[] masterKey, int dataKeyIterations)
         {
             var salt = _pbkdf2.GenerateSalt();
             var dataKey = _pbkdf2.Compute(masterKey, salt, dataKeyIterations);
             var initializationVector = _aes.GenerateInitializationVector();
-            var ciphertext = _aes.Encrypt(message, dataKey, initializationVector); ;
-            return new EncryptedDataDto
-            {
-                Iterations = dataKeyIterations,
-                Salt = salt,
-                InitializationVector = initializationVector,
-                Ciphertext = ciphertext
-            };
+            var ciphertext = _aes.Encrypt(message, dataKey, initializationVector);
+            return new EncryptedData(salt, initializationVector, dataKeyIterations, ciphertext);
         }
 
-        public string DecryptData(EncryptedDataDto encryptedData, byte[] masterKey)
+        public string DecryptData(EncryptedData encryptedData, byte[] masterKey)
         {
             var dataKey = _pbkdf2.Compute(masterKey, encryptedData.Salt, encryptedData.Iterations);
             var message = _aes.Decrypt(encryptedData.Ciphertext, dataKey, encryptedData.InitializationVector);
