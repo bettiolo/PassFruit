@@ -19,16 +19,16 @@ namespace PassFruit.Server.CiphertextDatastore
 
         public abstract string Description { get; }
 
-        public abstract IEnumerable<Guid> GetAllIds();
+        public abstract Guid[] GetAllIds();
 
         public abstract CiphertextDto Get(Guid accountId);
 
         internal protected abstract void InternalSave(CiphertextDto ciphertextDto);
 
-        public IEnumerable<CiphertextDto> GetAll(CiphertextStatus ciphertextStatus = CiphertextStatus.Active)
+        public CiphertextDto[] GetAll(CiphertextStatus ciphertextStatus = CiphertextStatus.Active)
         {
             return GetAllIds().Select(Get).Where(ciphertextDto =>
-                IsMatchedByStatus(ciphertextStatus, ciphertextDto.Deleted));
+                IsMatchedByStatus(ciphertextStatus, ciphertextDto.Deleted)).ToArray();
         }
 
         public void Save(CiphertextDto ciphertextDto)

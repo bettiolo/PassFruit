@@ -50,7 +50,7 @@ namespace PassFruit.Ui.Wp {
 
         static void AddCustomConventions()
         {
-            ConventionManager.AddElementConvention<Pivot>(Pivot.ItemsSourceProperty, "SelectedItem", "SelectionChanged").ApplyBinding =
+            ConventionManager.AddElementConvention<Pivot>(ItemsControl.ItemsSourceProperty, "SelectedItem", "SelectionChanged").ApplyBinding =
                 (viewModelType, path, property, element, convention) => {
                     if (ConventionManager
                         .GetElementConvention(typeof(ItemsControl))

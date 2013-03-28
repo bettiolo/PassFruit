@@ -10,9 +10,9 @@ namespace PassFruit.Datastore {
 
         string Description { get; }
 
-        IEnumerable<Guid> GetAllAccountIds();
+        Guid[] GetAllAccountIds();
 
-        IEnumerable<AccountDto> GetAccountDtos(AccountStatus accountStatus = AccountStatus.Active);
+        AccountDto[] GetAccountDtos(AccountStatus accountStatus = AccountStatus.Active);
 
         AccountDto GetAccountDto(Guid accountId);
 

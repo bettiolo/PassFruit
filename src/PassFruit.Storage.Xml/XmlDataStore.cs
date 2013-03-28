@@ -70,7 +70,7 @@ namespace PassFruit.Datastore.XmlDatastore {
             get { return "XML dataStore, the data is persisted in a XML file"; }
         }
 
-        public override IEnumerable<Guid> GetAllAccountIds() {
+        public override Guid[] GetAllAccountIds() {
             return GetAccountIdsWithFilter(accountId => !AccountElementIsDeleted(accountId));
         }
 
@@ -115,7 +115,7 @@ namespace PassFruit.Datastore.XmlDatastore {
         //    SaveXml();
         //}
 
-        private IEnumerable<Guid> GetAccountIdsWithFilter(Func<Guid, bool> filterAccount) {
+        private Guid[] GetAccountIdsWithFilter(Func<Guid, bool> filterAccount) {
             var accountIds = new List<Guid>();
             GetElementsWithId(GetAccountsElement(), AccountIdPrefix, (accountId, _) => {
                 if (filterAccount(accountId)) {
@@ -125,7 +125,7 @@ namespace PassFruit.Datastore.XmlDatastore {
             return accountIds;
         }
 
-        private IList<TagDto> GetTags(Guid accountId) {
+        private TagDto[] GetTags(Guid accountId) {
             var tags = new List<TagDto>();
             foreach (var tagElement in GetTagsElement(accountId).Elements()) {
                 var tagElementName = tagElement.Name.LocalName;

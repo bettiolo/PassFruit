@@ -9,11 +9,11 @@ namespace PassFruit.Contracts {
 
         IAccount this[Guid accountId] { get; }
 
-        IEnumerable<IAccount> GetByEmail(string email);
+        IAccount[] GetByEmail(string email);
 
-        IEnumerable<IAccount> GetByUserName(string userName);
+        IAccount[] GetByUserName(string userName);
 
-        IEnumerable<IAccount> GetByTag(string tagKey); 
+        IAccount[] GetByTag(string tagKey); 
             
         IAccount Create(string providerKey, Guid? id = null);
 

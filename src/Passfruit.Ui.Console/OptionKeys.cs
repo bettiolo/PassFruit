@@ -34,7 +34,7 @@ namespace PassFruit.Ui.ConsoleApp {
             return this;
         }
 
-        public OptionKeys Options<T>(IEnumerable<T> items, Action<int, T> displayItem, Action<T> itemSelectedAction) {
+        public OptionKeys Options<T>(T[] items, Action<int, T> displayItem, Action<T> itemSelectedAction) {
             var index = 1;
             foreach (var item in items) {
                 var localItem = item;

@@ -19,7 +19,7 @@ namespace PassFruit.Ui.Wp.Views {
 
         }
 
-        public IEnumerable<TagViewModel> Tags {
+        public TagViewModel[] Tags {
             get { return _account.Tags.Select(accountTag => new TagViewModel(accountTag)); }
         }
 

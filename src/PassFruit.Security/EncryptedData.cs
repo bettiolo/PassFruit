@@ -2,6 +2,7 @@
 {
     public class EncryptedData
     {
+
         public EncryptedData(byte[] salt, byte[] initializationVector, int iterations, byte[] ciphertext)
         {
             Ciphertext = ciphertext;

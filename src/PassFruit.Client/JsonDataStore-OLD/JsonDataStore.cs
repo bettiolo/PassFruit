@@ -36,9 +36,9 @@ namespace PassFruit.Datastore.JsonDatastore
             }
         }
 
-        public override IEnumerable<Guid> GetAllAccountIds()
+        public override Guid[] GetAllAccountIds()
         {
-            return GetJsonAccounts().Accounts.Keys;
+            return GetJsonAccounts().Accounts.Keys.ToArray();
         }
 
         public override AccountDto GetAccountDto(Guid accountId)

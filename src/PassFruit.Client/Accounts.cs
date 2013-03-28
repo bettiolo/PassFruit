@@ -36,16 +36,16 @@ namespace PassFruit {
             return this.SingleOrDefault(account => account.Id == accountId);
         }
 
-        public IEnumerable<IAccount> GetByEmail(string email) {
-            return this.Where(account => FindField(account, FieldTypeKey.Email, email));
+        public IAccount[] GetByEmail(string email) {
+            return this.Where(account => FindField(account, FieldTypeKey.Email, email)).ToArray();
         }
 
-        public IEnumerable<IAccount> GetByUserName(string userName) {
-            return this.Where(account => FindField(account, FieldTypeKey.UserName, userName));
+        public IAccount[] GetByUserName(string userName) {
+            return this.Where(account => FindField(account, FieldTypeKey.UserName, userName)).ToArray();
         }
 
-        public IEnumerable<IAccount> GetByTag(string tagKey) {
-            return _accounts.Where(account => account.Tags.Contains(tagKey));
+        public IAccount[] GetByTag(string tagKey) {
+            return _accounts.Where(account => account.Tags.Contains(tagKey)).ToArray();
         }
 
         public IAccount Create(string providerKey, Guid? id = null) {
@@ -82,12 +82,12 @@ namespace PassFruit {
             return GetEnumerator();
         }
 
-        public IEnumerable<ITag> GetAllTags() {
+        public ITag[] GetAllTags() {
             IList<ITag> tags = new List<ITag>();
             foreach (var tag in _accounts.SelectMany(account => account.Tags.Where(tag => !tags.Contains(tag)))) {
                 tags.Add(tag);
             }
-            return tags;
+            return tags.ToArray();
         }
 
     }

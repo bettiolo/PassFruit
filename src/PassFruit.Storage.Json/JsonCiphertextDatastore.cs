@@ -30,7 +30,7 @@ namespace PassFruit.Server.CiphertextDatastore.Json
             get { return "JSON ciphertext data store, the data is persisted in a json format usin JSON.Net"; }
         }
 
-        public override IEnumerable<Guid> GetAllIds()
+        public override Guid[] GetAllIds()
         {
             return _jsonCiphertexts.Ciphertexts.Keys;
         }

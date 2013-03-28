@@ -31,7 +31,7 @@ namespace System {
             return new OptionKeys(message).Option(key, action);
         }
 
-        public static OptionKeys Options<T>(this string message, IEnumerable<T> items, Action<int, T> displayItem, Action<T> itemSelectedAction) {
+        public static OptionKeys Options<T>(this string message, T[] items, Action<int, T> displayItem, Action<T> itemSelectedAction) {
             var optionKeys = new OptionKeys(message);
             return optionKeys.Options(items, displayItem, itemSelectedAction);
         }

@@ -17,11 +17,11 @@ namespace PassFruit.Contracts {
 
         ITags Tags { get; }
 
-        IEnumerable<IField> Fields { get; }
+        IField[] Fields { get; }
 
         bool IsDirty { get; }
 
-        IEnumerable<IField> GetFieldsByKey(FieldTypeKey fieldTypeKey);
+        IField[] GetFieldsByKey(FieldTypeKey fieldTypeKey);
         
         void SetField(FieldTypeKey fieldTypeKey, object value);
 

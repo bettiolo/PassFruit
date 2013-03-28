@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PassFruit.Datastore {
     
@@ -12,8 +13,8 @@ namespace PassFruit.Datastore {
             _dataStores.Add(dataStore);
         }
 
-        public IEnumerable<IDatastore> GetAvailableDatastores() {
-            return _dataStores;
+        public IDatastore[] GetAvailableDatastores() {
+            return _dataStores.ToArray();
         }
 
         public void SelectDatastore(IDatastore dataStore) {

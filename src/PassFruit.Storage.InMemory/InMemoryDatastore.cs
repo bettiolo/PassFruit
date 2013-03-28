@@ -23,8 +23,8 @@ namespace PassFruit.Datastore.InMemoryDatastore {
             get { return "In Memory Datastore, the data is serialized"; }
         }
 
-        public override IEnumerable<Guid> GetAllAccountIds() {
-            return _accountDtos.Select(item => item.Key);
+        public override Guid[] GetAllAccountIds() {
+            return _accountDtos.Select(item => item.Key).ToArray();
         }
 
         public override AccountDto GetAccountDto(Guid accountId) {

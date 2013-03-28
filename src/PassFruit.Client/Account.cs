@@ -116,9 +116,9 @@ namespace PassFruit {
 
         public ITags Tags { get; private set; }
 
-        public IEnumerable<IField> Fields { get { return _fields.ToArray(); } }
+        public IField[] Fields { get { return _fields.ToArray(); } }
 
-        public IEnumerable<IField> GetFieldsByKey(FieldTypeKey fieldTypeKey) {
+        public IField[] GetFieldsByKey(FieldTypeKey fieldTypeKey) {
             return _fields.Where(field => field.FieldType.Key == fieldTypeKey);
         }
 

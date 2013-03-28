@@ -12,11 +12,12 @@ namespace PassFruit.Datastore {
 
         public abstract string Description { get; }
 
-        public abstract IEnumerable<Guid> GetAllAccountIds();
+        public abstract Guid[] GetAllAccountIds();
 
-        public IEnumerable<AccountDto> GetAccountDtos(AccountStatus accountStatus = AccountStatus.Active) {
+        public AccountDto[] GetAccountDtos(AccountStatus accountStatus = AccountStatus.Active) {
             return GetAllAccountIds().Select(GetAccountDto).Where(accountDto => 
-                IsAccountDtoMatchedByStatus(accountStatus, accountDto.IsDeleted));
+                    IsAccountDtoMatchedByStatus(accountStatus, accountDto.IsDeleted))
+                .ToArray();
         }
 
         public abstract AccountDto GetAccountDto(Guid accountId);
