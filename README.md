@@ -76,6 +76,9 @@ Discuss things in real-time.
 [Ohloh Project Statistics](https://www.ohloh.net/p/passfruit)
 View statistics about the project
 
+[PassFruit Forum](https://passfruit.uservoice.com/)
+User forum and support
+
 Wiki
 ----
 [More about PassFruit in the Wiki](https://github.com/bettiolo/PassFruit/wiki)
